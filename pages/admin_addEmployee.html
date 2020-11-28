@@ -14,13 +14,22 @@
 
 <body>
     <script>
-            $(document).on('click',"#addEmployee", function(){
-                var type = $("#typeEmploy").find(":selected").text();
-                var name = $("#nameEmploy").val();
-                var username = $("#usernameEmploy").val();
-                var password = $("#pwEmploy").val();
-                admin.addSecretary(name,username,password);
-            });
+        $(document).on('click', "#addEmployee", function () {
+            var type = $("#typeEmploy").find(":selected").text();
+            var name = $("#nameEmploy").val();
+            var username = $("#usernameEmploy").val();
+            var password = $("#pwEmploy").val();
+            //add employee
+            var valid = admin.addSecretary(name, username, password);
+            //notify user
+            if (valid === true) {
+                $("#addedList").append('<tr><td>' + type + '</td><td>' + username + '</td></tr>');
+                $("#error").hide();
+            }
+            else {
+                $("#error").show();
+            }
+        });
     </script>
 
     <div id="logo">
@@ -65,8 +74,19 @@
                 <input type="submit" value="Submit">
         -->
         <button type="button" id="addEmployee">Add Employee</button>
+        <span id="error" style="display: none; color: red;">Employee's username already exists!</span>
         <br><br>
     </form>
+    <Span>You've Successfully Added: </Span>
+    <table id="addedList">
+        <thead>
+            <th>Type</th>
+            <th>Username</th>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
 </body>
 
 </html>
