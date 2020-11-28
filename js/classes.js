@@ -9,7 +9,7 @@ class Admin
         this.SecretaryList = []; 
     }
 
-    //functions of the admin
+    //precondition check for secretary existing
     secretaryExists(username)
     {
         var i;
@@ -26,25 +26,62 @@ class Admin
                 return false; 
             }
         }
-
     }
-    
+
+    //adding a secretary to the system as an admin
     addSecretary(name, username, password)
-    {
-        
+    {   
         if(!this.secretaryExists(username))
         {
             var secretary_1 = new Secretary(name, username, password); 
             this.SecretaryList.push(secretary_1); 
             console.log("Adding Sec: Name: " + admin.SecretaryList[0].name + "Username: " + admin.SecretaryList[0].username + "Passwrod: " + admin.SecretaryList[0].password);
+            return true; 
         }
         else
         {
             console.log("THIS ALREADY EXISTS");
-        }
-               
-                
+            return false; 
+        }              
     }
+
+    //precondition for checking if teacher already exists
+    teacherExists(username)
+    {
+        var i;
+
+        for(i = 0; i < this.TeacherList.length; i++)
+        {
+            if(username == this.TeacherList[i].username)
+            {
+                //do not add the teacher to the list 
+               return true; 
+            }
+            else
+            {
+                return false; 
+            }
+        }
+    }
+
+    //adding teacher to the list
+    addTeacher(name, username, password)
+    {   
+        if(!this.teacherExists(username))
+        {
+            var teacher_1 = new Teacher(name, username, password); 
+            this.TeacherList.push(teacher_1); 
+            console.log("Adding Teach: Name: " + admin.TeacherList[0].name + "Username: " + admin.TeacherList[0].username + "Passwrod: " + admin.TeacherList[0].password);
+            return true;
+        }
+        else
+        {
+            console.log("THIS ALREADY EXISTS");
+            return false; 
+        }              
+    }
+
+    
 
     
 
@@ -67,7 +104,7 @@ class Secretary
 
 class Teacher
 {
-    constructor(name,username,password,type)
+    constructor(name,username,password)
     {
         this.name = name; 
         this.username = username; 
@@ -111,7 +148,7 @@ class Classroom
         this.name = name; 
         this.teacher = new Teacher();
         this.timeinterval = timeinterval;
-        this.StudentList = new Array(Student);
+        this.StudentList = []; 
 
     }
 
@@ -138,7 +175,7 @@ class ClassAttendance
 {
     constructor(ListAttendances)
     {
-        this.ListAttendances = new Array(AttendanceEntry); 
+        this.ListAttendances = []; 
 
     }
 
@@ -151,8 +188,8 @@ class Student
     {
       this.name = name;
       this.Stdid = Stdid;
-      this.classes = new Array(Classroom); 
-      this.attendanceList = new Array(Attendance)
+      this.classes = []; 
+      this.attendanceList = []; 
     }
 }
 
