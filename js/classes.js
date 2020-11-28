@@ -1,12 +1,51 @@
 class Admin 
 {
-    constructor(username,password,type)
+    constructor(username,password,type,TeacherList, SecretaryList)
     {
         this.username = username;
         this.password = password;
         this.type = "ADMIN"; 
+        this.TeacherList = new Array(Teacher);
+        this.SecretaryList = new Array(Secretary); 
     }
 
+    //functions of the admin
+    secretaryExists(username)
+    {
+        var i;
+
+        for(i = 0; i < this.SecretaryList.length; i++)
+        {
+            if(username == this.SecretaryList[i].username)
+            {
+                //do not add the secretary to the list 
+               return true; 
+            }
+            else
+            {
+                return false; 
+            }
+        }
+
+    }
+    
+    addSecretary(name, username, password, StudentList, ClassList, type)
+    {
+        
+        if(!this.secretaryExists(username))
+        {
+            secretary_1 = new Secretary(name, username, password, StudentList, ClassList, type); 
+            this.SecretaryList.push(secretary_1); 
+        }
+        else
+        {
+            //do nothing
+        }
+               
+                
+    }
+
+    
 
 }
 
