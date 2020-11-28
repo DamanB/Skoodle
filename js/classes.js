@@ -89,7 +89,7 @@ class Secretary
         this.password = password;
         //this.StudentList = new Array(Student);
         //this.ClassList = new Array(Classroom);
-        this.type = "SECRETARY";
+        this.type = "Secretary";
     }
 
 
@@ -102,7 +102,7 @@ class Teacher
         this.name = name; 
         this.username = username; 
         this.password = password;
-        this.type = "TEACHER";
+        this.type = "Teacher";
     }
 
 }
@@ -114,7 +114,7 @@ class SupplyTeacher
         this.name = name; 
         this.username = username; 
         this.password = password;
-        this.type = "SUPPLYTEACHER"; 
+        this.type = "SupplyTeacher"; 
     }
 
 }

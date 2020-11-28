@@ -1,13 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/generic.css">
     <link rel="stylesheet" href="/css/main.css">
-    <script src="jquery-3.5.1.min.js"></script>
-    <title>Skoodle: Supply Teacher</title>
+    <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type='text/javascript' src="/js/classes.js"></script>
+    <script type='text/javascript' src="/js/data.js"></script>
+    <title>Skoodle: Admin Page</title>
 </head>
+
+<script>
+    $(document).ready(function(){
+        console.log(admin.EmployeeList.length);
+        admin.EmployeeList.forEach(function (emp) {
+            console.log("Employee: " + emp.username);
+        });
+    });
+    $(document).on('change', "#typeSelect", function () {
+        console.log("selected!");
+        $("#employeeList tbody").empty();
+        var type = $("#typeSelect").find(":selected").text();
+        console.log(type);
+
+        admin.EmployeeList.forEach(function (emp) {
+            if (emp.type === type) {
+                $('#employeeList tbody').append('<tr><td>' + emp.type + '</td><td>' + emp.name + '</td></tr>' + '</td><td>' + emp.username + '</td></tr>');
+            }
+        });
+    });
+</script>
+
 <body>
     <div id="logo">
         Skoodle
@@ -26,8 +51,26 @@
 
     <div id="actions">
         <ul>
-            <li><a href="">Manage Employee Accounts</a></li>
+            <li><a href="/pages/admin_addEmployee.html">Add Employees</a></li>
         </ul>
     </div>
+    <div id="employeeList">
+        <Span>Employees in the System: </Span><br>
+        <select id="typeSelect">
+            <option value="select">Select an Employee Type</option>
+            <option value="secretary">Secretary</option>
+            <option value="teacher">Teacher</option>
+        </select>
+        <table id="addedList">
+            <thead>
+                <th>Account Type</th>
+                <th>Name</th>
+                <th>Username</th>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <div>
 </body>
+
 </html>
