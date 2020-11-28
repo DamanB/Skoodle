@@ -36,7 +36,6 @@ class Admin
         }
         else
         {
-            console.log("THIS ALREADY EXISTS");
             return false; 
         }              
     }
