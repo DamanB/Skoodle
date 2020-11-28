@@ -66,7 +66,7 @@ class Admin
             if(victim_employee_index> -1)
             {
                 this.EmployeeList.splice(victim_employee_index,1); 
-                return true; 
+                return true;
             }
         }
         else
@@ -77,6 +77,9 @@ class Admin
     }
 }
 
+var ClassList = [];
+var StudentList = [];
+
 class Secretary
 {
     constructor(name, username, password)
@@ -84,9 +87,9 @@ class Secretary
         this.name = name;
         this.username = username;
         this.password = password;
-        //this.StudentList = new Array(Student); 
-        //this.ClassList = new Array(Classroom); 
-        this.type = "SECRETARY"; 
+        //this.StudentList = new Array(Student);
+        //this.ClassList = new Array(Classroom);
+        this.type = "SECRETARY";
     }
 
 
@@ -99,7 +102,7 @@ class Teacher
         this.name = name; 
         this.username = username; 
         this.password = password;
-        this.type = "TEACHER"; 
+        this.type = "TEACHER";
     }
 
 }
@@ -174,12 +177,12 @@ class ClassAttendance
 
 class Student 
 {
-    constructor(name,Stdid,classes, attendanceList) 
+    constructor(name, Stdid, classes) 
     {
       this.name = name;
       this.Stdid = Stdid;
       this.classes = []; 
-      this.attendanceList = []; 
+      //this.attendanceList = []; 
     }
 }
 
