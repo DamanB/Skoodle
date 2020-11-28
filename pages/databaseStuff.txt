@@ -1,0 +1,82 @@
+TYPES OF DATABASES
+------------------------------------------
+FOR LOGIN:
+
+- Login Database
+    > usernames
+    > passwords
+    > account types
+
+------------------------------------------
+FOR SUPPLY TEACHERS:
+
+- Supply/Full-Time Teacher Classes List
+    > All Classes a teacher is teaching
+
+- Supply/Full-Time Teacher's Class List of Students
+    > Students in respective Class
+
+------------------------------------------
+FOR FULL-TIME TEACHERS:
+
+- Supply/Full-Time Teacher Classes List
+    > All Classes a teacher is teaching
+
+- Supply/Full-Time Teacher's Class List of Students
+    > Students in respective Class
+
+- Specific Student's Classes List
+    > All Classes a student is enrolled in
+
+- Specific Student's Attendance Record
+    > A student's school attendance record (across classes)
+
+------------------------------------------
+FOR PARENTS:
+
+- Parent's Children List
+    > Child/Student of the Parent
+
+- Specific Student's Classes List
+    > All Classes a student is enrolled in
+
+- Specific Student's Attendance Record
+    > A student's school attendance record (across classes)
+    
+------------------------------------------
+FOR SECRETARIES:
+
+- Secretary Classes List
+    > All Classes currently being taught
+    
+- Secretary's Class List of Students
+    > Students in respective Class
+
+- Specific Student's Classes List
+    > All Classes a student is enrolled in
+
+
+- Secretary Students List
+    > All Students currently enrolled in the school
+
+- Specific Student's Classes List
+    > All Classes a student is enrolled in
+
+
+- Secretary Teachers List
+    > All Teachers currently enrolled in the school
+
+- Secretary Full School Attendance Report
+    > List of all attendance pages for all classes
+
+
+
+------------------------------------------
+FOR ADMINS:
+
+- Admin's Employee List
+    > All Employees
+    > Employee (Teachers + Secretaries) Info
+    > Employee (Teachers) Classes
+
+------------------------------------------
