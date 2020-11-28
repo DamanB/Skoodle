@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/generic.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="jquery-3.5.1.min.js"></script>
+    <title>Generic Webpage</title>
+</head>
+<body>
+    <div id="logo">
+        Skoodle
+    </div>
+    <div class="nameLabel">
+        <p>
+            Hello User Name! </br>
+            Student Name
+        </p>
+    </div>
+    <!-- <div id="logout">
+        <a href="/index.html">
+            LOGOUT
+        </a>
+    </div> -->
+
+    <div id="actions">
+        <!-- Unsure about the "form action... action_page.php" -->
+        <form action="/action_page.php">
+            <label for="date">Insert Date of Absence</label><br>
+            <input type="text" id="date" name="fname" value="Date"><br>
+            <br>
+            <label for="rAbsence">Reason for Absence</label><br>
+            <!-- Would like some way of making the text box bigger. -->
+            <input type="text" id="rAbsence" name="rAbsence" value="Insert Reason"><br><br>
+            <input type="submit" value="Submit Absence Request">
+          </form> 
+    </div>
+</body>
+</html>
