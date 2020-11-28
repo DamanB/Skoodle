@@ -1,0 +1,1 @@
+var admin = new Admin("admin404", "notfound");

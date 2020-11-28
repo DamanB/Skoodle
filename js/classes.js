@@ -1,12 +1,12 @@
 class Admin 
 {
-    constructor(username,password,type,TeacherList, SecretaryList)
+    constructor(username,password)
     {
         this.username = username;
         this.password = password;
         this.type = "ADMIN"; 
-        this.TeacherList = new Array(Teacher);
-        this.SecretaryList = new Array(Secretary); 
+        this.TeacherList = [];
+        this.SecretaryList = []; 
     }
 
     //functions of the admin
@@ -29,17 +29,18 @@ class Admin
 
     }
     
-    addSecretary(name, username, password, StudentList, ClassList, type)
+    addSecretary(name, username, password)
     {
         
         if(!this.secretaryExists(username))
         {
-            secretary_1 = new Secretary(name, username, password, StudentList, ClassList, type); 
+            var secretary_1 = new Secretary(name, username, password); 
             this.SecretaryList.push(secretary_1); 
+            console.log("Adding Sec: Name: " + admin.SecretaryList[0].name + "Username: " + admin.SecretaryList[0].username + "Passwrod: " + admin.SecretaryList[0].password);
         }
         else
         {
-            //do nothing
+            console.log("THIS ALREADY EXISTS");
         }
                
                 
@@ -51,13 +52,13 @@ class Admin
 
 class Secretary
 {
-    constructor(name, username, password,StudentList,ClassList, type)
+    constructor(name, username, password)
     {
         this.name = name;
         this.username = username;
         this.password = password;
-        this.StudentList = new Array(Student); 
-        this.ClassList = new Array(Classroom); 
+        //this.StudentList = new Array(Student); 
+        //this.ClassList = new Array(Classroom); 
         this.type = "SECRETARY"; 
     }
 
