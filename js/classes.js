@@ -45,6 +45,35 @@ class Admin
         }              
     }
 
+    //removing a secretary
+    removeSecretary(username)
+    {
+        var i;
+
+        if(this.secretaryExists(username))
+        {
+            for(i = 0; i < this.SecretaryList.length; i++)
+            {
+                if(username == this.SecretaryList[i].username)
+                {
+                    const victim_secretary_index = this.SecretaryList.indexOf(i); 
+                }
+            }
+    
+            if(victim_secretary_index> -1)
+            {
+                this.SecretaryList.splice(victim_secretary_index,1); 
+                return true; 
+            }
+        }
+        else
+        {
+            console.log("THIS DOES NOT EXISTS");
+            return false;  
+        }
+    }
+    
+
     //precondition for checking if teacher already exists
     teacherExists(username)
     {
@@ -81,7 +110,35 @@ class Admin
         }              
     }
 
+    //removing a teacher
+    removeTeacher(username)
+    {
+        var i;
+
+        if(this.teacherExists(username))
+        {
+            for(i = 0; i < this.TeacherList.length; i++)
+            {
+                if(username == this.TeacherList[i].username)
+                {
+                    const victim_teacher_index = this.TeacherList.indexOf(i); 
+                }
+            }
     
+            if(victim_teacher_index> -1)
+            {
+                this.TeacherList.splice(victim_teacher_index,1); 
+                return true; 
+            }
+        }
+        else
+        {
+            console.log("THIS DOES NOT EXISTS");
+            return false;  
+        }
+    }
+
+
 
     
 
