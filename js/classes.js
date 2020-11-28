@@ -29,13 +29,13 @@ class Admin
     {   
         if(!this.employeeExists(username))
         {
-            if(type == "SECRETARY")
+            if(type == "Secretary")
             {
                 var secretary_1 = new Secretary(name, username, password); 
                 this.EmployeeList.push(secretary_1); 
                 return true; 
             }
-            else if(type == "TEACHER")
+            else if(type == "Teacher")
             {
                 var teacher_1 = new Teacher(name, username, password); 
                 this.EmployeeList.push(teacher_1); 

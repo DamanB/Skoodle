@@ -20,7 +20,7 @@
             var username = $("#usernameEmploy").val();
             var password = $("#pwEmploy").val();
             //add employee
-            var valid = admin.addSecretary(name, username, password);
+            var valid = admin.addEmployee(name, username, password, type);
             //notify user
             if (valid === true) {
                 $("#addedList").append('<tr><td>' + type + '</td><td>' + username + '</td></tr>');
@@ -87,6 +87,8 @@
 
         </tbody>
     </table>
+    <a href="/pages/admin1.html">BACK</a>
+
 </body>
 
 </html>
