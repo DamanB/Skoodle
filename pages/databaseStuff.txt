@@ -2,7 +2,7 @@ TYPES OF DATABASES
 ------------------------------------------
 FOR LOGIN:
 
-- Login Database
+- (1) Login Database
     > usernames
     > passwords
     > account types
@@ -10,19 +10,19 @@ FOR LOGIN:
 ------------------------------------------
 FOR SUPPLY TEACHERS:
 
-- Supply/Full-Time Teacher Classes List
+- (2) Supply/Full-Time Teacher Classes List
     > All Classes a teacher is teaching
 
-- Supply/Full-Time Teacher's Class List of Students
+- (3) Supply/Full-Time Teacher's Class List of Students
     > Students in respective Class
 
 ------------------------------------------
 FOR FULL-TIME TEACHERS:
 
-- Supply/Full-Time Teacher Classes List
+- (2) Supply/Full-Time Teacher Classes List
     > All Classes a teacher is teaching
 
-- Supply/Full-Time Teacher's Class List of Students
+- (3) Supply/Full-Time Teacher's Class List of Students
     > Students in respective Class
 
 - Specific Student's Classes List
@@ -80,3 +80,18 @@ FOR ADMINS:
     > Employee (Teachers) Classes
 
 ------------------------------------------
+
+
+LIST OF LOGIN CREDENTIALS
+
+LIST OF EMPLOYEES
+    LIST OF SECRETARIES
+    LIST OF TEACHERS
+
+LIST OF CLASSES
+    LIST OF A TEACHER'S CLASSES
+    LIST OF CLASSES A STUDENT IS ENROLLED IN
+    
+LIST OF STUDENTS
+    LIST OF STUDENTS IN A CLASS
+    LIST OF STUDENTS UNDER A PARENT
