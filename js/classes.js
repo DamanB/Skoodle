@@ -14,18 +14,15 @@ class Admin
     {
         var i;
 
-        for(i = 0; i < this.SecretaryList.length; i++)
+        for(i = 0; i < this.SecretaryList.length; i=i+1)
         {
-            if(username == this.SecretaryList[i].username)
+            if(username === this.SecretaryList[i].username)
             {
                 //do not add the secretary to the list 
                return true; 
             }
-            else
-            {
-                return false; 
-            }
         }
+        return false; 
     }
 
     //adding a secretary to the system as an admin
@@ -35,7 +32,6 @@ class Admin
         {
             var secretary_1 = new Secretary(name, username, password); 
             this.SecretaryList.push(secretary_1); 
-            console.log("Adding Sec: Name: " + admin.SecretaryList[0].name + "Username: " + admin.SecretaryList[0].username + "Passwrod: " + admin.SecretaryList[0].password);
             return true; 
         }
         else
@@ -86,11 +82,8 @@ class Admin
                 //do not add the teacher to the list 
                return true; 
             }
-            else
-            {
-                return false; 
-            }
         }
+        return false; 
     }
 
     //adding teacher to the list
