@@ -5,34 +5,42 @@ class Admin
         this.username = username;
         this.password = password;
         this.type = "ADMIN"; 
-        this.TeacherList = [];
-        this.SecretaryList = []; 
+        this.EmployeeList = [];
     }
 
-    //precondition check for secretary existing
-    secretaryExists(username)
+    //precondition check for employee existing
+    employeeExists(username)
     {
         var i;
 
-        for(i = 0; i < this.SecretaryList.length; i=i+1)
+        for(i = 0; i < this.EmployeeList.length; i=i+1)
         {
-            if(username === this.SecretaryList[i].username)
+            if(username === this.EmployeeList[i].username)
             {
-                //do not add the secretary to the list 
+                //do not add the employee to the list 
                return true; 
             }
         }
         return false; 
     }
 
-    //adding a secretary to the system as an admin
-    addSecretary(name, username, password)
+    //adding an employee to the system as an admin
+    addEmployee(name, username, password, type)
     {   
-        if(!this.secretaryExists(username))
+        if(!this.employeeExists(username))
         {
-            var secretary_1 = new Secretary(name, username, password); 
-            this.SecretaryList.push(secretary_1); 
-            return true; 
+            if(type == "SECRETARY")
+            {
+                var secretary_1 = new Secretary(name, username, password); 
+                this.EmployeeList.push(secretary_1); 
+                return true; 
+            }
+            else if(type == "TEACHER")
+            {
+                var teacher_1 = new Teacher(name, username, password); 
+                this.EmployeeList.push(teacher_1); 
+                return true; 
+            }            
         }
         else
         {
@@ -40,24 +48,24 @@ class Admin
         }              
     }
 
-    //removing a secretary
-    removeSecretary(username)
+    //removing a employee
+    removeEmployee(username)
     {
         var i;
 
-        if(this.secretaryExists(username))
+        if(this.employeeExists(username))
         {
-            for(i = 0; i < this.SecretaryList.length; i++)
+            for(i = 0; i < this.EmployeeList.length; i++)
             {
-                if(username == this.SecretaryList[i].username)
+                if(username == this.EmployeeList[i].username)
                 {
-                    const victim_secretary_index = this.SecretaryList.indexOf(i); 
+                    const victim_employee_index = this.EmployeeList.indexOf(i); 
                 }
             }
     
-            if(victim_secretary_index> -1)
+            if(victim_employee_index> -1)
             {
-                this.SecretaryList.splice(victim_secretary_index,1); 
+                this.EmployeeList.splice(victim_employee_index,1); 
                 return true; 
             }
         }
@@ -67,73 +75,6 @@ class Admin
             return false;  
         }
     }
-    
-
-    //precondition for checking if teacher already exists
-    teacherExists(username)
-    {
-        var i;
-
-        for(i = 0; i < this.TeacherList.length; i++)
-        {
-            if(username == this.TeacherList[i].username)
-            {
-                //do not add the teacher to the list 
-               return true; 
-            }
-        }
-        return false; 
-    }
-
-    //adding teacher to the list
-    addTeacher(name, username, password)
-    {   
-        if(!this.teacherExists(username))
-        {
-            var teacher_1 = new Teacher(name, username, password); 
-            this.TeacherList.push(teacher_1); 
-            console.log("Adding Teach: Name: " + admin.TeacherList[0].name + "Username: " + admin.TeacherList[0].username + "Passwrod: " + admin.TeacherList[0].password);
-            return true;
-        }
-        else
-        {
-            console.log("THIS ALREADY EXISTS");
-            return false; 
-        }              
-    }
-
-    //removing a teacher
-    removeTeacher(username)
-    {
-        var i;
-
-        if(this.teacherExists(username))
-        {
-            for(i = 0; i < this.TeacherList.length; i++)
-            {
-                if(username == this.TeacherList[i].username)
-                {
-                    const victim_teacher_index = this.TeacherList.indexOf(i); 
-                }
-            }
-    
-            if(victim_teacher_index> -1)
-            {
-                this.TeacherList.splice(victim_teacher_index,1); 
-                return true; 
-            }
-        }
-        else
-        {
-            console.log("THIS DOES NOT EXISTS");
-            return false;  
-        }
-    }
-
-
-
-    
-
 }
 
 class Secretary
