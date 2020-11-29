@@ -17,9 +17,9 @@ class Admin
     {
         var i;
 
-        for(i = 0; i < this.EmployeeList.length; i=i+1)
+        for(i = 0; i < EmployeeList.length; i=i+1)
         {
-            if(username === this.EmployeeList[i].username)
+            if(username === EmployeeList[i].username)
             {
                 //do not add the employee to the list 
                return true; 
@@ -36,13 +36,13 @@ class Admin
             if(type == "Secretary")
             {
                 var secretary_1 = new Secretary(name, username, password); 
-                this.EmployeeList.push(secretary_1); 
+                EmployeeList.push(secretary_1); 
                 return true; 
             }
             else if(type == "Teacher")
             {
                 var teacher_1 = new Teacher(name, username, password); 
-                this.EmployeeList.push(teacher_1); 
+                EmployeeList.push(teacher_1); 
                 return true; 
             }            
         }
@@ -59,17 +59,17 @@ class Admin
 
         if(this.employeeExists(username))
         {
-            for(i = 0; i < this.EmployeeList.length; i++)
+            for(i = 0; i < EmployeeList.length; i++)
             {
-                if(username == this.EmployeeList[i].username)
+                if(username == EmployeeList[i].username)
                 {
-                    const victim_employee_index = this.EmployeeList.indexOf(i); 
+                    const victim_employee_index = EmployeeList.indexOf(i); 
                 }
             }
     
             if(victim_employee_index> -1)
             {
-                this.EmployeeList.splice(victim_employee_index,1); 
+                EmployeeList.splice(victim_employee_index,1); 
                 return true;
             }
         }
@@ -99,9 +99,9 @@ class Secretary
     {
         var i;
 
-        for(i = 0; i < this.EmployeeList.length; i=i+1)
+        for(i = 0; i < EmployeeList.length; i=i+1)
         {
-            if(username === this.EmployeeList[i].username)
+            if(username === EmployeeList[i].username)
             {
                 //do not add the employee to the list 
                return true; 

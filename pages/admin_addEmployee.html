@@ -31,14 +31,7 @@
                 };
                 $("#addedList").append('<tr><td>' + type + '</td><td>' + username + '</td></tr>');
                 $("#error").hide();
-
-                //JSON
-                const fs = require('fs')
-                try {
-                    fs.writeFileSync('/JSON/employees.JSON', JSON.stringify(admin.EmployeeList))
-                } catch (err) {
-                    console.error(err)
-                }
+                console.log(EmployeeList);
             }
             else {
                 $("#error").show();
