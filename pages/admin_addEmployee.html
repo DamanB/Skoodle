@@ -20,6 +20,13 @@
             var name = $("#nameEmploy").val();
             var username = $("#usernameEmploy").val();
             var password = $("#pwEmploy").val();
+
+            //check data
+            var employeejson = sessionStorage.getItem('EmployeeList');
+            if (employeejson) {
+                list = JSON.parse(employeejson);
+                EmployeeList = list;
+            }
             //add employee
             var valid = admin.addEmployee(name, username, password, type);
             //notify user
