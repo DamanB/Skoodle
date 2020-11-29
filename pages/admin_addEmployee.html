@@ -14,6 +14,7 @@
 
 <body>
     <script>
+        //Add the employee
         $(document).on('click', "#addEmployee", function () {
             var type = $("#typeEmploy").find(":selected").text();
             var name = $("#nameEmploy").val();
@@ -23,8 +24,21 @@
             var valid = admin.addEmployee(name, username, password, type);
             //notify user
             if (valid === true) {
+                var obj = {
+                    name: "myName",
+                    username: "testuser",
+                    type: "Teacher"
+                };
                 $("#addedList").append('<tr><td>' + type + '</td><td>' + username + '</td></tr>');
                 $("#error").hide();
+
+                //JSON
+                const fs = require('fs')
+                try {
+                    fs.writeFileSync('/JSON/employees.JSON', JSON.stringify(admin.EmployeeList))
+                } catch (err) {
+                    console.error(err)
+                }
             }
             else {
                 $("#error").show();

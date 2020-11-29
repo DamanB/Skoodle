@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/generic.css">
-    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" type='text/css' href="/css/generic.css">
+    <link rel="stylesheet" type='text/css' href="/css/main.css">
     <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type='text/javascript' src="/js/classes.js"></script>
     <script type='text/javascript' src="/js/data.js"></script>
@@ -13,23 +13,31 @@
 </head>
 
 <script>
-    $(document).ready(function(){
-        console.log(admin.EmployeeList.length);
+   /* $(document).ready(function(){
         admin.EmployeeList.forEach(function (emp) {
             console.log("Employee: " + emp.username);
         });
-    });
+    });*/
     $(document).on('change', "#typeSelect", function () {
-        console.log("selected!");
         $("#employeeList tbody").empty();
         var type = $("#typeSelect").find(":selected").text();
         console.log(type);
 
-        admin.EmployeeList.forEach(function (emp) {
+        var list;
+        try
+        {
+            list = JSON.parse(localStorage.getItem('employeeList'));
+            console.log("Loaded session variable: " + list);
+
+            list.forEach(function (emp) {
             if (emp.type === type) {
                 $('#employeeList tbody').append('<tr><td>' + emp.type + '</td><td>' + emp.name + '</td></tr>' + '</td><td>' + emp.username + '</td></tr>');
             }
         });
+        }catch(err)
+        {
+            console.log('Couldnt Load:' + list);
+        }
     });
 </script>
 
@@ -51,7 +59,7 @@
 
     <div id="actions">
         <ul>
-            <li><a href="/pages/admin_addEmployee.html">Add Employees</a></li>
+            <li><a href="http://localhost:8080/pages/admin_addEmployee.html">Add Employees</a></li>
         </ul>
     </div>
     <div id="employeeList">
