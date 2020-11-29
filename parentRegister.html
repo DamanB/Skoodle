@@ -29,7 +29,11 @@
 
         button
         {
-            display:inline-block; 
+            display: inline-block;
+            position:absolute;
+            left:50%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
         }
     </style>
     <body>
@@ -68,9 +72,9 @@
                 Change to this for actual, working submit button 
                     <input type="submit" value="Submit">
             -->
-            <button id="submit">Submit</button> 
-            
-            <br><br>
         </form>
+        <a href="/index.html">
+            <button id="submit">Submit</button>
+        </a>
     </body>
 </html>

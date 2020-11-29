@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/css/generic.css">
     <link rel="stylesheet" href="/css/main.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <title>Skoodle: Student Details</title>
+    <title>Skoodle: Student's Absence</title>
 </head>
 <body>
     <div id="logo">
@@ -15,7 +15,7 @@
     <div class="nameLabel">
         <p>
             Hello User Name! </br>
-            Class Name
+            Student Name
         </p>
     </div>
     <!-- <div id="logout">
@@ -25,12 +25,16 @@
     </div> -->
 
     <div id="actions">
-        <ul>
-            <h3>Student's in this class:</h3>
-            <li><a href="">John Doe the First</a></li>
-            <li><a href="">John Doe the Second</a></li>
-            <li><a href="">John Doe the Third</a></li>
-        </ul>
+        <!-- Unsure about the "form action... action_page.php" -->
+        <form>
+            <label for="date">Insert Date of Absence</label><br>
+            <input type="text" id="date" name="fname" value="Date"><br>
+            <br>
+            <label for="rAbsence">Reason for Absence</label><br>
+            <!-- Would like some way of making the text box bigger. -->
+            <input type="text" id="rAbsence" name="rAbsence" value="Insert Reason"><br><br>
+            <input type="submit" value="Submit Absence Request">
+          </form> 
     </div>
 </body>
 </html>
