@@ -1,11 +1,15 @@
+var EmployeeList = [];
+var GlobalClassList = [];
+var StudentList = [];
+
 class Admin 
 {
     constructor(username,password)
     {
         this.username = username;
         this.password = password;
-        this.type = "ADMIN"; 
-        this.EmployeeList = [];
+        this.type = "ADMIN";
+        this.EmployeeList;
     }
 
     //precondition check for employee existing
@@ -77,8 +81,6 @@ class Admin
     }
 }
 
-var ClassList = [];
-var StudentList = [];
 
 class Secretary
 {
@@ -87,9 +89,136 @@ class Secretary
         this.name = name;
         this.username = username;
         this.password = password;
+        this.EmployeeList;
         //this.StudentList = new Array(Student);
         //this.ClassList = new Array(Classroom);
         this.type = "Secretary";
+    }
+
+    employeeExists(username)
+    {
+        var i;
+
+        for(i = 0; i < this.EmployeeList.length; i=i+1)
+        {
+            if(username === this.EmployeeList[i].username)
+            {
+                //do not add the employee to the list 
+               return true; 
+            }
+        }
+        return false; 
+    }
+
+
+    //precondition check for a classroom existing
+    classExists(name)
+    {
+        var i;
+
+        for(i = 0; i < this.GlobalClassList.length; i=i+1)
+        {
+            if(name === this.GlobalClassList[i].name)
+            {
+                //do not add the classroom to the list of all classes 
+               return true; 
+            }
+        }
+        return false; 
+    }
+
+    //adding an employee to the system as an admin
+    addClass(name, teacher, timeinterval, ClassList)
+    {   
+        if(!this.classExists(name)){
+            if(employeeExists(teacher.username)) {
+                if(ClassList.length == 0) {                 // no students in given class list
+                    ClassList.push(StudentList[0]);         // need minimum 1 student in a class list before instantiation
+                    var classroom_1 = new Classroom(name, teacher, timeinterval, ClassList);
+                    this.GlobalClassList.push(classroom_1);
+                    return true;
+                }
+                else {
+                    var classroom_1 = new Classroom(name, teacher, timeinterval, ClassList);
+                    this.GlobalClassList.push(classroom_1);
+                    return true;
+                }
+
+            }       
+        }
+        else
+        {
+            return false; 
+        }              
+    }
+
+    studentExists(studID)
+    {
+        var i;
+
+        for(i = 0; i < this.StudentList.length; i=i+1)
+        {
+            if(studID === this.StudentList[i].Stdid)
+            {
+               return true; 
+            }
+        }
+        return false; 
+    }
+
+    addStudentToClass(className, student) {
+        if(classExists(className)) {
+            if(studentExists(student.Stdid)) {
+                for(var i = 0; i < GlobalClassList.length; i++) {
+                    if(className == this.GlobalClassList[i].name) {
+                        
+                        // found correct class
+                        var holder_class = this.GlobalClassList[i];
+                        for(var j = 0; j < holder_class.ClassList.length; j++) {
+                            if(studID == holder_class.ClassList[j].Stdid) {
+                                return false;
+                            }
+                        }
+                        holder_class.ClassList.push(student);
+                        return true;
+                    }
+                }
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+    }
+
+    //removing a class
+    removeClass(name)
+    {
+        var i;
+
+        if(classExists(name))
+        {
+            for(i = 0; i < this.GlobalClassList.length; i++)
+            {
+                if(name == this.GlobalClassList[i].name)
+                {
+                    const victim_class_index = this.GlobalClassList.indexOf(i); 
+                }
+            }
+    
+            if(victim_class_index > -1)
+            {
+                this.GlobalClassList.splice(victim_class_index,1); 
+                return true;
+            }
+        }
+        else
+        {
+            console.log("THIS DOES NOT EXISTS");
+            return false;  
+        }
     }
 
 
@@ -136,12 +265,12 @@ class Parent
 
 class Classroom
 {
-    constructor(name,teacher, timeinterval,StudentList)
+    constructor(name, teacher, timeinterval, ClassList)
     {
         this.name = name; 
         this.teacher = new Teacher();
         this.timeinterval = timeinterval;
-        this.StudentList = []; 
+        this.ClassList = [];    // Array of Student Objects
 
     }
 
