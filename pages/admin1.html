@@ -22,22 +22,16 @@
         $("#employeeList tbody").empty();
         var type = $("#typeSelect").find(":selected").text();
         console.log(type);
-
-        var list;
-        try
-        {
-            list = JSON.parse(localStorage.getItem('employeeList'));
-            console.log("Loaded session variable: " + list);
-
-            list.forEach(function (emp) {
+        console.log(sessionStorage.getItem('EmployeeList'));
+        var employeejson = sessionStorage.getItem('EmployeeList');
+        list = JSON.parse(employeejson);
+        console.log(list);
+        list.forEach(function (emp) {
+            console.log("writing mans");
             if (emp.type === type) {
                 $('#employeeList tbody').append('<tr><td>' + emp.type + '</td><td>' + emp.name + '</td></tr>' + '</td><td>' + emp.username + '</td></tr>');
             }
         });
-        }catch(err)
-        {
-            console.log('Couldnt Load:' + list);
-        }
     });
 </script>
 

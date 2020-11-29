@@ -24,14 +24,10 @@
             var valid = admin.addEmployee(name, username, password, type);
             //notify user
             if (valid === true) {
-                var obj = {
-                    name: "myName",
-                    username: "testuser",
-                    type: "Teacher"
-                };
                 $("#addedList").append('<tr><td>' + type + '</td><td>' + username + '</td></tr>');
                 $("#error").hide();
-                console.log(EmployeeList);
+                //save
+                sessionStorage.setItem('EmployeeList', JSON.stringify(EmployeeList));
             }
             else {
                 $("#error").show();
