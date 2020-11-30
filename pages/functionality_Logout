@@ -1,3 +1,4 @@
+<script type='text/javascript' src="/js/classes.js"></script>
 <script type='text/javascript' src="/js/data.js"></script>
 
 <script>
@@ -9,7 +10,7 @@
         $("#username").text(user.type.toUpperCase() + ": " + user.username);
         $("#name").text("Hello " + user.name + "!");
     });
-    
+
     //Logout button
     $(document).on('click', "#logout", function(){
         removeActiveUser();

@@ -1,46 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/generic.css">
-    <link rel="stylesheet" href="/css/main.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <title>Skoodle: Parent's Add Child</title>
-</head>
-<body>
-    <div id="logo">
-        Skoodle
-    </div>
-    <div class="nameLabel">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/css/generic.css">
+        <link rel="stylesheet" href="/css/main.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type='text/javascript' src="/js/classes.js"></script>
+        <script type='text/javascript' src="/js/data.js"></script>
+        <title>Skoodle: Parent's Add Child</title>
+    </head>
+    <body>
+        <script>
+            var user;
+        
+            //set header
+            $(document).ready(function () {
+                user = Object.assign(new Admin, getActiveUser());
+                $("#username").text(user.type.toUpperCase() + ": " + user.username);
+                $("#name").text("Hello " + user.name + "!");
+            });
+            
+            //Logout button
+            $(document).on('click', "#logout", function(){
+                removeActiveUser();
+                window.location.href = "/index.html";
+            }); 
+        </script>
+
+        <div id="logo">
+            Skoodle
+        </div>
+        
+        <div class="nameLabel">
+            <span id="username"></span><br>
+            <span id="name"></span>
+        </div>
+
+        <div id="logout">
+            <button>Logout</button>
+        </div>
+
+        <div id="actions">
+            <ul>
+                <!-- <li><a href="">Action 1</a></li> -->
+            </ul>
+        </div>
+
         <p>
-            User Name </br>
-            Account Type
+            Please enter the following to register your child:</br>
+            1. Student ID of your child</br>
+            2. Verification key assigned to you by secretary 
         </p>
-    </div>
-    <div id="logout">
-        <a href="/index.html">
-            LOGOUT
-        </a>
-    </div>
-
-    <div id="actions">
-        <ul>
-            <!-- <li><a href="">Action 1</a></li> -->
-        </ul>
-    </div>
-
-    <p>
-        Please enter the following to register your child:</br>
-        1. Student ID of your child</br>
-        2. Verification key assigned to you by secretary 
-    </p>
-    <form>
-        <label for="studentid">Student ID: </label>
-        <input type="text" id="studentid" name="studentid"><br><br>
-        <label for="tempkey">Verification key: </label>
-        <input type="text" id="tempkey" name="tempkey"><br><br>
-        <input type="submit" value="Submit">
-      </form>
-</body>
+        <form>
+            <label for="studentid">Student ID: </label>
+            <input type="text" id="studentid" name="studentid"><br><br>
+            <label for="tempkey">Verification key: </label>
+            <input type="text" id="tempkey" name="tempkey"><br><br>
+            <input type="submit" value="Submit">
+        </form>
+    </body>
 </html>
