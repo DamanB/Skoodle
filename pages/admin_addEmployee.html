@@ -18,10 +18,15 @@
         //set header
         $(document).ready(function () {
             user = Object.assign(new Admin, getActiveUser());
-            console.log("Logged user: " + user);
-            $("#username").text("ADMINISTRATOR: " + user.username);
+            $("#username").text(user.type.toUpperCase() + ": " + user.username);
             $("#name").text("Hello " + user.name + "!");
         });
+        //Logout button
+        $(document).on('click', "#logout", function(){
+            removeActiveUser();
+            window.location.href = "/index.html";
+        }); 
+
         //Add the employee
         $(document).on('click', "#addEmployee", function () {
             var type = $("#typeEmploy").find(":selected").text();
@@ -54,10 +59,9 @@
         <span id="name"></span>
     </div>
     <div id="logout">
-        <a href="/index.html">
-            LOGOUT
-        </a>
+        <button>Logout</button>
     </div>
+
 
     <form>
         <span><br>Select Employee Type:</span><br>
