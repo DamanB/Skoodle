@@ -5,8 +5,9 @@ var ParentList = [];
 
 class Admin 
 {
-    constructor(username,password)
+    constructor(name,username,password)
     {
+        this.name = name; 
         this.username = username;
         this.password = password;
         this.type = "ADMIN";
