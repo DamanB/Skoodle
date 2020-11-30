@@ -1,40 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/generic.css">
-    <link rel="stylesheet" href="/css/main.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <title>Skoodle: Student Details</title>
-</head>
-<body>
-    <div id="logo">
-        Skoodle
-    </div>
-    <div class="nameLabel">
-        <p>
-            Hello User Name! </br>
-            Student Name
-        </p>
-    </div>
-    <div id="logout">
-        <a href="/index.html">
-            LOGOUT
-        </a>
-    </div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/css/generic.css">
+        <link rel="stylesheet" href="/css/main.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type='text/javascript' src="/js/classes.js"></script>
+        <script type='text/javascript' src="/js/data.js"></script>
+        <title>Skoodle: Student Details</title>
+    </head>
+    <body>
+        <script>
+            var user;
+        
+            //set header
+            $(document).ready(function () {
+                user = Object.assign(new Admin, getActiveUser());
+                $("#username").text(user.type.toUpperCase() + ": " + user.username);
+                $("#name").text("Hello " + user.name + "!");
+            });
+        
+            //Logout button
+            $(document).on('click', "#logout", function(){
+                removeActiveUser();
+                window.location.href = "/index.html";
+            }); 
+        </script>
+        
+        <div id="logo">
+            Skoodle
+        </div>
 
-    <p>Student: <span>Student's Name</span ></p> 
+        <div class="nameLabel">
+            <span id="username"></span><br>
+            <span id="name"></span>
+        </div>
 
-    <p>ID: <span>Student's ID</span ></p>
-    
-    <p>Class: <span>Student's Class</span ></p> 
+        <div id="logout">
+            <button>Logout</button>
+        </div>
 
-    <p>Attendance Table:</p>
-    <div id="actions">
-        <ul>
-            <h3>Dates:</h3>
-        </ul>
-    </div>
-</body>
+        <p>Student: <span>Student's Name</span ></p> 
+
+        <p>ID: <span>Student's ID</span ></p>
+        
+        <p>Class: <span>Student's Class</span ></p> 
+
+        <p>Attendance Table:</p>
+        <div id="actions">
+            <ul>
+                <h3>Dates:</h3>
+            </ul>
+        </div>
+    </body>
 </html>

@@ -1,33 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/generic.css">
-    <link rel="stylesheet" href="/css/main.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <title>Skoodle: Supply Teacher</title>
-</head>
-<body>
-    <div id="logo">
-        Skoodle
-    </div>
-    <div class="nameLabel">
-        <p>
-            Hello User Name!</br>
-            Supply Teacher's Name
-        </p>
-    </div>
-    <div id="logout">
-        <a href="/index.html">
-            LOGOUT
-        </a>
-    </div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/css/generic.css">
+        <link rel="stylesheet" href="/css/main.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type='text/javascript' src="/js/classes.js"></script>
+        <script type='text/javascript' src="/js/data.js"></script>
+        <title>Skoodle: Supply Teacher</title>
+    </head>
 
-    <p>Class: <span>Class Name</span ></p> 
+    <body>
+        <script>
+            var user;
+        
+            //set header
+            $(document).ready(function () {
+                user = Object.assign(new Admin, getActiveUser());
+                $("#username").text(user.type.toUpperCase() + ": " + user.username);
+                $("#name").text("Hello " + user.name + "!");
+            });
+        
+            //Logout button
+            $(document).on('click', "#logout", function(){
+                removeActiveUser();
+                window.location.href = "/index.html";
+            }); 
+        </script>
+        
+        <div id="logo">
+            Skoodle
+        </div>
 
-    <p>Attendance Section</p>
+        <div class="nameLabel">
+            <span id="username"></span><br>
+            <span id="name"></span>
+        </div>
 
-    <button>Submit Attendance</button>
-</body>
+        <div id="logout">
+            <button>Logout</button>
+        </div>
+        <p>Class: <span>Class Name</span ></p> 
+
+        <p>Attendance Section</p>
+
+        <button>Submit Attendance</button>
+    </body>
 </html>

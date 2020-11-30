@@ -1,158 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type='text/javascript' src="/js/classes.js"></script>
+        <script type='text/javascript' src="/js/data.js"></script>
+        <link rel="stylesheet" href="css/main.css">
+        <title>Skoodle</title>
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type='text/javascript' src="/js/classes.js"></script>
-    <script type='text/javascript' src="/js/data.js"></script>
-    <link rel="stylesheet" href="css/main.css">
-    <title>Skoodle</title>
-</head>
+    <style>
+        h2 {
+            text-align: center;
+        }
 
-<style>
-    h2 {
-        text-align: center;
-    }
+        form {
+            text-align: center;
+        }
 
-    form {
-        text-align: center;
-    }
+        label {
+            display: inline-block;
+            width: 200px;
+            margin-right: 0px;
+            text-align: center;
+        }
 
-    label {
-        display: inline-block;
-        width: 200px;
-        margin-right: 0px;
-        text-align: center;
-    }
+        button {
+            display: inline-block;
+            position: absolute;
+            left: 50%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+    </style>
 
-    button {
-        display: inline-block;
-        position: absolute;
-        left: 50%;
-        -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-    }
-</style>
-
-<body>
-
-    <script>
-        $(document).ready(function () {
-            $("#error").hide();
-            //Get data
-            var data = getEmployeeList();
-            console.log(data);
-            if (!data) {
-                //Init data
-                console.log("Initializing data for first time run");
-                InitData();
+    <body>
+        <script>
+            $(document).ready(function () {
+                $("#error").hide();
+                //Get data
                 var data = getEmployeeList();
+                console.log(data);
                 if (!data) {
-                    console.log("ERROR: Init data not found");
-                }
-            }
-        })
-
-        //Perform login check 
-        $(document).on('click', '#login', function () {
-            var username = $("#id").val();
-            var password = $("#pw").val();
-            console.log("Attempted login with: " + username + " - " + password);
-            //Authenticate
-            elist = getEmployeeList();
-            plistRaw = sessionStorage.getItem("ParentList");
-            var valid = false;
-            plist = JSON.parse(plistRaw);
-            //check empty
-            if (elist) {
-                valid = auth(username, password, elist);
-            }
-            if (!valid && plist) {
-                valid = auth(username, password, plist)
-            }
-            if (valid) {
-                redirect(valid.type);
-            }
-            else {
-                $("#error").show();
-            }
-
-        });
-        //Authenticate the user
-        function auth(uname, pword, list) {
-            var found = false;
-            list.forEach(function (user) {
-                if (user.username === uname) {
-                    if (user.password === pword) {
-                        console.log("Successfull User Login");
-                        $("#error").hide();
-                        found = user;
-                        setActiveUser(user);
-                        return;
+                    //Init data
+                    console.log("Initializing data for first time run");
+                    InitData();
+                    var data = getEmployeeList();
+                    if (!data) {
+                        console.log("ERROR: Init data not found");
                     }
                 }
             })
-            return found;
-        }
 
-        //Redirect to appropriate page
-        function redirect(type) {
-            if (type == "Admin") {
-                window.location.href = "/pages/admin1.html";
-            }
-            else if (type == "Secretary") {
-                window.location.href = "/pages/secretary1.html";
-            }
-            else if (type == "Teacher") {
-                window.location.href = "/pages/teach_full1.html";
-            }
-            else if (type == "SupplyTeacher"){
-                window.location.href = "/pages/teach_supply1.html";
-            }
-            else if (type == "Parent"){
-                window.location.href = "/pages/parent1.html"
-            }
-            else
-            {
-                console.log("ERROR: The user type is not valid!");
-            }
-        }
-    </script>
+            //Perform login check 
+            $(document).on('click', '#login', function () {
+                var username = $("#id").val();
+                var password = $("#pw").val();
+                console.log("Attempted login with: " + username + " - " + password);
+                //Authenticate
+                elist = getEmployeeList();
+                plistRaw = sessionStorage.getItem("ParentList");
+                var valid = false;
+                plist = JSON.parse(plistRaw);
+                //check empty
+                if (elist) {
+                    valid = auth(username, password, elist);
+                }
+                if (!valid && plist) {
+                    valid = auth(username, password, plist)
+                }
+                if (valid) {
+                    redirect(valid.type);
+                }
+                else {
+                    $("#error").show();
+                }
 
-    <div id="logo">
-        Skoodle
-    </div>
-    <!-- Hello Frands -->
-    <!-- test -->
-    <h2>Enter the following information in the following textbox</h2>
+            });
 
-    <form>
-        <label for="id">ID:</label><br>
-        <input type="text" id="id" name="id">
+            //Authenticate the user
+            function auth(uname, pword, list) {
+                var found = false;
+                list.forEach(function (user) {
+                    if (user.username === uname) {
+                        if (user.password === pword) {
+                            console.log("Successfull User Login");
+                            $("#error").hide();
+                            found = user;
+                            setActiveUser(user);
+                            return;
+                        }
+                    }
+                })
+                return found;
+            }
+
+            //Redirect to appropriate page
+            function redirect(type) {
+                if (type == "Admin") {
+                    window.location.href = "/pages/admin1.html";
+                }
+                else if (type == "Secretary") {
+                    window.location.href = "/pages/secretary1.html";
+                }
+                else if (type == "Teacher") {
+                    window.location.href = "/pages/teach_full1.html";
+                }
+                else if (type == "SupplyTeacher"){
+                    window.location.href = "/pages/teach_supply1.html";
+                }
+                else if (type == "Parent"){
+                    window.location.href = "/pages/parent1.html"
+                }
+                else
+                {
+                    console.log("ERROR: The user type is not valid!");
+                }
+            }
+        </script>
+
+        <div id="logo">
+            Skoodle
+        </div>
+
+        <h2>Enter the following information in the following textbox</h2>
+
+        <form>
+            <label for="id">ID:</label><br>
+            <input type="text" id="id" name="id">
+
+            <br><br>
+
+            <label for="pw">Password:</label><br>
+            <input type="text" id="pw" name="pw">
+
+            <br><br>
+        </form>
+
+        <button id="login">Log-In</button>
 
         <br><br>
 
-        <label for="pw">Password:</label><br>
-        <input type="text" id="pw" name="pw">
-
+        <span id="error" style="display: none; color: red; text-align: center">Invalid username or password!</span>
+        
         <br><br>
 
-        <!-- 
-                Change to this for actual, working submit button 
-                    <input type="submit" value="Submit">
-            -->
-        <br><br>
-    </form>
-
-    <button id="login">Log-In</button>
-    <br><br>
-    <span id="error" style="display: none; color: red; text-align: center">Invalid username or password!</span>
-    <br><br>
-    <a href="/pages/parentRegister.html">
-        <button>Register as Parent</button>
-    </a>
-</body>
-
+        <a href="/pages/parentRegister.html">
+            <button>Register as Parent</button>
+        </a>
+    </body>
 </html>
