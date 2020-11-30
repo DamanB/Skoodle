@@ -1,6 +1,7 @@
 var EmployeeList = [];
 var GlobalClassList = [];
 var StudentList = [];
+var ParentList = [];
 
 class Admin 
 {
@@ -237,7 +238,7 @@ class Teacher
 
 class SupplyTeacher
 {
-    constructor(name,username,password,type)
+    constructor(name,username,password)
     {
         this.name = name; 
         this.username = username; 
@@ -250,13 +251,13 @@ class SupplyTeacher
 class Parent
 {
 
-    constructor(username, password, name, email,type)
+    constructor(name, username, password, email)
     {
+        this.name = name; 
         this.username = username; 
         this.password = password; 
-        this.name = name; 
         this.email = email;
-        this.type = "PARENT";  
+        this.type = "Parent";  
     }
 
 
