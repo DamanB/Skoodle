@@ -13,11 +13,11 @@
 </head>
 
 <script>
-   /* $(document).ready(function(){
-        admin.EmployeeList.forEach(function (emp) {
-            console.log("Employee: " + emp.username);
-        });
-    });*/
+   $(document).ready(function(){
+        var user = getActiveUser();
+        $("#username").text("ADMINISTRATOR: " + user.username);
+        $("#name").text("Hello " + user.name + "!");
+    });
     $(document).on('change', "#typeSelect", function () {
         $("#employeeList tbody").empty();
         var type = $("#typeSelect").find(":selected").text();
@@ -40,12 +40,11 @@
         Skoodle
     </div>
     <div class="nameLabel">
-        <p>
-            Hello User Name!</br>
-            Administrator's Name
-        </p>
+        <span id="username"></span><br>
+        <span id="name"></span>
     </div>
     <div id="logout">
+        <br>
         <a href="/index.html">
             LOGOUT
         </a>

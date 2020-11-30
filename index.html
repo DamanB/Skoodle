@@ -67,32 +67,58 @@
             plist = JSON.parse(plistRaw);
             //check empty
             if (elist) {
-                valid = auth(username, password, elist)
+                valid = auth(username, password, elist);
+                console.log(valid);
             }
             if (!valid && plist) {
                 valid = auth(username, password, plist)
             }
-            if (valid)
-            {
-                //TODO LOGIN REDIRECT
+            if (valid) {
+                redirect(valid.type);
             }
-            else{
+            else {
                 $("#error").show();
             }
 
         });
+        //Authenticate the user
         function auth(uname, pword, list) {
+            var found = false;
             list.forEach(function (user) {
                 if (user.username === uname) {
                     if (user.password === pword) {
                         console.log("Successfull User Login");
-                        sessionStorage.setItem('user', JSON.stringify(user));
                         $("#error").hide();
-                        return true;
+                        found = user;
+                        setActiveUser(user);
+                        return;
                     }
                 }
             })
-            return false;
+            return found;
+        }
+
+        //Redirect to appropriate page
+        function redirect(type) {
+            if (type == "Admin") {
+                window.location.href = "/pages/admin1.html";
+            }
+            else if (type == "Secretary") {
+                window.location.href = "/pages/secretary1.html";
+            }
+            else if (type == "Teacher") {
+                window.location.href = "/pages/teach_full1.html";
+            }
+            else if (type == "SupplyTeacher"){
+                window.location.href = "/pages/teach_supply1.html";
+            }
+            else if (type == "Parent"){
+                window.location.href = "/pages/parent1.html"
+            }
+            else
+            {
+                console.log("ERROR: The user type is not valid!");
+            }
         }
     </script>
 
