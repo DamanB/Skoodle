@@ -237,7 +237,7 @@ class Teacher
 
 class SupplyTeacher
 {
-    constructor(name,username,password,type)
+    constructor(name,username,password)
     {
         this.name = name; 
         this.username = username; 
@@ -250,7 +250,7 @@ class SupplyTeacher
 class Parent
 {
 
-    constructor(name, username, password, email, type)
+    constructor(name, username, password, email)
     {
         this.name = name; 
         this.username = username; 
