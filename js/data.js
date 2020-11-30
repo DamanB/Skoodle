@@ -1,6 +1,6 @@
 function InitData()
 {
-    var admin_1 = new Admin("Adam", "1234"); 
+    var admin_1 = new Admin("Adam", "admin_1" , "1234"); 
 
     admin_1.addtoList(); 
 
