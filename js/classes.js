@@ -1,6 +1,7 @@
 var EmployeeList = [];
 var GlobalClassList = [];
 var StudentList = [];
+var ParentList = [];
 
 class Admin 
 {
