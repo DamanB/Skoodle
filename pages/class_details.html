@@ -1,41 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/generic.css">
-    <link rel="stylesheet" href="/css/main.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <title>Skoodle: Class Details</title>
-    <!--This page is the same as the Class' Attendance Page-->
-</head>
-<body>
-    <div id="logo">
-        Skoodle
-    </div>
-    <div class="nameLabel">
-        <p>
-            Hello User Name!
-        </p>
-    </div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/css/generic.css">
+        <link rel="stylesheet" href="/css/main.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type='text/javascript' src="/js/data.js"></script>
+        <title>Skoodle: Class Details</title>
+        <!--This page is the same as the Class' Attendance Page-->
+    </head>
 
-    <div id="logout">
-        <a href="/index.html">
-            LOGOUT
-        </a>
-    </div>
+    <body>
+        <script>
+            var user;
+            //set header
+            $(document).ready(function () {
+                user = Object.assign(new Admin, getActiveUser());
+                $("#username").text(user.type.toUpperCase() + ": " + user.username);
+                $("#name").text("Hello " + user.name + "!");
+            });
+            //Logout button
+            $(document).on('click', "#logout", function(){
+                removeActiveUser();
+                window.location.href = "/index.html";
+            }); 
+        </script>
 
-    <p>Class:  <span>Class Name</span></p>
-    <p>Assigned Teacher:  <span>Teacher's Name</span></p>
-  
+        <div id="logo">
+            Skoodle
+        </div>
 
-    <div id="actions">
-        <ul>
-            <h3>Students in this class:</h3>
-            <li><a href="/pages/student_enrolledClassAttendance.html">John Doe the First</a></li>
-            <li><a href="">John Doe the Second</a></li>
-            <li><a href="">John Doe the Third</a></li>
-        </ul>
-    </div>
-</body>
+        <div class="nameLabel">
+            <span id="username"></span><br>
+            <span id="name"></span>
+        </div>
+        
+        <div id="logout">
+            <button>Logout</button>
+        </div>
+
+        <p>Class:  <span>Class Name</span></p>
+        <p>Assigned Teacher:  <span>Teacher's Name</span></p>
+    
+        <div id="actions">
+            <ul>
+                <h3>Students in this class:</h3>
+                <li><a href="/pages/student_enrolledClassAttendance.html">John Doe the First</a></li>
+                <li><a href="">John Doe the Second</a></li>
+                <li><a href="">John Doe the Third</a></li>
+            </ul>
+        </div>
+    </body>
 </html>

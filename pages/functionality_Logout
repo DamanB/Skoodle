@@ -1,0 +1,27 @@
+<script type='text/javascript' src="/js/data.js"></script>
+
+<script>
+    var user;
+
+    //set header
+    $(document).ready(function () {
+        user = Object.assign(new Admin, getActiveUser());
+        $("#username").text(user.type.toUpperCase() + ": " + user.username);
+        $("#name").text("Hello " + user.name + "!");
+    });
+    
+    //Logout button
+    $(document).on('click', "#logout", function(){
+        removeActiveUser();
+        window.location.href = "/index.html";
+    }); 
+</script>
+
+        <div class="nameLabel">
+            <span id="username"></span><br>
+            <span id="name"></span>
+        </div>
+
+        <div id="logout">
+            <button>Logout</button>
+        </div>

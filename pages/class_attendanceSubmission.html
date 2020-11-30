@@ -6,23 +6,36 @@
         <link rel="stylesheet" href="/css/generic.css">
         <link rel="stylesheet" href="/css/main.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type='text/javascript' src="/js/data.js"></script>
         <title>Skoodle: Class Attendance Submission</title>
     </head>
     
     <body>
+        <script>
+            var user;
+            
+            //set header
+            $(document).ready(function () {
+                user = Object.assign(new Admin, getActiveUser());
+                $("#username").text(user.type.toUpperCase() + ": " + user.username);
+                $("#name").text("Hello " + user.name + "!");
+            });
+
+            //Logout button
+            $(document).on('click', "#logout", function(){
+                removeActiveUser();
+                window.location.href = "/index.html";
+            }); 
+        </script>
         <div id="logo">
             Skoodle
         </div>
         <div class="nameLabel">
-            <p>
-                User Name </br>
-                Account Type
-            </p>
+            <span id="username"></span><br>
+            <span id="name"></span>
         </div>
         <div id="logout">
-            <a href="/index.html">
-                LOGOUT
-            </a>
+            <button>Logout</button>
         </div>
 
         <div id="actions">
