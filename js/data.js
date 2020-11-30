@@ -39,6 +39,8 @@ function InitData()
     var par_1 = new Parent("Mary", "par1", "1234567", "mary@gmail.com"); 
     
     var par_2 = new Parent("Ostroff", "par2", "1234567", "ostroff@gmail.com"); 
+
+    setEmployeeList(EmployeeList); 
     
 
 }
