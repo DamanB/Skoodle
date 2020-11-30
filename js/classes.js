@@ -166,7 +166,7 @@ class Secretary
         return false; 
     }
 
-
+    // test comment
     addStudentToClass(className, student) {
         if(classExists(className)) {
             if(studentExists(student.Stdid)) {
