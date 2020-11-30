@@ -11,7 +11,7 @@ class Admin
         this.name = name; 
         this.username = username;
         this.password = password;
-        this.type = "ADMIN";
+        this.type = "Admin";
 
     }
     addToList()
