@@ -2,7 +2,7 @@ var EmployeeList = []; //list of all employees (admins, secretaries, teachers)
 var GlobalClassList = []; //list of all classes offered at the school
 var StudentList = []; //list of all students in the class
 var ParentList = []; //list of all parents of the students in the school
-var DailyAttendenceList = [];  //the daily attendence 
+var GlobalDailyAttendenceList = [];  //the daily attendence 
 
 class Admin 
 {
