@@ -21,9 +21,7 @@ class Admin {
     /* ADMIN FUNCTION: ADDING EMPLOYEES */
     //precondition check for employee existing
     employeeExists(username) {
-        var i;
-
-        for (i = 0; i < EmployeeList.length; i = i + 1) {
+        for (var i = 0; i < EmployeeList.length; i++) {
             if (username === EmployeeList[i].username) {
                 //do not add the employee to the list 
                 return EmployeeList[i];
@@ -80,8 +78,13 @@ class Admin {
     }
 
     modifyEmployeeUsername(username, newUser) {
-        var employee_1 = this.employeeExists(username);
-        employee_1.username = newUser;
+        if (employeeExists(newUser)) {
+            return false;
+        }
+        else {
+            var employee_1 = this.employeeExists(username);
+            employee_1.username = newUser;
+        }
     }
 
     modifyEmployeePassword(username, newPass) {
