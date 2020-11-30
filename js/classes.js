@@ -1,7 +1,8 @@
-var EmployeeList = [];
-var GlobalClassList = [];
-var StudentList = [];
-var ParentList = [];
+var EmployeeList = []; //list of all employees (admins, secretaries, teachers)
+var GlobalClassList = []; //list of all classes offered at the school
+var StudentList = []; //list of all students in the class
+var ParentList = []; //list of all parents of the students in the school
+var DailyAttendenceList = [];  //the daily attendence 
 
 class Admin 
 {
@@ -273,19 +274,20 @@ class Parent
 
 class Classroom
 {
-    constructor(name, teacher, timeinterval, ClassList)
+    constructor(name, teacher, timeinterval, ClassList, Attendance)
     {
         this.name = name; 
         this.teacher = new Teacher();
         this.timeinterval = timeinterval;
         this.ClassList = [];    // Array of Student Objects
+        this.Attendance = [];  //list of of attendance entries where teacher can check present etc...
 
     }
 
 
 }
 
-//this is just a single entry within the major attendance sheet
+//this is just a single entry within the major attendance sheet for a single class for a single student
 class AttendanceEntry
 {
     constructor(StudentName,className, date, studentStatus)
