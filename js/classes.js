@@ -38,13 +38,13 @@ class Admin
             {
                 var secretary_1 = new Secretary(name, username, password); 
                 EmployeeList.push(secretary_1); 
-                return true; 
+                return secretary_1;  
             }
             else if(type == "Teacher")
             {
                 var teacher_1 = new Teacher(name, username, password); 
                 EmployeeList.push(teacher_1); 
-                return true; 
+                return teacher_1; 
             }            
         }
         else
@@ -136,12 +136,12 @@ class Secretary
                     ClassList.push(StudentList[0]);         // need minimum 1 student in a class list before instantiation
                     var classroom_1 = new Classroom(name, teacher, timeinterval, ClassList);
                     GlobalClassList.push(classroom_1);
-                    return true;
+                    return classroom_1;
                 }
                 else {
                     var classroom_1 = new Classroom(name, teacher, timeinterval, ClassList);
                     GlobalClassList.push(classroom_1);
-                    return true;
+                    return classroom_1;
                 }
 
             }       
