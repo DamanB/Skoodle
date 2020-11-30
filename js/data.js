@@ -2,7 +2,7 @@ function InitData()
 {
     var admin_1 = new Admin("Adam", "1234"); 
 
-    EmployeeList.push(admin_1);
+    admin_1.addtoList(); 
 
     var sec_1 = admin_1.addEmployee("Susan", "sec1", "123", "Secretary"); 
     
