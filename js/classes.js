@@ -250,13 +250,13 @@ class SupplyTeacher
 class Parent
 {
 
-    constructor(username, password, name, email,type)
+    constructor(name, username, password, email, type)
     {
+        this.name = name; 
         this.username = username; 
         this.password = password; 
-        this.name = name; 
         this.email = email;
-        this.type = "PARENT";  
+        this.type = "Parent";  
     }
 
 
