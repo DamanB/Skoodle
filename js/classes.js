@@ -181,7 +181,7 @@ class Secretary
                             }
                         }
                         holder_class.ClassList.push(student);       // add student into specified class
-                        student.classes.push(holder_class);         // add class to list of student's enrolled classes
+                        student.classes.push(holder_class);         // add class to list of student's enrolled class list
                         return true;
                     }
                 }
