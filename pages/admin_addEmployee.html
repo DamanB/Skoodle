@@ -14,27 +14,31 @@
 
 <body>
     <script>
+        var user;
+        //set header
+        $(document).ready(function () {
+            user = Object.assign(new Admin, getActiveUser());
+            console.log("Logged user: " + user);
+            $("#username").text("ADMINISTRATOR: " + user.username);
+            $("#name").text("Hello " + user.name + "!");
+        });
         //Add the employee
         $(document).on('click', "#addEmployee", function () {
             var type = $("#typeEmploy").find(":selected").text();
             var name = $("#nameEmploy").val();
             var username = $("#usernameEmploy").val();
             var password = $("#pwEmploy").val();
-
-            //check data
-            var employeejson = sessionStorage.getItem('EmployeeList');
-            if (employeejson) {
-                list = JSON.parse(employeejson);
-                EmployeeList = list;
-            }
+            //EmployeeList = getEmployeeList();
+            EmployeeList = getEmployeeList();
             //add employee
-            var valid = admin_1.addEmployee(name, username, password, type);
+            var valid = user.addEmployee(name, username, password, type);
+            console.log("Added: " + valid);
             //notify user
-            if (valid === true) {
+            if (valid) {
                 $("#addedList").append('<tr><td>' + type + '</td><td>' + username + '</td></tr>');
                 $("#error").hide();
                 //save
-                sessionStorage.setItem('EmployeeList', JSON.stringify(EmployeeList));
+                setEmployeeList(EmployeeList);
             }
             else {
                 $("#error").show();
@@ -46,10 +50,8 @@
         Skoodle
     </div>
     <div class="nameLabel">
-        <p>
-            User Name </br>
-            Account Type
-        </p>
+        <span id="username"></span><br>
+        <span id="name"></span>
     </div>
     <div id="logout">
         <a href="/index.html">

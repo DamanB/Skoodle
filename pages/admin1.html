@@ -13,21 +13,19 @@
 </head>
 
 <script>
-   $(document).ready(function(){
-        var user = getActiveUser();
+    var user;
+    //set header
+    $(document).ready(function () {
+        user = Object.assign(new Admin, getActiveUser());
+        console.log("Logged user: " + user);
         $("#username").text("ADMINISTRATOR: " + user.username);
         $("#name").text("Hello " + user.name + "!");
     });
     $(document).on('change', "#typeSelect", function () {
         $("#employeeList tbody").empty();
         var type = $("#typeSelect").find(":selected").text();
-        console.log(type);
-        console.log(sessionStorage.getItem('EmployeeList'));
-        var employeejson = sessionStorage.getItem('EmployeeList');
-        list = JSON.parse(employeejson);
-        console.log(list);
+        list = getEmployeeList();
         list.forEach(function (emp) {
-            console.log("writing mans");
             if (emp.type === type) {
                 $('#employeeList tbody').append('<tr><td>' + emp.type + '</td><td>' + emp.name + '</td><td>' + emp.username + '</td></tr>');
             }
@@ -44,13 +42,13 @@
         <span id="name"></span>
     </div>
     <div id="logout">
-        <br>
         <a href="/index.html">
             LOGOUT
         </a>
     </div>
 
     <div id="actions">
+        <span><br><b>Here's your data!</b><br></span>
         <ul>
             <li><a href="/pages/admin_addEmployee.html">Add Employees</a></li>
         </ul>
