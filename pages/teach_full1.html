@@ -1,48 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/generic.css">
-    <link rel="stylesheet" href="/css/main.css">
-    <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type='text/javascript' src="/js/teacherClassList.js"></script>
-    <title>Skoodle: Full-Time Teacher</title>
-</head>
-<body>
-    <div id="logo">
-        Skoodle
-    </div>
-    <div class="nameLabel">
-        <p>
-            Hello User Name!</br>
-            Full-Time Teacher's Name
-        </p>
-    </div>
-    <div id="logout">
-        <a href="/index.html">
-            LOGOUT
-        </a>
-    </div>
-
-    <div id="list">
-        <span>Select your class to view students: <br> </span>
-        <select id="classList">
-        </select>
-        <table id="studentList">
-            <thead>
-                <t>
-                    <th>Name</th>
-                    <th>Class</th>
-                </tr>
-            </thead>
-            <tbody>
-                
-            </tbody>
-        </table>
-        <div>
-            <a href="student_attendance.html">John Doe the First</a>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/css/generic.css">
+        <link rel="stylesheet" href="/css/main.css">
+        <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type='text/javascript' src="/js/teacherClassList.js"></script>
+        <script type='text/javascript' src="/js/classes.js"></script>
+        <script type='text/javascript' src="/js/data.js"></script>
+        <title>Skoodle: Full-Time Teacher</title>
+    </head>
+    <body>
+        <script>
+            var user;
+        
+            //set header
+            $(document).ready(function () {
+                user = Object.assign(new Admin, getActiveUser());
+                $("#username").text(user.type.toUpperCase() + ": " + user.username);
+                $("#name").text("Hello " + user.name + "!");
+            });
+        
+            //Logout button
+            $(document).on('click', "#logout", function(){
+                removeActiveUser();
+                window.location.href = "/index.html";
+            }); 
+        </script>
+        
+        <div id="logo">
+            Skoodle
         </div>
-    </div>
-</body>
+
+        <div class="nameLabel">
+            <span id="username"></span><br>
+            <span id="name"></span>
+        </div>
+
+        <div id="logout">
+            <button>Logout</button>
+        </div>
+
+        <div id="list">
+            <span>Select your class to view students: <br> </span>
+            <select id="classList">
+            </select>
+            <table id="studentList">
+                <thead>
+                    <t>
+                        <th>Name</th>
+                        <th>Class</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+            <div>
+                <a href="student_attendance.html">John Doe the First</a>
+            </div>
+        </div>
+    </body>
 </html>
