@@ -116,3 +116,7 @@ function getActiveUser(){
 function setActiveUser(user){
     sessionStorage.setItem("User", JSON.stringify(user)); 
 }
+
+function removeActiveUser(){
+    sessionStorage.setItem("User", null); 
+}
