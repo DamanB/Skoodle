@@ -166,6 +166,7 @@ class Secretary
         return false; 
     }
 
+
     addStudentToClass(className, student) {
         if(classExists(className)) {
             if(studentExists(student.Stdid)) {
@@ -174,12 +175,13 @@ class Secretary
                         
                         // found correct class
                         var holder_class = GlobalClassList[i];
-                        for(var j = 0; j < holder_class.ClassList.length; j++) {
-                            if(studID == holder_class.ClassList[j].Stdid) {
+                        for(var j = 0; j < holder_class.ClassList.length; j++) {    // does the student already exist in the class?
+                            if(student.Stdid == holder_class.ClassList[j].Stdid) {
                                 return false;
                             }
                         }
-                        holder_class.ClassList.push(student);
+                        holder_class.ClassList.push(student);       // add student into specified class
+                        student.classes.push(holder_class);         // add class to list of student's enrolled classes
                         return true;
                     }
                 }
