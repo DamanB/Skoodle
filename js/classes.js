@@ -38,13 +38,13 @@ class Admin
             {
                 var secretary_1 = new Secretary(name, username, password); 
                 EmployeeList.push(secretary_1); 
-                return true; 
+                return secretary_1;  
             }
             else if(type == "Teacher")
             {
                 var teacher_1 = new Teacher(name, username, password); 
                 EmployeeList.push(teacher_1); 
-                return true; 
+                return teacher_1; 
             }            
         }
         else
@@ -131,17 +131,17 @@ class Secretary
     addClass(name, teacher, timeinterval, ClassList)
     {   
         if(!this.classExists(name)){
-            if(employeeExists(teacher.username)) {
+            if(this.employeeExists(teacher.username)) {
                 if(ClassList.length == 0) {                 // no students in given class list
                     ClassList.push(StudentList[0]);         // need minimum 1 student in a class list before instantiation
                     var classroom_1 = new Classroom(name, teacher, timeinterval, ClassList);
                     GlobalClassList.push(classroom_1);
-                    return true;
+                    return classroom_1;
                 }
                 else {
                     var classroom_1 = new Classroom(name, teacher, timeinterval, ClassList);
                     GlobalClassList.push(classroom_1);
-                    return true;
+                    return classroom_1;
                 }
 
             }       
@@ -168,8 +168,8 @@ class Secretary
 
     // test comment
     addStudentToClass(className, student) {
-        if(classExists(className)) {
-            if(studentExists(student.Stdid)) {
+        if(this.classExists(className)) {
+            if(this.studentExists(student.Stdid)) {
                 for(var i = 0; i < GlobalClassList.length; i++) {
                     if(className == GlobalClassList[i].name) {
                         
