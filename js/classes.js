@@ -10,6 +10,10 @@ class Admin
         this.username = username;
         this.password = password;
         this.type = "ADMIN";
+        this.addToList(); 
+    }
+    addToList()
+    {
         EmployeeList.push(this); 
 
     }
