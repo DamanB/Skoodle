@@ -9,7 +9,7 @@ class Admin
         this.username = username;
         this.password = password;
         this.type = "ADMIN";
-        this.EmployeeList;
+
     }
 
     //precondition check for employee existing
@@ -89,7 +89,6 @@ class Secretary
         this.name = name;
         this.username = username;
         this.password = password;
-        this.EmployeeList;
         //this.StudentList = new Array(Student);
         //this.ClassList = new Array(Classroom);
         this.type = "Secretary";
@@ -116,9 +115,9 @@ class Secretary
     {
         var i;
 
-        for(i = 0; i < this.GlobalClassList.length; i=i+1)
+        for(i = 0; i < GlobalClassList.length; i=i+1)
         {
-            if(name === this.GlobalClassList[i].name)
+            if(name === GlobalClassList[i].name)
             {
                 //do not add the classroom to the list of all classes 
                return true; 
@@ -135,12 +134,12 @@ class Secretary
                 if(ClassList.length == 0) {                 // no students in given class list
                     ClassList.push(StudentList[0]);         // need minimum 1 student in a class list before instantiation
                     var classroom_1 = new Classroom(name, teacher, timeinterval, ClassList);
-                    this.GlobalClassList.push(classroom_1);
+                    GlobalClassList.push(classroom_1);
                     return true;
                 }
                 else {
                     var classroom_1 = new Classroom(name, teacher, timeinterval, ClassList);
-                    this.GlobalClassList.push(classroom_1);
+                    GlobalClassList.push(classroom_1);
                     return true;
                 }
 
@@ -156,9 +155,9 @@ class Secretary
     {
         var i;
 
-        for(i = 0; i < this.StudentList.length; i=i+1)
+        for(i = 0; i < StudentList.length; i=i+1)
         {
-            if(studID === this.StudentList[i].Stdid)
+            if(studID === StudentList[i].Stdid)
             {
                return true; 
             }
@@ -170,10 +169,10 @@ class Secretary
         if(classExists(className)) {
             if(studentExists(student.Stdid)) {
                 for(var i = 0; i < GlobalClassList.length; i++) {
-                    if(className == this.GlobalClassList[i].name) {
+                    if(className == GlobalClassList[i].name) {
                         
                         // found correct class
-                        var holder_class = this.GlobalClassList[i];
+                        var holder_class = GlobalClassList[i];
                         for(var j = 0; j < holder_class.ClassList.length; j++) {
                             if(studID == holder_class.ClassList[j].Stdid) {
                                 return false;
@@ -200,17 +199,17 @@ class Secretary
 
         if(classExists(name))
         {
-            for(i = 0; i < this.GlobalClassList.length; i++)
+            for(i = 0; i < GlobalClassList.length; i++)
             {
-                if(name == this.GlobalClassList[i].name)
+                if(name == GlobalClassList[i].name)
                 {
-                    const victim_class_index = this.GlobalClassList.indexOf(i); 
+                    const victim_class_index = GlobalClassList.indexOf(i); 
                 }
             }
     
             if(victim_class_index > -1)
             {
-                this.GlobalClassList.splice(victim_class_index,1); 
+                GlobalClassList.splice(victim_class_index,1); 
                 return true;
             }
         }
