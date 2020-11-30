@@ -1,6 +1,3 @@
-
-
-
 function InitData()
 {
     var admin_1 = new Admin("Adam", "1234"); 
@@ -44,8 +41,13 @@ function InitData()
     var par_2 = new Parent("Ostroff", "par2", "1234567", "ostroff@gmail.com"); 
     
 
-    
-
-
 }
 
+function getEmployeeList(){
+    var raw = sessionStorage.getItem('EmployeeList');
+    var list = JSON.parse(raw);
+    return list;
+}
+function setEmployeeList(list){
+    sessionStorage.setItem('EmployeeList', JSON.stringify(list));
+}
