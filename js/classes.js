@@ -168,8 +168,8 @@ class Secretary
 
     // test comment
     addStudentToClass(className, student) {
-        if(classExists(className)) {
-            if(studentExists(student.Stdid)) {
+        if(this.classExists(className)) {
+            if(this.studentExists(student.Stdid)) {
                 for(var i = 0; i < GlobalClassList.length; i++) {
                     if(className == GlobalClassList[i].name) {
                         
