@@ -52,6 +52,67 @@ function getEmployeeList(){
     var list = JSON.parse(raw);
     return list;
 }
+
 function setEmployeeList(list){
     sessionStorage.setItem('EmployeeList', JSON.stringify(list));
+}
+
+function getGlobalClassList(){
+    var raw = sessionStorage.getItem('GlobalClassList');
+    var list = JSON.parse(raw);
+    return list;
+}
+
+function setGlobalClassList(list){
+    sessionStorage.setItem('GlobalClassList', JSON.stringify(list));
+}
+
+function getStudentList(){
+    var raw = sessionStorage.getItem('StudentList');
+    var list = JSON.parse(raw);
+    return list;
+}
+
+function setStudentList(list){
+    sessionStorage.setItem('StudentList', JSON.stringify(list));
+}
+
+function getStudentList(){
+    var raw = sessionStorage.getItem('StudentList');
+    var list = JSON.parse(raw);
+    return list;
+}
+
+function setStudentList(list){
+    sessionStorage.setItem('StudentList', JSON.stringify(list));
+}
+
+function getParentList(){
+    var raw = sessionStorage.getItem('ParentList');
+    var list = JSON.parse(raw);
+    return list;
+}
+
+function setParentList(list){
+    sessionStorage.setItem('ParentList', JSON.stringify(list));
+}
+
+function getGlobalDailyAttendenceList(){
+    var raw = sessionStorage.getItem('GlobalDailyAttendenceList');
+    var list = JSON.parse(raw);
+    return list;
+}
+
+function setGlobalDailyAttendenceList(list){
+    sessionStorage.setItem('GlobalDailyAttendenceList', JSON.stringify(list));
+}
+
+function getActiveUser(){
+    var raw = sessionStorage.getItem("User"); 
+    var user = JSON.parse(raw);
+    return user;
+}
+
+function setActiveUser(user){
+    sessionStorage.setItem("User", JSON.stringify(user)); 
 }
