@@ -51,7 +51,8 @@
                 var username = $("#username").val();
                 var password = $("#pw").val();
                 var confirmpwd = $("#pw_confirm").val();
-                var fName = $("full_name").val();
+                var fName = $("#full_name").val();
+                var email = $("#email").val();
                 console.log("Attempted signup as parent with: " + username 
                                                                 + " - " 
                                                                 + password 
@@ -62,12 +63,19 @@
                 
                 var valid_username = false;
                 var valid_password = false;
+                
+                var pList = getParentList();
+                var valid = false();
 
                 // should check if username entered already exists
-                if (username === "john123"){
+                // if (username === "john123"){
                     
-                    $("#error_username").show();
+                //     $("#error_username").show();
 
+                // }
+
+                if (pList) {
+                    valid = auth(username);
                 }
                 // else, username doesn't already exist (valid)
                 else {
@@ -99,6 +107,20 @@
                     window.location.href = "/index.html";
                 }
             });
+            
+            // Check if username already exists
+            function auth(uname) {
+                var found = false;
+                list.forEach(function (user) {
+                    if (user.username === uname) {
+                        console.log("username exists");
+                        $("#error_username").show();
+                        found = user;
+                        return;
+                    }
+                })
+                return found;
+            }
         </script>
 
         <div id="logo">
@@ -126,7 +148,12 @@
             <input type="text" id="full_name" name="full_name">
             
             <br><br>
+
+            <label for="email">Email:</label><br>
+            <input type="text" id="email" name="email">
             
+            <br><br>
+
         </form>
         
         <button id="submit">Submit</button>
