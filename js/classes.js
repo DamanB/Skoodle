@@ -21,9 +21,7 @@ class Admin {
     /* ADMIN FUNCTION: ADDING EMPLOYEES */
     //precondition check for employee existing
     employeeExists(username) {
-        var i;
-
-        for (i = 0; i < EmployeeList.length; i = i + 1) {
+        for (var i = 0; i < EmployeeList.length; i++) {
             if (username === EmployeeList[i].username) {
                 //do not add the employee to the list 
                 return EmployeeList[i];
@@ -80,8 +78,13 @@ class Admin {
     }
 
     modifyEmployeeUsername(username, newUser) {
-        var employee_1 = this.employeeExists(username);
-        employee_1.username = newUser;
+        if (employeeExists(newUser)) {
+            return false;
+        }
+        else {
+            var employee_1 = this.employeeExists(username);
+            employee_1.username = newUser;
+        }
     }
 
     modifyEmployeePassword(username, newPass) {
@@ -104,24 +107,21 @@ class Secretary {
 
     /* SECRETARY FUNCTION: ADD CLASSROOM TO GLOBAL CLASS LIST */
     employeeExists(username) {
-        var i;
-
-        for (i = 0; i < EmployeeList.length; i = i + 1) {
+        for (var i = 0; i < EmployeeList.length; i++) {
             if (username === EmployeeList[i].username) {
-                //do not add the employee to the list 
                 return EmployeeList[i];
             }
         }
         return false;
     }
-    
-        
+
+
     // gets Classroom reference from GlobalClassList
     //precondition check for a classroom existing
     classExists(name) {
         for (var i = 0; i < GlobalClassList.length; i++) {
             if (name === GlobalClassList[i].name) {
-                return GlobalClassList[i];          
+                return GlobalClassList[i];
             }
         }
         return false;
@@ -174,31 +174,38 @@ class Secretary {
         }
     }
 
-
     /* SECRETARY FUNCTION: MODIFY A CLASSROOM'S INFORMATION */
-    modifyClassroom() {
-        
-        this.Classroom.name = name;
-        this.Classroom.teacher = teacher;
-        this.Classroom.timeinterval = timeinterval;
-
-    }
-
-    modifyClassName(name) {
-        if (classExists(name)) {
-            return false; // class name already exists
+    modifyClassName(className, newName) {
+        if (classExists(newName)) {
+            return false;
         }
         else {
-            
+            var classroom_1 = this.classExists(className);
+            classroom_1.name = newName;
         }
     }
 
-    modifyClassTeach() {
-
+    modifyClassTeach(className, newTeach) {
+        if (employeeExists(newTeach)) {         // newTeach exists?
+            var classroom_1 = this.classExists(className);      
+            if (classroom_1) {                  // classroom exists?
+                if (classroom_1.teacher.username == newTeach.username) {    // same teacher assigned?
+                    return false;
+                }
+                classroom_1.teacher = newTeach;
+            }
+        }
+        return false;
     }
 
-    modifyClassTime() {
-
+    modifyClassTime(className, newTime) {
+        var classroom_1 = this.classExists(className);  
+        if (classroom_1) {                              // class exists?
+            classroom_1.timeinterval = newTime;         // set new time interval
+        }
+        else {
+            return false;
+        }
     }
 
 
@@ -210,7 +217,7 @@ class Secretary {
 
         for (i = 0; i < StudentList.length; i = i + 1) {
             if (studID === StudentList[i].Stdid) {
-                return true;
+                return StudentList[i];
             }
         }
         return false;
