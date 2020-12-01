@@ -65,11 +65,12 @@
                 var password = $("#pw").val();
                 var confirmpwd = $("#pw_confirm").val();
                 var fName = $("full_name").val();
-                console.log("Attempted signup as parent with: " + id + " - " + password + " - " + confirmpwd + " - " + fName);
+                console.log("Attempted signup as parent with: " + username + " - " + password + " - " + confirmpwd + " - " + fName);
                 //Authenticate (check ID exists already + check password vs confirm password)
                 //elist = getEmployeeList();
                 //plistRaw = sessionStorage.getItem("ParentList");
                 var valid = false;
+                var hardcodeusr = "john123";
                 //plist = JSON.parse(plistRaw);
                 //check empty
                 // if (elist) {
@@ -84,19 +85,26 @@
                 // else {
                 //     $("#error").show();
                 // }
-                if (password == confirmpwd)
-                {
-                    alert("Registration successful")
-                    $("#error_password").hide();
+                // should check if username entered already exists
+                if (username === hardcodeusr){
+                    $("error_username").show();
                 }
-                else
-                $("#error_password").show();
-                
+                // if password and confirm pwd is same AND username doesn't already exist, success
+                else if (password == confirmpwd && username != hardcodeusr)
+                {
+                    $("#error_password").hide();
+                    alert("Registration successful")
+                    window.location.href = "/index.html";
+                }
+                // passwords dont match
+                else {
+                    $("#error_password").show();
+                }                
 
             });
 
             //Authenticate the user
-            function auth(uname, pword, list) {
+            function auth(uname, pword, pwordconfirm) {
                 var found = false;
                 list.forEach(function (user) {
                     if (user.username === uname) {
@@ -112,28 +120,6 @@
                 return found;
             }
 
-            //Redirect to appropriate page
-            function redirect(type) {
-                if (type == "Admin") {
-                    window.location.href = "/pages/admin1.html";
-                }
-                else if (type == "Secretary") {
-                    window.location.href = "/pages/secretary1.html";
-                }
-                else if (type == "Teacher") {
-                    window.location.href = "/pages/teach_full1.html";
-                }
-                else if (type == "SupplyTeacher"){
-                    window.location.href = "/pages/teach_supply1.html";
-                }
-                else if (type == "Parent"){
-                    window.location.href = "/pages/parent1.html"
-                }
-                else
-                {
-                    console.log("ERROR: The user type is not valid!");
-                }
-            }
         </script>
 
         <div id="logo">
@@ -168,9 +154,9 @@
             -->
         </form>
         
-            <button id="submit">Submit</button>
+        <button id="submit">Submit</button>
         
-        <p id="error_username" style="display: none; color: red; text-align: center; margin: 0; padding: 0"></p><br>Username Already Exists</p>
+        <p id="error_username" style="display: none; color: red; text-align: center; margin: 0; padding: 0"><br>Username Already Exists</p>
         <p id="error_password" style="display: none; color: red; text-align: center; margin: 0; padding: 0"><br>Passwords Do Not Match</p>
 
     </body>
