@@ -64,7 +64,9 @@ function setEmployeeList(list){
 function getGlobalClassList(){
     var raw = sessionStorage.getItem('GlobalClassList');
     var list = JSON.parse(raw);
-    GlobalClassList = list; 
+    if (list){
+        GlobalClassList = list; 
+    }
     return list;
 }
 
@@ -76,7 +78,9 @@ function setGlobalClassList(list){
 function getStudentList(){
     var raw = sessionStorage.getItem('StudentList');
     var list = JSON.parse(raw);
-    StudentList = list; 
+    if (list){
+        StudentList = list; 
+    }
     return list;
 }
 
@@ -88,7 +92,9 @@ function setStudentList(list){
 function getParentList(){
     var raw = sessionStorage.getItem('ParentList');
     var list = JSON.parse(raw);
-    ParentList = list; 
+    if (list){
+        ParentList = list; 
+    }
     return list;
 }
 
@@ -100,7 +106,9 @@ function setParentList(list){
 function getGlobalDailyAttendenceList(){
     var raw = sessionStorage.getItem('GlobalDailyAttendenceList');
     var list = JSON.parse(raw);
-    GlobalDailyAttendenceList = list; 
+    if (list){
+        GlobalDailyAttendenceList = list; 
+    }
     return list;
 }
 
