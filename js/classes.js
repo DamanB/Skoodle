@@ -84,6 +84,7 @@ class Admin {
         else {
             var employee_1 = this.employeeExists(username);
             employee_1.username = newUser;
+            return true;
         }
     }
 
@@ -133,13 +134,15 @@ class Secretary {
             if (this.employeeExists(teacher.username)) {
                 if (ClassList.length == 0) {                 // no students in given class list
                     ClassList.push(StudentList[0]);         // need minimum 1 student in a class list before instantiation
-                    var classroom_1 = new Classroom(name, teacher, timeinterval, ClassList);
+                    var classroom_1 = new Classroom(name, teacher, timeinterval, ClassList, []);
                     GlobalClassList.push(classroom_1);
+                    teacher.taughtClasses.push(classroom_1); 
                     return classroom_1;
                 }
                 else {
-                    var classroom_1 = new Classroom(name, teacher, timeinterval, ClassList);
+                    var classroom_1 = new Classroom(name, teacher, timeinterval, ClassList, []);
                     GlobalClassList.push(classroom_1);
+                    teacher.taughtClasses.push(classroom_1); 
                     return classroom_1;
                 }
 
@@ -160,10 +163,11 @@ class Secretary {
             for (i = 0; i < GlobalClassList.length; i++) {
                 if (name == GlobalClassList[i].name) {
                     const victim_class_index = GlobalClassList.indexOf(i);
+                    var victim_classroom = GlobalClassList[i]; 
                 }
             }
-
             if (victim_class_index > -1) {
+                victim_classroom.teacher.taughtClasses.splice(victim_class_index,1);  //unassigning teacher from removed class
                 GlobalClassList.splice(victim_class_index, 1);
                 return true;
             }
@@ -192,7 +196,21 @@ class Secretary {
                 if (classroom_1.teacher.username == newTeach.username) {    // same teacher assigned?
                     return false;
                 }
+                //derolling current teacher from class so newTeach can teach it
+                var victim_teacher = classroom_1.teacher; 
+                for(var i = 0; i<victim_teacher.taughtClasses.length; i++)
+                {
+                    if(victim_teacher.taughtClasses[i].name == classroom_1.name)
+                    {
+                        var victim_classroom = victim_teacher.taughtClasses.indexOf(i); 
+                    }
+                }
+                if (victim_classroom > -1) {
+                    victim_teacher.taughtClasses.splice(victim_classroom,1);  //unassigning teacher from removed class
+                    return true;
+                }
                 classroom_1.teacher = newTeach;
+                newTeach.taughtClasses.push(classroom_1); //adding the class to the new teacher's list of taught classes
             }
         }
         return false;
@@ -223,7 +241,6 @@ class Secretary {
         return false;
     }
 
-    // test comment
     addStudentToClass(className, student) {
         if (this.classExists(className)) {
             if (this.studentExists(student.Stdid)) {
@@ -254,7 +271,79 @@ class Secretary {
 
 
     /* SECRETARY FUNCTION: REMOVE A STUDENT FROM A CLASSROOM */
+    removeStudentFromClass(className,student)
+    {
+        var currClass = this.classExists(className); 
+        
+        //class exists 
+        if(currClass)
+        {
+            for(var i = 0; i < currClass.length; i++)
+            {
+                if(currClass.ClassList[i].Stdid == student.Stdid)
+                {
+                    var victim_stud = currClass.ClassList[i].indexOf(i); 
+                }
+            }
+            if (victim_stud > -1) 
+            {
+                currClass.ClassList.splice(victim_employee_index, 1);
+                return true;
+            }
+        }
+        else
+        {
+            return false; 
+        }
+    }
 
+    //generate random RegKey for Students
+    genKey()
+    {
+       return Math.floor(Math.random()*1000); 
+    }
+    
+    //generate student ID
+    genStudID()
+    {
+        var ID = Math.floor(Math.random()*1000000); 
+        ID = ID + 1;
+        return ID;   
+    }
+
+    //adding student to global student list (registering student to school)
+    registerStudent(studName)
+    {
+        var regKey = this.genKey(); 
+        var studID = this.genStudID(); 
+        var newStud = new Student(studName, studID, [], regKey); 
+
+        StudentList.push(newStud); 
+    }
+
+    //removing student from global student list (deregistering student from school)
+    deregisterStudent(student)
+    {
+        if(this.studentExists(student.Stdid))
+        {
+            for(var i = 0; i<StudentList.length; i++)
+            {
+                if(student.Stdid == StudentList[i].Stdid)
+                {
+                    var victim_stud = StudentList[i].indexOf(i); 
+                }
+            }
+            if(victim_stud > -1)
+            {
+                StudentList.splice(victim_stud, 1);
+                return true;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
 
 class Teacher {
@@ -263,7 +352,58 @@ class Teacher {
         this.username = username;
         this.password = password;
         this.type = "Teacher";
+        this.taughtClasses = []; //list of classrooms assigned to teacher 
     }
+
+    classExists(className) {
+        for (var i = 0; i < this.taughtClasses.length; i++) {
+            if (className === this.taughtClasses[i].name) {
+                return this.taughtClasses[i];
+            }
+        }
+        return false;
+    }
+    
+    //create attendance for day and class
+    createAttendance(className)
+    {
+        var currClassroom = this.classExists(className); 
+        
+        if(currClassroom)
+        {
+            for(var i = 0; i < currClassroom.ClassList.length; i++)
+            {
+                
+            }
+        }
+        
+        var attendance_1 = new ClassAttendance()
+    }
+    
+    //mark student present
+    markPresent(className, student)
+    {
+        var currClassroom = this.classExists(className); 
+
+        if(currClassroom)
+        {
+            for(var i = 0; i < currClassroom.Attendance.length; i++)
+            {
+                if(currClassroom.ClassList[i].name == student.name && currClassroom.ClassList[i].Stdid == student.Stdid)
+                {
+                     
+                }
+            }
+        }
+    }
+
+    //marking student absent
+    markAbsent(className)
+    {
+
+    }
+
+
 
 }
 
@@ -291,13 +431,12 @@ class Parent {
 }
 
 class Classroom {
-    constructor(name, teacher, timeinterval, ClassList, Attendance) {
+    constructor(name, teacher, timeinterval, ClassList) {
         this.name = name;
-        this.teacher = new Teacher();
+        this.teacher = teacher;
         this.timeinterval = timeinterval;
-        this.ClassList = [];    // Array of Student Objects
+        this.ClassList = ClassList;    // Array of Student Objects
         this.Attendance = [];  //list of of attendance entries where teacher can check present etc...
-
     }
 
 
@@ -305,23 +444,21 @@ class Classroom {
 
 //this is just a single entry within the major attendance sheet for a single class for a single student
 class AttendanceEntry {
-    constructor(StudentName, className, date, studentStatus) {
+    constructor(student, className, date, studentStatus) {
+        this.student = student; 
         this.className = className;
-        this.StudentName = StudentName;
         this.date = new Date();
         this.studentStatus = false;
-
     }
-
 
 }
 
 //attendance which teacher fills out for their classes 
 class ClassAttendance {
-    constructor(ListAttendances) {
-        this.ListAttendances = [];
-
+    constructor(AttEntries) {
+        this.entries = AttEntries;
     }
+
 
 }
 
@@ -330,9 +467,9 @@ class Student {
     constructor(name, Stdid, classes, regKey) {
         this.name = name;
         this.Stdid = Stdid;
-        this.classes = [];
+        this.classes = []; //list of classes student is enrolled in
         this.regKey = regKey;
-        //this.attendanceList = []; 
+        this.attendanceList = []; //list of particular student's attendance entries   
     }
 }
 
