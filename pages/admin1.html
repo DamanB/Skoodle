@@ -1,84 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type='text/css' href="/css/generic.css">
+        <link rel="stylesheet" type='text/css' href="/css/main.css">
+        <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type='text/javascript' src="/js/classes.js"></script>
+        <script type='text/javascript' src="/js/data.js"></script>
+        <title>Skoodle: Admin Page</title>
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type='text/css' href="/css/generic.css">
-    <link rel="stylesheet" type='text/css' href="/css/main.css">
-    <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type='text/javascript' src="/js/classes.js"></script>
-    <script type='text/javascript' src="/js/data.js"></script>
-    <title>Skoodle: Admin Page</title>
-</head>
+    <script>
+        var user;
 
-<script>
-    var user;
-    //set header
-    $(document).ready(function () {
-        user = Object.assign(new Admin, getActiveUser());
-        $("#username").text(user.type.toUpperCase() + ": " + user.username);
-        $("#name").text("Hello " + user.name + "!");
-    });
-    //Logout button
-    $(document).on('click', "#logout", function () {
-        removeActiveUser();
-        window.location.href = "/index.html";
-    });
-    //selecting a type
-    $(document).on('change', "#typeSelect", function () {
-        $("#employeeList tbody").empty();
-        var type = $("#typeSelect").find(":selected").text();
-        list = getEmployeeList();
-        list.forEach(function (emp) {
-            if (emp.type === type) {
-                $('#employeeList tbody').append('<tr><td>' + emp.type + '</td><td>' + emp.name + '</td><td>' + emp.username + '</td><td>' + '<button class="modify">Modify<span class=".info" style="display: none">' + JSON.stringify(emp) + '</span></button> </td></tr>');
-            }
+        //set header
+        $(document).ready(function () {
+            user = Object.assign(new Admin, getActiveUser());
+            $("#username").text(user.type.toUpperCase() + ": " + user.username);
+            $("#name").text("Hello " + user.name + "!");
         });
-    });
-    //selecting to modify a user
-    $(document).on('click','.modify', function(){
-        var data = $(this).children().text();
-        sessionStorage.setItem("ModifyEmployee",data);
-        window.location.href = "/pages/admin_manageEmployee.html";
-    });
-</script>
 
-<body>
-    <div id="logo">
-        Skoodle
-    </div>
-    <div class="nameLabel">
-        <span id="username"></span><br>
-        <span id="name"></span>
-    </div>
-    <div id="logout">
-        <button>Logout</button>
-    </div>
+        //Logout button
+        $(document).on('click', "#logout", function () {
+            removeActiveUser();
+            window.location.href = "/index.html";
+        });
 
-    <div id="actions">
-        <span><br><b>Here's your data!</b><br></span>
-        <ul>
-            <li><a href="/pages/admin_addEmployee.html">Add Employees</a></li>
-        </ul>
-    </div>
-    <div id="employeeList">
-        <Span>Employees in the System: </Span><br>
-        <select id="typeSelect">
-            <option value Type>Select Employee Type</option>
-            <option value="secretary">Secretary</option>
-            <option value="teacher">Teacher</option>
-        </select>
-        <table id="addedList">
-            <thead>
-                <th>Account Type</th>
-                <th>Name</th>
-                <th>Username</th>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-        <div>
-</body>
+        //selecting a type
+        $(document).on('change', "#typeSelect", function () {
+            $("#employeeList tbody").empty();
+            var type = $("#typeSelect").find(":selected").text();
+            list = getEmployeeList();
+            list.forEach(function (emp) {
+                if (emp.type === type) {
+                    $('#employeeList tbody').append('<tr><td>' + emp.type + '</td><td>' + emp.name + '</td><td>' + emp.username + '</td><td>' + '<button class="modify">Modify<span class=".info" style="display: none">' + JSON.stringify(emp) + '</span></button> </td></tr>');
+                }
+            });
+        });
 
+        //selecting to modify a user
+        $(document).on('click','.modify', function(){
+            var data = $(this).children().text();
+            sessionStorage.setItem("ModifyEmployee",data);
+            window.location.href = "/pages/admin_manageEmployee.html";
+        });
+
+    </script>
+
+    <body>
+        <div id="logo">
+            Skoodle
+        </div>
+
+        <div class="nameLabel">
+            <span id="username"></span><br>
+            <span id="name"></span>
+        </div>
+
+        <div id="logout">
+            <button>Logout</button>
+        </div>
+
+        <div id="actions">
+            <span><br><b>Here's your data!</b><br></span>
+            <ul>
+                <li><a href="/pages/admin_addEmployee.html">Add Employees</a></li>
+            </ul>
+        </div>
+
+        <div id="employeeList">
+            <span>Employees in the System: </span><br>
+
+            <select id="typeSelect">
+                <option value Type>Select Employee Type</option>
+                <option value="secretary">Secretary</option>
+                <option value="teacher">Teacher</option>
+            </select>
+
+            <table id="addedList">
+                <thead>
+                    <th>Account Type</th>
+                    <th>Name</th>
+                    <th>Username</th>
+                </thead>
+
+                <tbody></tbody>
+            </table>
+        </div>
+    </body>
 </html>
