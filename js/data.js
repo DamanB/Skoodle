@@ -43,7 +43,7 @@ function InitData()
     var par_2 = new Parent("Ostroff", "par2", "1234567", "ostroff@gmail.com"); 
 
     setEmployeeList(EmployeeList); 
-    
+    setGlobalClassList(GlobalClassList);    
 
 }
 
