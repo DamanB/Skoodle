@@ -44,18 +44,6 @@
             $(document).ready(function () {
                 $("#error_username").hide();
                 $("#error_password").hide();
-                //Get data
-                var data = getEmployeeList();
-                console.log(data);
-                if (!data) {
-                    //Init data
-                    console.log("Initializing data for first time run");
-                    InitData();
-                    var data = getEmployeeList();
-                    if (!data) {
-                        console.log("ERROR: Init data not found");
-                    }
-                }
             })
 
             //Perform login check 
@@ -69,8 +57,8 @@
                 //Authenticate (check ID exists already + check password vs confirm password)
                 //elist = getEmployeeList();
                 //plistRaw = sessionStorage.getItem("ParentList");
-                var valid = false;
-                var hardcodeusr = "john123";
+                var valid_username = false;
+                var valid_password = false;
                 //plist = JSON.parse(plistRaw);
                 //check empty
                 // if (elist) {
@@ -85,22 +73,43 @@
                 // else {
                 //     $("#error").show();
                 // }
+
                 // should check if username entered already exists
                 if (username === "john123"){
-                    $("error_username").show();
+                    
+                    $("#error_username").show();
+
+                }
+                else {
+
+                    valid_username = true;
+
                 }
                 // if password and confirm pwd is same AND username doesn't already exist, success
-                else if (password == confirmpwd && username != hardcodeusr)
-                {
+                if (password != confirmpwd){
+                    
+                    $("#error_password").show();
+
+                }
+                else {
+                    valid_password = true;
+                }
+
+                if (valid_username == false && valid_password == false) {
+                    $("#error_password").show();
+                    $("#error_password").show();
+
+
+                } 
+
+                // if both valids are true, redirect to index.html
+                if (valid_username && valid_password){
+
                     $("#error_password").hide();
+                    $("#error_username").hide();
                     alert("Registration successful")
                     window.location.href = "/index.html";
                 }
-                // passwords dont match
-                else {
-                    $("#error_password").show();
-                }                
-
             });
 
             //Authenticate the user
