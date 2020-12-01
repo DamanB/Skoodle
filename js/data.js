@@ -50,60 +50,60 @@ function InitData()
 function getEmployeeList(){
     var raw = sessionStorage.getItem('EmployeeList');
     var list = JSON.parse(raw);
+    EmployeeList = list; 
     return list;
 }
 
 function setEmployeeList(list){
+    EmployeeList = list; 
     sessionStorage.setItem('EmployeeList', JSON.stringify(list));
 }
 
 function getGlobalClassList(){
     var raw = sessionStorage.getItem('GlobalClassList');
     var list = JSON.parse(raw);
+    GlobalClassList = list; 
     return list;
 }
 
 function setGlobalClassList(list){
+    GlobalClassList = list; 
     sessionStorage.setItem('GlobalClassList', JSON.stringify(list));
 }
 
 function getStudentList(){
     var raw = sessionStorage.getItem('StudentList');
     var list = JSON.parse(raw);
+    StudentList = list; 
     return list;
 }
 
 function setStudentList(list){
-    sessionStorage.setItem('StudentList', JSON.stringify(list));
-}
-
-function getStudentList(){
-    var raw = sessionStorage.getItem('StudentList');
-    var list = JSON.parse(raw);
-    return list;
-}
-
-function setStudentList(list){
+    StudentList = list; 
     sessionStorage.setItem('StudentList', JSON.stringify(list));
 }
 
 function getParentList(){
     var raw = sessionStorage.getItem('ParentList');
     var list = JSON.parse(raw);
+    ParentList = list; 
     return list;
 }
 
 function setParentList(list){
+    ParentList = list; 
     sessionStorage.setItem('ParentList', JSON.stringify(list));
 }
 
 function getGlobalDailyAttendenceList(){
     var raw = sessionStorage.getItem('GlobalDailyAttendenceList');
     var list = JSON.parse(raw);
+    GlobalDailyAttendenceList = list; 
     return list;
 }
 
 function setGlobalDailyAttendenceList(list){
+    GlobalDailyAttendenceList = list; 
     sessionStorage.setItem('GlobalDailyAttendenceList', JSON.stringify(list));
 }
 
