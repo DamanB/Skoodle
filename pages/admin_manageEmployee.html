@@ -14,12 +14,19 @@
     <body>
         <script>
             var user;
-
+            var toEdit;
             //set header
             $(document).ready(function () {
                 user = Object.assign(new Admin, getActiveUser());
                 $("#username").text(user.type.toUpperCase() + ": " + user.username);
                 $("#name").text("Hello " + user.name + "!");
+
+                //get modify data
+                toEdit = JSON.parse(sessionStorage.getItem("ModifyEmployee"));
+                console.log(toEdit);
+                $("#nameToEdit").text(toEdit.name);
+                $("#usernameToEdit").text(toEdit.username);
+                $("#passwordToEdit").text(toEdit.password);
             });
 
             //Logout button
@@ -42,42 +49,41 @@
         <div id="logout">
             <button>Logout</button>
         </div>
+        <div id="back">
+            <button><a href="/pages/admin1.html" style="color: black; text-decoration: none;">Back</a></button>
+        </div>
+        <br>
 
         <form>
-            <span>Employee's Current Name:</span> 
+            <span>MANAGE EMPLOYEE</span><br>
+            <span>Employee's Current Name:</span> <span id="nameToEdit"></span>
             <span id="currentName"></span>
-
             <br>
-
             <label for="nameEmployee">Employee's New Name:</label>
             <input type="text" id="nameEmployee" name="nameEmployee">
+            <button id="submitName">Submit Changes</button>
 
             <br><br>
 
-            <span>Employee's Current Username:</span> 
+            <span>Employee's Current Username:</span><span id="usernameToEdit"></span>
             <span id="currentUsername"></span>
-
             <br>
-
             <label for="usernameEmployee">Employee's New Username:</label>
             <input type="text" id="usernameEmployee" name="usernameEmployee">
+            <button id="submitUsername">Submit Changes</button>
 
             <br><br>
 
-            <span>Employee's Current Password:</span> 
+            <span>Employee's Current Password:</span><span id="passwordToEdit"></span>
             <span id="currentPassword"></span>
-
             <br>
-
             <label for="passwordEmployee">Employee's New Password:</label>
             <input type="text" id="passwordEmployee" name="passwordEmployee">
+            <button id="submitPassword">Submit Changes</button>
+
         </form>
 
         <br>
-
-        <button>Submit Changes</button>
-
-        <br><br>
 
         <button>Remove Employee</button>
     </body>
