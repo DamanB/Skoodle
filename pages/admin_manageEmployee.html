@@ -63,6 +63,9 @@
             <input type="text" id="nameEmployee" name="nameEmployee">
             <button id="submitName">Submit Changes</button>
 
+            <span style="color:green">Success</span>
+            <span style="color:red">Failure</span>
+
             <br><br>
 
             <span>Employee's Current Username:</span><span id="usernameToEdit"></span>
@@ -71,6 +74,9 @@
             <label for="usernameEmployee">Employee's New Username:</label>
             <input type="text" id="usernameEmployee" name="usernameEmployee">
             <button id="submitUsername">Submit Changes</button>
+
+            <span style="color:green">Success</span>
+            <span style="color:red">Username already exists</span>
 
             <br><br>
 
@@ -85,6 +91,27 @@
 
         <br>
 
-        <button>Remove Employee</button>
+        
+        <button onclick="removeEmployee()">Remove Employee</button>
+        <span id="decision"></span>
+
+        <script>
+            function removeEmployee()
+            {
+                var txt = "Removal successful.";
+                var r = confirm("Confirm removal of employee?");
+
+                if (r == true)
+                {
+                    txt = "Removal successful.";
+                }
+                else
+                {
+                    txt = "Removal cancelled.";
+                }
+
+                document.getElementById("decision").innerHTML = txt;
+            }
+        </script>
     </body>
 </html>

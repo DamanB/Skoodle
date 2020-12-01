@@ -34,15 +34,17 @@
             list = getEmployeeList();
             list.forEach(function (emp) {
                 if (emp.type === type) {
-                    $('#employeeList tbody').append('<tr><td>' + emp.type + '</td><td>' + emp.name + '</td><td>' + emp.username + '</td><td>' + '<button class="modify">Modify<span class=".info" style="display: none">' + JSON.stringify(emp) + '</span></button> </td></tr>');
+                    $('#employeeList tbody').append('<tr><td>' + emp.type + '</td><td>' + emp.name + '</td><td>' + emp.username + '</td><td>' + '<button class="modify">Modify</button> </td></tr>');
                 }
             });
         });
 
         //selecting to modify a user
         $(document).on('click','.modify', function(){
-            var data = $(this).children().text();
-            sessionStorage.setItem("ModifyEmployee",data);
+            //EmployeeList = getEmployeeList();
+            var uname = $(this).parent().prev().text();
+            var data = user.employeeExists(uname); 
+            sessionStorage.setItem("ModifyEmployee",JSON.stringify(data));
             window.location.href = "/pages/admin_manageEmployee.html";
         });
 
@@ -63,7 +65,7 @@
         </div>
 
         <div id="actions">
-            <span><br><b>Here's your data!</b><br></span>
+            <span><br><b>Here's Your Tools!</b><br></span>
             <ul>
                 <li><a href="/pages/admin_addEmployee.html">Add Employees</a></li>
             </ul>
