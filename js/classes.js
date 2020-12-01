@@ -368,16 +368,27 @@ class Teacher {
     createAttendance(className)
     {
         var currClassroom = this.classExists(className); 
+        var attendance_holder = [];  //mock attendance for holding student attendance entries
         
         if(currClassroom)
         {
             for(var i = 0; i < currClassroom.ClassList.length; i++)
             {
+                var currStudent = currClassroom.ClassList[i]; 
                 
+                var new_date = new Date(); 
+                var d = new Date(new_date.getFullYear(), new_date.getMonth(), new_date.getDay());
+                var attendance_entry = new AttendanceEntry(currStudent, className, d, false); 
+                currStudent.AttendanceList.push(attendance_entry); 
+                
+                attendance_holder[i].push(attendance_entry);   //storing attendance entries into mock holder
+
             }
         }
         
-        var attendance_1 = new ClassAttendance()
+        var attendance_1 = new ClassAttendance(attendance_holder); 
+
+        return attendance_1; 
     }
     
     //mark student present
