@@ -25,16 +25,22 @@
         removeActiveUser();
         window.location.href = "/index.html";
     });
-    
+    //selecting a type
     $(document).on('change', "#typeSelect", function () {
         $("#employeeList tbody").empty();
         var type = $("#typeSelect").find(":selected").text();
         list = getEmployeeList();
         list.forEach(function (emp) {
             if (emp.type === type) {
-                $('#employeeList tbody').append('<tr><td>' + emp.type + '</td><td>' + emp.name + '</td><td>' + emp.username + '</td></tr>');
+                $('#employeeList tbody').append('<tr><td>' + emp.type + '</td><td>' + emp.name + '</td><td>' + emp.username + '</td><td>' + '<button class="modify">Modify<span class=".info" style="display: none">' + JSON.stringify(emp) + '</span></button> </td></tr>');
             }
         });
+    });
+    //selecting to modify a user
+    $(document).on('click','.modify', function(){
+        var data = $(this).children().text();
+        sessionStorage.setItem("ModifyEmployee",data);
+        window.location.href = "/pages/admin_manageEmployee.html";
     });
 </script>
 
