@@ -353,19 +353,24 @@ class Teacher {
         this.taughtClasses = []; //list of classrooms assigned to teacher 
     }
 
+    getTeacherFromClass(className) {
+        var currClassroom = this.classExists(className);
+        return currClassroom.teacher;
+    }
+
     classExists(className) {
-        for (var i = 0; i < this.taughtClasses.length; i++) {
-            if (className === this.taughtClasses[i].name) {
-                return this.taughtClasses[i];
+        for (var i = 0; i < this.GlobalClassList.length; i++) {
+            if (className === this.GlobalClassList[i].name) {
+                return this.GlobalClassList[i];
             }
         }
         return false;
     }
     
     attendanceExists(className) {
-        for (var i = 0; i < this.taughtClasses.length; i++) {
-            if (className === this.taughtClasses[i].name) {
-                return this.taughtClasses[i].Attendance;
+        for (var i = 0; i < this.GlobalClassList.length; i++) {
+            if (className === this.GlobalClassList[i].name) {
+                return this.GlobalClassList[i].Attendance;
             }
         }
         return false;
