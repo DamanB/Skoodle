@@ -50,7 +50,9 @@ function InitData()
 function getEmployeeList(){
     var raw = sessionStorage.getItem('EmployeeList');
     var list = JSON.parse(raw);
-    EmployeeList = list; 
+    if (list){
+        EmployeeList = list; 
+    }
     return list;
 }
 
