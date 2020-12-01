@@ -136,13 +136,11 @@ class Secretary {
                     ClassList.push(StudentList[0]);         // need minimum 1 student in a class list before instantiation
                     var classroom_1 = new Classroom(name, teacher, timeinterval, ClassList, []);
                     GlobalClassList.push(classroom_1);
-                    teacher.taughtClasses.push(classroom_1); 
                     return classroom_1;
                 }
                 else {
                     var classroom_1 = new Classroom(name, teacher, timeinterval, ClassList, []);
                     GlobalClassList.push(classroom_1);
-                    teacher.taughtClasses.push(classroom_1); 
                     return classroom_1;
                 }
 
@@ -364,6 +362,15 @@ class Teacher {
         return false;
     }
     
+    attendanceExists(className) {
+        for (var i = 0; i < this.taughtClasses.length; i++) {
+            if (className === this.taughtClasses[i].name) {
+                return this.taughtClasses[i].Attendance;
+            }
+        }
+        return false;
+    }
+
     //create attendance for day and class
     createAttendance(className)
     {
@@ -379,42 +386,27 @@ class Teacher {
                 var new_date = new Date(); 
                 var d = new Date(new_date.getFullYear(), new_date.getMonth(), new_date.getDay());
                 var attendance_entry = new AttendanceEntry(currStudent, className, d, false); 
-                currStudent.AttendanceList.push(attendance_entry); 
+                currStudent.attendanceList.push(attendance_entry); 
                 
                 attendance_holder[i].push(attendance_entry);   //storing attendance entries into mock holder
 
             }
         }
         
-        var attendance_1 = new ClassAttendance(attendance_holder); 
+        var attendance_1 = new ClassAttendance(attendance_holder);  // creating the class attendance list from temp mock class attendance
 
         return attendance_1; 
     }
     
-    //mark student present
-    markPresent(className, student)
+    //mark student present/absent
+    markStatus(className, student, status)
     {
-        var currClassroom = this.classExists(className); 
+        var currClass = this.classExists(className);
+        if (currClass) {
+            var currAttendance = this.attendanceExists(className);
 
-        if(currClassroom)
-        {
-            for(var i = 0; i < currClassroom.Attendance.length; i++)
-            {
-                if(currClassroom.ClassList[i].name == student.name && currClassroom.ClassList[i].Stdid == student.Stdid)
-                {
-                     
-                }
-            }
         }
     }
-
-    //marking student absent
-    markAbsent(className)
-    {
-
-    }
-
-
 
 }
 
