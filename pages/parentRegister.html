@@ -81,25 +81,21 @@
 
                 }
                 else {
-
                     valid_username = true;
-
+                    $("#error_username").hide();
                 }
                 // if password and confirm pwd is same AND username doesn't already exist, success
                 if (password != confirmpwd){
-                    
                     $("#error_password").show();
-
                 }
                 else {
                     valid_password = true;
+                    $("#error_password").hide();
                 }
 
                 if (valid_username == false && valid_password == false) {
                     $("#error_password").show();
                     $("#error_password").show();
-
-
                 } 
 
                 // if both valids are true, redirect to index.html
