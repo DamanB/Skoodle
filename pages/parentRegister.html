@@ -44,82 +44,61 @@
             $(document).ready(function () {
                 $("#error_username").hide();
                 $("#error_password").hide();
-                //Get data
-                var data = getEmployeeList();
-                console.log(data);
-                if (!data) {
-                    //Init data
-                    console.log("Initializing data for first time run");
-                    InitData();
-                    var data = getEmployeeList();
-                    if (!data) {
-                        console.log("ERROR: Init data not found");
-                    }
-                }
             })
 
             //Perform login check 
-            //$("#error_username").show();
             $(document).on('click', '#submit', function () {
                 var username = $("#username").val();
                 var password = $("#pw").val();
                 var confirmpwd = $("#pw_confirm").val();
                 var fName = $("full_name").val();
-                console.log("Attempted signup as parent with: " + username + " - " + password + " - " + confirmpwd + " - " + fName);
-                //Authenticate (check ID exists already + check password vs confirm password)
-                //elist = getEmployeeList();
-                //plistRaw = sessionStorage.getItem("ParentList");
-                var valid = false;
-                var hardcodeusr = "john123";
-                //plist = JSON.parse(plistRaw);
-                //check empty
-                // if (elist) {
-                //     valid = auth(username, password, elist);
-                // }
-                // if (!valid && plist) {
-                //     valid = auth(username, password, plist)
-                // }
-                // if (valid) {
-                //     redirect(valid.type);
-                // }
-                // else {
-                //     $("#error").show();
-                // }
+                console.log("Attempted signup as parent with: " + username 
+                                                                + " - " 
+                                                                + password 
+                                                                + " - " 
+                                                                + confirmpwd 
+                                                                + " - " 
+                                                                + fName);
+                
+                var valid_username = false;
+                var valid_password = false;
+
                 // should check if username entered already exists
-                if (username === hardcodeusr){
-                    $("error_username").show();
+                if (username === "john123"){
+                    
+                    $("#error_username").show();
+
+                }
+                // else, username doesn't already exist (valid)
+                else {
+                    valid_username = true;
+                    $("#error_username").hide();
                 }
                 // if password and confirm pwd is same AND username doesn't already exist, success
-                else if (password == confirmpwd && username != hardcodeusr)
-                {
+                if (password != confirmpwd){
+                    $("#error_password").show();
+                }
+                // else, password matches (valid)
+                else {
+                    valid_password = true;
                     $("#error_password").hide();
+                }
+
+                // if both username and password are invalid, show both errors 
+                if (valid_username == false && valid_password == false) {
+                    $("#error_password").show();
+                    $("#error_password").show();
+                } 
+
+                // if both username and password are valid, go back to index.html
+                if (valid_username && valid_password){
+
+                    $("#error_password").hide();
+                    $("#error_username").hide();
                     alert("Registration successful")
                     window.location.href = "/index.html";
                 }
-                // passwords dont match
-                else {
-                    $("#error_password").show();
-                }                
-
             });
-
-            //Authenticate the user
-            function auth(uname, pword, pwordconfirm) {
-                var found = false;
-                list.forEach(function (user) {
-                    if (user.username === uname) {
-                        if (user.password === pword) {
-                            console.log("Successfull User Login");
-                            $("#error").hide();
-                            found = user;
-                            setActiveUser(user);
-                            return;
-                        }
-                    }
-                })
-                return found;
-            }
-
         </script>
 
         <div id="logo">
@@ -147,17 +126,15 @@
             <input type="text" id="full_name" name="full_name">
             
             <br><br>
-
-            <!-- 
-                Change to this for actual, working submit button 
-                    <input type="submit" value="Submit">
-            -->
+            
         </form>
         
         <button id="submit">Submit</button>
         
-        <p id="error_username" style="display: none; color: red; text-align: center; margin: 0; padding: 0"><br>Username Already Exists</p>
-        <p id="error_password" style="display: none; color: red; text-align: center; margin: 0; padding: 0"><br>Passwords Do Not Match</p>
+        <p id="error_username" style="display: none; color: red; text-align: center; margin: 0; padding: 0">
+            <br>Username Already Exists</p>
+        <p id="error_password" style="display: none; color: red; text-align: center; margin: 0; padding: 0">
+            <br>Passwords Do Not Match</p>
 
     </body>
 </html>
