@@ -138,7 +138,7 @@ class Secretary {
     addClass(name, teacher, timeinterval, ClassList) {
         if (!this.classExists(name)) {
             if (this.employeeExists(teacher.username)) {
-                if (ClassList.length == 0) {                 // no students in given class list
+                if (ClassList.length == 1) {                 // no students in given class list
                     ClassList.push(StudentList[0]);         // need minimum 1 student in a class list before instantiation
                     var classroom_1 = new Classroom(name, teacher, timeinterval, ClassList, []);
                     GlobalClassList.push(classroom_1);
@@ -491,10 +491,49 @@ class Parent {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.children = [];             // array of children (Student's name)
+        this.children = [];             // array of children (Student's ID #)  NOTE: FRONT-END CAN SORT BY NAMES INSTEAD OF ID
         this.type = "Parent";
     }
+    
 
+    // a helper function for checking if a child (student) exists in the Parent's children list
+    childExists(studId) {
+        for (var i = 0; i < this.children.length; i++) {
+            if (this.children[i].Stdid == studId) {
+                return this.children[i];
+            }
+        }
+        return false;
+    }
+    
+    
+    // Lets Parent link a student to their account
+    addStudent(studId, studRegKey) {
+        for (var i = 0; i < StudentList.length; i++) {
+            if (StudentList[i].Stdid == studId && StudentList[i].regKey == studRegKey) {   // if student found + regKey matches
+                var currStud = StudentList[i];
+                this.children.push(currStud);         // student ID # pushed onto parent's children list
+                setParentList(ParentList);
+            }
+            else {
+                return false;       // could not find student
+            }
+        }
+        return false;
+    }
+
+
+    // Displays the selected child's (Student) attendance record
+    viewStudentAttendance(student) {
+        var currChild = this.childExists(student.Stdid);        // fetch the student object from parent's child list
+        return currChild.attendanceList;
+    }
+
+
+    // 
+    reportStudentAbsence() {
+        
+    }
 
 
 

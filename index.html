@@ -41,13 +41,15 @@
                 $("#error").hide();
                 //Get data
                 var data = getEmployeeList();
-                console.log(data);
-                if (!data) {
+                var data2 = getParentList();
+
+                if (!data && !data2) {
                     //Init data
                     console.log("Initializing data for first time run");
                     InitData();
                     var data = getEmployeeList();
-                    if (!data) {
+                    var data2 = getParentList();
+                    if (!data || !data2) {
                         console.log("ERROR: Init data not found");
                     }
                 }
@@ -60,14 +62,14 @@
                 console.log("Attempted login with: " + username + " - " + password);
                 //Authenticate
                 elist = getEmployeeList();
-                plistRaw = sessionStorage.getItem("ParentList");
+                plist = getParentList();
                 var valid = false;
-                plist = JSON.parse(plistRaw);
                 //check empty
                 if (elist) {
                     valid = auth(username, password, elist);
                 }
                 if (!valid && plist) {
+                    console.log("checking parents");
                     valid = auth(username, password, plist)
                 }
                 if (valid) {
