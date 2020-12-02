@@ -377,26 +377,22 @@ class Secretary {
     }
 
     //removing student from global student list (deregistering student from school)
-    deregisterStudent(student)
+    deregisterStudent(studId)
     {
-        if(this.studentExists(student))
-        {
-            for(var i = 0; i<StudentList.length; i++)
-            {
-                if(student == StudentList[i].Stdid)
-                {
-                    var victim_stud = StudentList[i].indexOf(i); 
+        var currStud = this.studentExists(studId);
+        if (currStud) {
+            for (var i = 0; i < StudentList.length; i++) {
+                if (studId == StudentList[i].Stdid) {
+                    var victim_index = i;
                 }
             }
-            if(victim_stud > -1)
-            {
-                StudentList.splice(victim_stud, 1);
+            if (victim_index > -1) {
+                StudentList.splice(victim_index, 1);
                 setStudentList(StudentList);
                 return true;
             }
         }
-        else
-        {
+        else {
             return false;
         }
     }
