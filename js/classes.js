@@ -281,10 +281,8 @@ class Secretary {
 
     /* SECRETARY FUNCTION: ADD A STUDENT TO A CLASSROOM */
     studentExists(studID) {
-        var i;
-
-        for (i = 0; i < StudentList.length; i = i + 1) {
-            if (studID === StudentList[i].Stdid) {
+        for (var i = 0; i < StudentList.length; i++) {
+            if (studID == StudentList[i].Stdid) {
                 return StudentList[i];
             }
         }
@@ -379,8 +377,10 @@ class Secretary {
     //removing student from global student list (deregistering student from school)
     deregisterStudent(studId)
     {
+        // console.log("deregister student now?");
         var currStud = this.studentExists(studId);
         if (currStud) {
+            // console.log("hjere");
             for (var i = 0; i < StudentList.length; i++) {
                 if (studId == StudentList[i].Stdid) {
                     var victim_index = i;
@@ -388,7 +388,7 @@ class Secretary {
                 if (victim_index > -1) {
                     StudentList.splice(victim_index, 1);
                     setStudentList(StudentList);
-                    console.log("removing student");
+                    // console.log("removing student");
                     return true;
                 }
             }
