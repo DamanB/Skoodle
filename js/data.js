@@ -16,25 +16,28 @@ function InitData()
 
     var class2 = sec_1.addClass("Math1", teach_2, "2:00pm - 3:00pm",[]); 
 
-    var stud_1 = sec_1.registerStudent("Ivan");
-    var stud_2 = sec_1.registerStudent("Andrew");
-    var stud_3 = sec_1.registerStudent("Wei");
-    var stud_4 = sec_1.registerStudent("Daman");
-    var stud_5 = sec_1.registerStudent("Booboo");
-    var stud_6 = sec_1.registerStudent("Adobo");  
-    
+    var stud_1 = sec_1.registerStudent("Maninder Bassi");
+    var stud_2 = sec_1.registerStudent("Jagveer Singh");
+    var stud_3 = sec_1.registerStudent("Tina Kelly");
+    var stud_4 = sec_1.registerStudent("Johnny Sons");
+    var stud_5 = sec_1.registerStudent("Jack Black");
+    var stud_6 = sec_1.registerStudent("Aaron Smith");  
+    var stud_7 = sec_1.registerStudent("Matimbo Johnson");
+
     sec_1.addStudentToClass("French1", stud_1); 
     sec_1.addStudentToClass("French1", stud_2);
     sec_1.addStudentToClass("French1", stud_3);
-    
+    sec_1.addStudentToClass("French1", stud_7); 
     sec_1.addStudentToClass("Math1", stud_4); 
     sec_1.addStudentToClass("Math1", stud_5); 
-    sec_1.addStudentToClass("Math1", stud_6); 
+    sec_1.addStudentToClass("Math1", stud_6);
+    
 
 
     var par_1 = new Parent("Mary", "par1", "1234567", "mary@gmail.com"); 
-    
     var par_2 = new Parent("Ostroff", "par2", "1234567", "ostroff@gmail.com"); 
+    ParentList.push(par_1);         // TEMPORARY
+    ParentList.push(par_2);         // TEMPORARY
 
     setEmployeeList(EmployeeList); 
     setGlobalClassList(GlobalClassList);    
