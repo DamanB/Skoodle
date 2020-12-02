@@ -557,7 +557,7 @@ class AttendanceEntry {
         this.student = student; 
         this.className = className;
         this.date = new Date();
-        this.studentStatus = false;
+        this.studentStatus = "P";
     }
 
 }
