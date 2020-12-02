@@ -512,7 +512,7 @@ class Parent {
         for (var i = 0; i < StudentList.length; i++) {
             if (StudentList[i].Stdid == studId && StudentList[i].regKey == studRegKey) {   // if student found + regKey matches
                 var currStud = StudentList[i];
-                this.children.push(currStud.Stdid);         // student ID # pushed onto parent's children list
+                this.children.push(currStud);         // student ID # pushed onto parent's children list
                 setParentList(ParentList);
             }
             else {
