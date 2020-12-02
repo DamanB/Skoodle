@@ -196,7 +196,7 @@ class Secretary {
         }
     }
 
-    //helper method for remove class
+    //helper method for removeClass function
     removeStudentsFromClass(currClassroom)
     {
         for (var i = 0; i < currClassroom.ClassList.length; i++)
@@ -373,6 +373,7 @@ class Secretary {
         var newStud = new Student(studName, studID, [], regKey);
         StudentList.push(newStud);
         setStudentList(StudentList);
+        return newStud;
     }
 
     //removing student from global student list (deregistering student from school)
@@ -490,8 +491,11 @@ class Parent {
         this.username = username;
         this.password = password;
         this.email = email;
+        this.children = [];             // array of children (Student's name)
         this.type = "Parent";
     }
+
+
 
 
 }
