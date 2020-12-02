@@ -25,7 +25,6 @@
             //update child list
             var list = user.children;
             list.forEach(function (cl) {
-                console.log(cl);
                 $('#classList tbody').append('<tr><td>' + cl.name + '</td><td>' + cl.Stdid + '</td><td>' + '<button class="modify">View/Report Absences</button> </td></tr>');
             });
         });
@@ -34,6 +33,14 @@
         $(document).on('click', "#logout", function () {
             removeActiveUser();
             window.location.href = "/index.html";
+        });
+
+        //selecting to modify a child
+        $(document).on('click', '.modify', function () {
+            var id = $(this).parent().prev().text();
+            var data = user.childExists(id);
+            sessionStorage.setItem("CheckChild", JSON.stringify(data));
+            window.location.href = "/pages/parent_manageChild.html";
         });
     </script>
 

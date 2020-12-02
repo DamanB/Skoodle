@@ -14,13 +14,23 @@
     <body>
         <script>
             var user;
-        
+            var child;         
             //set header
             $(document).ready(function () {
                 user = Object.assign(new Admin, getActiveUser());
                 $("#username").text(user.type.toUpperCase() + ": " + user.username);
                 $("#name").text("Hello " + user.name + "!");
+
+                //get child
+                child = JSON.parse(sessionStorage.getItem("CheckChild"));
+                console.log(child);
+                $("#attendanceHead").append("Attendance for: " + child.name + "<br>Student ID: " + child.Stdid);
+                getAttendance();
             });
+
+            function getAttendance(){
+                var attendance = child.attendanceList;
+            }
             
             //Logout button
             $(document).on('click', "#logout", function(){
@@ -41,20 +51,17 @@
         <div id="logout">
             <button>Logout</button>
         </div>
-        
-        <p>Student: <span>Student's Name</span ></p> 
+        <br>
+        <div id="back">
+            <button><a href="/pages/parent1.html" style="color: black; text-decoration: none;">Back</a></button>
+        </div>
         
         <div id="actions">
-            <ul>
-                <h3>Student is enrolled in:</h3>
-                <li><a href="/pages/student_enrolledClassAttendance.html">EECS 1234</a></li>
-            </ul>
+            <h2 id='attendanceHead'></h2>        
+
+
         </div>
         
         <br><br>
-
-        <a href="/pages/student_abscence.html">
-            <button>Request Absence</button>
-        </a>
     </body>
 </html>
