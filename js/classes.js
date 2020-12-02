@@ -220,7 +220,7 @@ class Secretary {
 
     /* SECRETARY FUNCTION: MODIFY A CLASSROOM'S INFORMATION */
     modifyClassName(className, newName) {
-        if (classExists(newName)) {
+        if (this.classExists(newName)) {
             return false;
         }
         else {
