@@ -38,6 +38,7 @@ function InitData()
     var par_2 = new Parent("Ostroff", "par2", "1234567", "ostroff@gmail.com"); 
     ParentList.push(par_1);         // TEMPORARY
     ParentList.push(par_2);         // TEMPORARY
+    setParentList(ParentList);
 
     setEmployeeList(EmployeeList); 
     setGlobalClassList(GlobalClassList);    
