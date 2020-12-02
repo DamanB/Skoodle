@@ -138,7 +138,7 @@ class Secretary {
     addClass(name, teacher, timeinterval, ClassList) {
         if (!this.classExists(name)) {
             if (this.employeeExists(teacher.username)) {
-                if (ClassList.length == 0) {                 // no students in given class list
+                if (ClassList.length == 1) {                 // no students in given class list
                     ClassList.push(StudentList[0]);         // need minimum 1 student in a class list before instantiation
                     var classroom_1 = new Classroom(name, teacher, timeinterval, ClassList, []);
                     GlobalClassList.push(classroom_1);
