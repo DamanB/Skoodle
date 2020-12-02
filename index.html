@@ -60,9 +60,8 @@
                 console.log("Attempted login with: " + username + " - " + password);
                 //Authenticate
                 elist = getEmployeeList();
-                plistRaw = sessionStorage.getItem("ParentList");
+                plist = getParentList();
                 var valid = false;
-                plist = JSON.parse(plistRaw);
                 //check empty
                 if (elist) {
                     valid = auth(username, password, elist);
