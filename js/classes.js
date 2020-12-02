@@ -14,7 +14,7 @@ class Admin {
     }
     addToList() {
         EmployeeList.push(this);
-
+        //setEmployeeList(EmployeeList); 
     }
 
 
@@ -36,11 +36,13 @@ class Admin {
             if (type == "Secretary") {
                 var secretary_1 = new Secretary(name, username, password);
                 EmployeeList.push(secretary_1);
+                setEmployeeList(EmployeeList); 
                 return secretary_1;
             }
             else if (type == "Teacher") {
                 var teacher_1 = new Teacher(name, username, password);
                 EmployeeList.push(teacher_1);
+                setEmployeeList(EmployeeList); 
                 return teacher_1;
             }
         }
@@ -62,6 +64,7 @@ class Admin {
 
             if (victim_employee_index > -1) {
                 EmployeeList.splice(victim_employee_index, 1);
+                setEmployeeList(EmployeeList); 
                 return true;
             }
         }
@@ -75,6 +78,7 @@ class Admin {
     modifyEmployeeName(username, newName) {
         var employee_1 = this.employeeExists(username);
         employee_1.name = newName;
+        setEmployeeList(EmployeeList); 
     }
 
     modifyEmployeeUsername(username, newUser) {
@@ -84,6 +88,7 @@ class Admin {
         else {
             var employee_1 = this.employeeExists(username);
             employee_1.username = newUser;
+            setEmployeeList(EmployeeList); 
             return true;
         }
     }
@@ -91,6 +96,7 @@ class Admin {
     modifyEmployeePassword(username, newPass) {
         var employee_1 = this.employeeExists(username);
         employee_1.password = newPass;
+        setEmployeeList(EmployeeList); 
     }
 }
 
@@ -136,11 +142,20 @@ class Secretary {
                     ClassList.push(StudentList[0]);         // need minimum 1 student in a class list before instantiation
                     var classroom_1 = new Classroom(name, teacher, timeinterval, ClassList, []);
                     GlobalClassList.push(classroom_1);
+                    teacher.taughtClasses.push(classroom_1.name); 
+                    setGlobalClassList(GlobalClassList); 
+                    setStudentList(StudentList); 
+                    setEmployeeList(EmployeeList); 
+
                     return classroom_1;
                 }
                 else {
                     var classroom_1 = new Classroom(name, teacher, timeinterval, ClassList, []);
                     GlobalClassList.push(classroom_1);
+                    teacher.taughtClasses.push(classroom_1.name); 
+                    setGlobalClassList(GlobalClassList);
+                    setStudentList(StudentList);
+                    setEmployeeList(EmployeeList); 
                     return classroom_1;
                 }
 
@@ -154,6 +169,7 @@ class Secretary {
 
     /* SECRETARY FUNCTION: REMOVE CLASSROOM FROM GLOBAL CLASS LIST */
     //removing a class
+    //remove class from student list 
     removeClass(name) {
         var i;
 
@@ -166,7 +182,11 @@ class Secretary {
             }
             if (victim_class_index > -1) {
                 victim_classroom.teacher.taughtClasses.splice(victim_class_index,1);  //unassigning teacher from removed class
+                this.removeStudentFromClass(victim_classroom); //unassigning students from removed classroom 
                 GlobalClassList.splice(victim_class_index, 1);
+                setGlobalClassList(GlobalClassList);
+                setEmployeeList(EmployeeList);
+                setStudentList(StudentList);  
                 return true;
             }
         }
@@ -174,6 +194,28 @@ class Secretary {
             console.log("THIS DOES NOT EXISTS");
             return false;
         }
+    }
+
+    //helper method for remove class
+    removeStudentsFromClass(currClassroom)
+    {
+        for (var i = 0; i < currClassroom.ClassList.length; i++)
+        {
+            var currStudent = currClassroom.ClassList[i]; 
+            
+            for(var j = 0; j < currStudent.classes.length; j++)
+            {
+                if(currStudent.classes[j].name == currClassroom.name)
+                {
+                    var victim_enrolled_class_index = currStudent.classes.indexOf(j); 
+                }
+            }
+            if(victim_enrolled_class_index > -1)
+            {
+                currStudent.classes.splice(victim_enrolled_class_index, 1); 
+            }
+        }
+
     }
 
     /* SECRETARY FUNCTION: MODIFY A CLASSROOM'S INFORMATION */
@@ -184,6 +226,8 @@ class Secretary {
         else {
             var classroom_1 = this.classExists(className);
             classroom_1.name = newName;
+            setGlobalClassList(GlobalClassList);
+            setStudentList(StudentList); 
         }
     }
 
@@ -205,10 +249,16 @@ class Secretary {
                 }
                 if (victim_classroom > -1) {
                     victim_teacher.taughtClasses.splice(victim_classroom,1);  //unassigning teacher from removed class
+                    setEmployeeList(EmployeeList);
+                    setGlobalClassList(GlobalClassList);
+                    setStudentList(StudentList); 
                     return true;
                 }
                 classroom_1.teacher = newTeach;
-                newTeach.taughtClasses.push(classroom_1); //adding the class to the new teacher's list of taught classes
+                newTeach.taughtClasses.push(classroom_1.name); //adding the class to the new teacher's list of taught classes
+                setEmployeeList(EmployeeList);
+                setGlobalClassList(GlobalClassList);
+                setStudentList(StudentList); 
             }
         }
         return false;
@@ -218,6 +268,8 @@ class Secretary {
         var classroom_1 = this.classExists(className);  
         if (classroom_1) {                              // class exists?
             classroom_1.timeinterval = newTime;         // set new time interval
+            setGlobalClassList(GlobalClassList);
+            setStudentList(StudentList);
         }
         else {
             return false;
@@ -253,7 +305,9 @@ class Secretary {
                             }
                         }
                         holder_class.ClassList.push(student);       // add student into specified class
-                        student.classes.push(holder_class);         // add class to list of student's enrolled class list
+                        student.classes.push(holder_class.name);         // add class to list of student's enrolled class list
+                        setGlobalClassList(GlobalClassList);
+                        setStudentList(StudentList); 
                         return true;
                     }
                 }
@@ -286,6 +340,8 @@ class Secretary {
             if (victim_stud > -1) 
             {
                 currClass.ClassList.splice(victim_employee_index, 1);
+                setStudentList(StudentList);
+                setGlobalClassList(GlobalClassList);
                 return true;
             }
         }
@@ -314,9 +370,9 @@ class Secretary {
     {
         var regKey = this.genKey(); 
         var studID = this.genStudID(); 
-        var newStud = new Student(studName, studID, [], regKey); 
-
-        StudentList.push(newStud); 
+        var newStud = new Student(studName, studID, [], regKey);
+        StudentList.push(newStud);
+        setStudentList(StudentList);
     }
 
     //removing student from global student list (deregistering student from school)
@@ -334,6 +390,7 @@ class Secretary {
             if(victim_stud > -1)
             {
                 StudentList.splice(victim_stud, 1);
+                setStudentList(StudentList);
                 return true;
             }
         }
@@ -353,6 +410,7 @@ class Teacher {
         this.taughtClasses = []; //list of classrooms assigned to teacher 
     }
 
+    
     getTeacherFromClass(className) {
         var currClassroom = this.classExists(className);
         return currClassroom.teacher;
