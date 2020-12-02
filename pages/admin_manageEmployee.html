@@ -42,20 +42,28 @@
             {
                 var curItem = toEdit.username;
                 var newItem = $("#nameEmployee").val();
-                user.modifyEmployeeName(curItem, newItem);
+                //user.modifyEmployeeName(curItem, newItem);
                 $("#nameToEdit").text(newItem);
                 $("#nameSuccess").show();
             });
 
-            $(document).on('click', "#submitUsername", function()
+             $(document).on('click', "#submitUsername", function()
             {
                 var curItem = toEdit.username;
                 var newItem = $("#usernameEmployee").val();
-                user.modifyEmployeeUsername(curItem, newItem);
+                //user.modifyEmployeeUsername(curItem, newItem);
                 $("#usernameToEdit").text(newItem);
                 $("#usernameSuccess").show();
             });
 
+            $(document).on('click', "#submitPassword", function()
+            {
+                var curItem = toEdit.username;
+                var newItem = $("#passwordEmployee").val();
+                //user.modifyEmployeePassword(curItem, newItem);
+                $("#passwordToEdit").text(newItem);
+                $("#passwordSuccess").show();
+            });
         </script>
 
         <div id="logo">
@@ -102,8 +110,8 @@
         <input type="text" id="usernameEmployee" name="usernameEmployee">
         <button id="submitUsername">Submit Changes</button>
 
-        <span style="color:green" id="usernameSuccess">Success</span>
-        <span style="color:red" id="usernameError">Username already exists</span>
+        <span style="display: none; color:green" id="usernameSuccess">Success</span>
+        <span style="display: none; color:red" id="usernameError">Username already exists</span>
 
         <br><br>
 
@@ -115,7 +123,7 @@
         <input type="text" id="passwordEmployee" name="passwordEmployee">
         <button id="submitPassword">Submit Changes</button>
 
-        <span style="color:green">Success</span>
+        <span style="display: none; color:green" id="passwordSuccess">Success</span>
 
         <br>
 
