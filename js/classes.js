@@ -385,11 +385,12 @@ class Secretary {
                 if (studId == StudentList[i].Stdid) {
                     var victim_index = i;
                 }
-            }
-            if (victim_index > -1) {
-                StudentList.splice(victim_index, 1);
-                setStudentList(StudentList);
-                return true;
+                if (victim_index > -1) {
+                    StudentList.splice(victim_index, 1);
+                    setStudentList(StudentList);
+                    console.log("removing student");
+                    return true;
+                }
             }
         }
         else {
