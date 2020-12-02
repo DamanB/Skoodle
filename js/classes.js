@@ -506,7 +506,18 @@ class Parent {
         return false;
     }
     
+
+    // a helper function for checking if a child is enrolled in a class
+    classExists(className) {
+        for (var i = 0; i < this.GlobalClassList.length; i++) {
+            if (className === this.GlobalClassList[i].name) {
+                return this.GlobalClassList[i];
+            }
+        }
+        return false;
+    }
     
+
     // Lets Parent link a student to their account
     addStudent(studId, studRegKey) {
         for (var i = 0; i < StudentList.length; i++) {
@@ -530,8 +541,17 @@ class Parent {
     }
 
 
-    // 
-    reportStudentAbsence() {
+    // Report the selected child's (Student) attendance entry to reported absent for certain date/class
+    reportStudentAbsence(student, date, className) {
+        var currChild = this.childExists(student.Stdid);        // fetch the student object from parent's child list
+        for (var i = 0; i < currChild.attendanceList.length; i++) {
+            if (currChild.attendanceList[i].className == className && currChild.attendanceList[i].date == date && !currChild.attendanceList[i].successfullyLogged) {
+                currChild.attendanceList[i].studentStatus = "RA";
+                setGlobalDailyAttendenceList(GlobalDailyAttendenceList);
+                return true;            // Parent successfully set student's attendance entry for that day/class to Reported Absence (RA)
+            }
+            return false;
+        }
         
     }
 
@@ -553,11 +573,12 @@ class Classroom {
 
 //this is just a single entry within the major attendance sheet for a single class for a single student
 class AttendanceEntry {
-    constructor(student, className, date, studentStatus) {
+    constructor(student, className, date) {
         this.student = student; 
         this.className = className;
         this.date = new Date();
         this.studentStatus = "P";
+        this.successfullyLogged = false;
     }
 
 }
