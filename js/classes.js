@@ -377,13 +377,13 @@ class Secretary {
     }
 
     //removing student from global student list (deregistering student from school)
-    deregisterStudent(student)
+    deregisterStudent(studId)
     {
-        if(this.studentExists(student))
+        if(this.studentExists(studId))
         {
             for(var i = 0; i<StudentList.length; i++)
             {
-                if(student == StudentList[i].Stdid)
+                if(studId == StudentList[i].Stdid)
                 {
                     var victim_stud = StudentList[i].indexOf(i); 
                 }
