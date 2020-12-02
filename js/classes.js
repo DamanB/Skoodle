@@ -82,7 +82,7 @@ class Admin {
     }
 
     modifyEmployeeUsername(username, newUser) {
-        if (employeeExists(newUser)) {
+        if (this.employeeExists(newUser)) {
             return false;
         }
         else {
@@ -173,7 +173,7 @@ class Secretary {
     removeClass(name) {
         var i;
 
-        if (classExists(name)) {
+        if (this.classExists(name)) {
             for (i = 0; i < GlobalClassList.length; i++) {
                 if (name == GlobalClassList[i].name) {
                     const victim_class_index = GlobalClassList.indexOf(i);
@@ -232,7 +232,7 @@ class Secretary {
     }
 
     modifyClassTeach(className, newTeach) {
-        if (employeeExists(newTeach)) {         // newTeach exists?
+        if (this.employeeExists(newTeach)) {         // newTeach exists?
             var classroom_1 = this.classExists(className);      
             if (classroom_1) {                  // classroom exists?
                 if (classroom_1.teacher.username == newTeach.username) {    // same teacher assigned?
