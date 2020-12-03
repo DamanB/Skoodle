@@ -40,6 +40,15 @@ function InitData()
     ParentList.push(par_2);         // TEMPORARY
     par_1.addStudent(stud_1.Stdid, stud_1.regKey);
     
+   var class1_attendance = teach_1.createAttendance("French1"); 
+   teach_1.markStatus("French1", stud_1.Stdid ,"P"); 
+   teach_1.markStatus("French1", stud_2.Stdid ,"A"); 
+
+   var class2_attendance = teach_2.createAttendance("Math1"); 
+   teach_1.markStatus("Math1", stud_4.Stdid ,"P"); 
+   teach_1.markStatus("Math1", stud_5.Stdid ,"A"); 
+
+    setGlobalAttendenceList(GlobalAttendenceList); 
     setParentList(ParentList);
     setEmployeeList(EmployeeList); 
     setGlobalClassList(GlobalClassList);    
@@ -102,18 +111,18 @@ function setParentList(list){
     sessionStorage.setItem('ParentList', JSON.stringify(list));
 }
 
-function getGlobalDailyAttendenceList(){
-    var raw = sessionStorage.getItem('GlobalDailyAttendenceList');
+function getGlobalAttendenceList(){
+    var raw = sessionStorage.getItem('GlobalAttendenceList');
     var list = JSON.parse(raw);
     if (list){
-        GlobalDailyAttendenceList = list; 
+        GlobalAttendenceList = list; 
     }
     return list;
 }
 
-function setGlobalDailyAttendenceList(list){
-    GlobalDailyAttendenceList = list; 
-    sessionStorage.setItem('GlobalDailyAttendenceList', JSON.stringify(list));
+function setGlobalAttendenceList(list){
+    GlobalAttendenceList = list; 
+    sessionStorage.setItem('GlobalAttendenceList', JSON.stringify(list));
 }
 
 function getActiveUser(){
@@ -130,17 +139,3 @@ function removeActiveUser(){
     sessionStorage.setItem("User", null); 
 }
 
-//PLEASE REMOVE THESE GETTERS AND SETTERS ONLY NEEDED TO TEST REMOVESTUDENTFROMCLASS
-function getWhiteList(){
-    var raw = sessionStorage.getItem('WHITELIST');
-    var list = JSON.parse(raw);
-    if (list){
-        WHITELIST = list; 
-    }
-    return list;
-}
-
-function setWhiteList(list){
-    WHITELIST = list; 
-    sessionStorage.setItem('GlobalClassList', JSON.stringify(list));
-}
