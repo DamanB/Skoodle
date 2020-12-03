@@ -3,6 +3,7 @@ var GlobalClassList = []; //list of all classes offered at the school
 var StudentList = []; //list of all students in the class
 var ParentList = []; //list of all parents of the students in the school
 var GlobalDailyAttendenceList = [];  //the daily attendence 
+var WHITELIST = []; //PLEASE DELETE THIS PLS AND THANK U
 
 class Admin {
     constructor(name, username, password) {
@@ -297,7 +298,7 @@ class Secretary {
                     if (className == GlobalClassList[i].name) {
 
                         // found correct class
-                        var holder_class = GlobalClassList[i];
+                        var holder_class = GlobalClassList[i]; 
                         for (var j = 0; j < holder_class.ClassList.length; j++) {    // does the student already exist in the class?
                             if (student.Stdid == holder_class.ClassList[j].Stdid) {
                                 return false;
@@ -337,7 +338,8 @@ class Secretary {
                 }
                 if (victim_stud > -1) 
                 {
-                    currClass.ClassList.splice(victim_stud, 1);
+                    WHITELIST = currClass.ClassList.splice(victim_stud, 1); //THIS IS JUST FOR JOHN TO SEE IF METHOD WORKED!!!!!!
+                    setWhiteList(WHITELIST); //DELETE THIS PLEASE
                     setStudentList(StudentList);
                     setGlobalClassList(GlobalClassList);
                     return true;

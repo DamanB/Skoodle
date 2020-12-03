@@ -129,3 +129,18 @@ function setActiveUser(user){
 function removeActiveUser(){
     sessionStorage.setItem("User", null); 
 }
+
+//PLEASE REMOVE THESE GETTERS AND SETTERS ONLY NEEDED TO TEST REMOVESTUDENTFROMCLASS
+function getWhiteList(){
+    var raw = sessionStorage.getItem('WHITELIST');
+    var list = JSON.parse(raw);
+    if (list){
+        WHITELIST = list; 
+    }
+    return list;
+}
+
+function setWhiteList(list){
+    WHITELIST = list; 
+    sessionStorage.setItem('GlobalClassList', JSON.stringify(list));
+}
