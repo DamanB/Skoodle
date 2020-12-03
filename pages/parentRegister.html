@@ -41,6 +41,7 @@
 
     <body>
         <script>
+            var user;
             $(document).ready(function () {
                 $("#error_username").hide();
                 $("#error_password").hide();
@@ -65,7 +66,7 @@
                                                                 + " - " 
                                                                 + fName);
                 
-                var valid_username = false;
+                var valid_username = true;
                 var valid_password = false;
                 //var is_username_null_same = false;
 
@@ -84,19 +85,11 @@
                         if (pl.username.toLowerCase() === username.toLowerCase()) {
                             $("#error_username").show();
                             //is_username_null_same  = false;
-                            return
                             valid_username = false;
-                        }
-                        else
-                        {
-                            valid_username = true;
-
+                            return
                         }
                     })
                 }
-                
-                //link these ^^      vv
-
                 // if (is_username_null_same) {
                 //     return
                 // }
@@ -126,7 +119,6 @@
                     $("#error_username").hide();
                     alert("Registration successful")
                     window.location.href = "/index.html";
-                    //console.log
                 }
             });
             
@@ -142,15 +134,6 @@
                     }
                 })
                 return found;
-            }
-
-            function getStudents() {
-            var stds = getStudentList();
-            var students = [];
-            stds.forEach(function (std) {
-                students.push(std);
-            });
-            return students;
             }
 
         </script>
