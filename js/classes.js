@@ -320,15 +320,39 @@ class Secretary {
         }
     }
 
-
+    deregisterStudent(studId)
+    {
+        // console.log("deregister student now?");
+        var currStud = this.studentExists(studId);
+        if (currStud) {
+            // console.log("hjere");
+            for (var i = 0; i < StudentList.length; i++) {
+                if (studId == StudentList[i].Stdid) {
+                    var victim_index = i;
+                }
+                if (victim_index > -1) {
+                    StudentList.splice(victim_index, 1);
+                    setStudentList(StudentList);
+                    // console.log("removing student");
+                    return true;
+                }
+            }
+        }
+        else {
+            return false;
+        }
+    }
+    
     /* SECRETARY FUNCTION: REMOVE A STUDENT FROM A CLASSROOM */
     removeStudentFromClass(className,studID)
     {
+        console.log("remove student now?");
         var currClass = this.classExists(className); 
         
         //class exists 
         if(currClass)
         {
+            console.log("hjere");
             for(var i = 0; i < currClass.ClassList.length; i++)
             {
                 if(currClass.ClassList[i].Stdid == studID)
@@ -339,6 +363,7 @@ class Secretary {
                 {
                     currClass.ClassList.splice(victim_stud, 1);
                     //setStudentList(StudentList);
+                    console.log("remove student from class");
                     setGlobalClassList(GlobalClassList);
                     return true;
                 }
