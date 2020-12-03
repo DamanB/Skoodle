@@ -466,7 +466,7 @@ class Teacher {
             {
                 var currStudent = currClassroom.ClassList[i];  //creating student object 
                 
-                var attendance_entry = new AttendanceEntry(currStudent, className, "");  //creating an attendance entry 
+                var attendance_entry = new AttendanceEntry(currStudent, className, "*");  //creating an attendance entry 
                                 
                 attendance_holder[i].push(attendance_entry);   //storing student attendance entries into mock holder
 
@@ -476,7 +476,7 @@ class Teacher {
         var d = new Date(new_date.getFullYear(), new_date.getMonth(), new_date.getDay());
         var attendance_1 = new ClassAttendance(attendance_holder, d);  // creating the class attendance list from temp mock class attendance
 
-        currClassroom.Attendance = attendance_1; //putting the attendance made into the class 
+        currClassroom.Attendance.push(attendance_1); //putting the attendance made into the class 
         setGlobalClassList(GlobalClassList); 
         
         GlobalAttendenceList.push(attendance_1); //sending the attendance so secratery can access the attendances
@@ -486,12 +486,29 @@ class Teacher {
     }
     
     //mark student present/absent
-    markStatus(className, studId, status)
+    markStatus(className, currDate, studId, status)
     {
         var currClass = this.classExists(className); //grabs the current class
-        var currStudent = this.studentExistsInClass(studId, currClass);  
-        if (currStudent && currClass) 
+        // var currStudent = this.studentExistsInClass(studId, currClass);
+        var classAttendanceList = currClass.Attendance;
+        var classAttendance_1;
+        classAttendanceList.forEach(function(classAttend){
+            if (classAttend.date == currDate) {
+                classAttendance_1 = classAttend;
+                return;
+            }
+        });
+        
+        classAttendance_1.forEach(function(classEntry){
+            if (classEntry.student.Stdid == studId) {
+                classEntry.studentStatus = status;
+                return;
+            }
+        });
+        
+        /*if (currStudent && currClass) 
         { 
+
             for (var i = 0; i < currClass.Attendance.length; i++)
             {
                 var stud_entry = currClass.Attendance[i];
@@ -503,7 +520,7 @@ class Teacher {
                 }
             }
         }
-        return false; 
+        return false; */
     }
 
     //submitting a complete attendance to the secretary (updating global list)
@@ -622,7 +639,7 @@ class Classroom {
         this.teacher = teacher;
         this.timeinterval = timeinterval;
         this.ClassList = ClassList;    // Array of Student Objects
-        this.Attendance = null;  //list of of Class attendance objects 
+        this.Attendance = [];  //list of of Class attendance objects 
     }
 
 
