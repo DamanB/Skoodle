@@ -333,11 +333,11 @@ class Secretary {
             {
                 if(currClass.ClassList[i].Stdid == studID)
                 {
-                    var victim_stud = currClass.ClassList[i].indexOf(i); 
+                    var victim_stud = i; 
                 }
                 if (victim_stud > -1) 
                 {
-                    currClass.ClassList.splice(victim_employee_index, 1);
+                    currClass.ClassList.splice(victim_stud, 1);
                     setStudentList(StudentList);
                     setGlobalClassList(GlobalClassList);
                     return true;
