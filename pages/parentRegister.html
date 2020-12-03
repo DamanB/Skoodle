@@ -63,19 +63,14 @@
                 
                 var valid_username = false;
                 var valid_password = false;
-                
-                var pList = getParentList();
-                var valid = false;
 
                 // should check if username entered already exists
                 // if (username === "john123"){
-                    
                 //     $("#error_username").show();
-
                 // }
 
                 if (pList) {
-                    valid = auth(username);
+                    //valid = auth(username);
                 }
                 // else, username doesn't already exist (valid)
                 else {
@@ -97,10 +92,8 @@
                     $("#error_password").show();
                     $("#error_password").show();
                 } 
-
                 // if both username and password are valid, go back to index.html
                 if (valid_username && valid_password){
-
                     $("#error_password").hide();
                     $("#error_username").hide();
                     alert("Registration successful")
@@ -121,6 +114,16 @@
                 })
                 return found;
             }
+
+            function getStudents() {
+            var stds = getStudentList();
+            var students = [];
+            stds.forEach(function (std) {
+                students.push(std);
+            });
+            return students;
+            }
+
         </script>
 
         <div id="logo">
