@@ -22,7 +22,7 @@ class Admin {
     //precondition check for employee existing
     employeeExists(username) {
         for (var i = 0; i < EmployeeList.length; i++) {
-            if (username === EmployeeList[i].username) {
+            if (username == EmployeeList[i].username) {
                 //do not add the employee to the list 
                 return EmployeeList[i];
             }
@@ -114,7 +114,7 @@ class Secretary {
     /* SECRETARY FUNCTION: ADD CLASSROOM TO GLOBAL CLASS LIST */
     employeeExists(username) {
         for (var i = 0; i < EmployeeList.length; i++) {
-            if (username === EmployeeList[i].username) {
+            if (username == EmployeeList[i].username) {
                 return EmployeeList[i];
             }
         }
@@ -126,7 +126,7 @@ class Secretary {
     //precondition check for a classroom existing
     classExists(name) {
         for (var i = 0; i < GlobalClassList.length; i++) {
-            if (name === GlobalClassList[i].name) {
+            if (name == GlobalClassList[i].name) {
                 return GlobalClassList[i];
             }
         }
@@ -320,28 +320,7 @@ class Secretary {
         }
     }
 
-    deregisterStudent(studId)
-    {
-        // console.log("deregister student now?");
-        var currStud = this.studentExists(studId);
-        if (currStud) {
-            // console.log("hjere");
-            for (var i = 0; i < StudentList.length; i++) {
-                if (studId == StudentList[i].Stdid) {
-                    var victim_index = i;
-                }
-                if (victim_index > -1) {
-                    StudentList.splice(victim_index, 1);
-                    setStudentList(StudentList);
-                    // console.log("removing student");
-                    return true;
-                }
-            }
-        }
-        else {
-            return false;
-        }
-    }
+
     
     /* SECRETARY FUNCTION: REMOVE A STUDENT FROM A CLASSROOM */
     removeStudentFromClass(className,studID)
@@ -442,7 +421,7 @@ class Teacher {
 
     classExists(className) {
         for (var i = 0; i < this.GlobalClassList.length; i++) {
-            if (className === this.GlobalClassList[i].name) {
+            if (className == this.GlobalClassList[i].name) {
                 return this.GlobalClassList[i];
             }
         }
@@ -451,7 +430,7 @@ class Teacher {
     
     attendanceExists(className) {
         for (var i = 0; i < this.GlobalClassList.length; i++) {
-            if (className === this.GlobalClassList[i].name) {
+            if (className == this.GlobalClassList[i].name) {
                 return this.GlobalClassList[i].Attendance;
             }
         }
@@ -532,7 +511,7 @@ class Parent {
     // a helper function for checking if a child is enrolled in a class
     classExists(className) {
         for (var i = 0; i < this.GlobalClassList.length; i++) {
-            if (className === this.GlobalClassList[i].name) {
+            if (className == this.GlobalClassList[i].name) {
                 return this.GlobalClassList[i];
             }
         }
