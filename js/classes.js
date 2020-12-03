@@ -322,7 +322,7 @@ class Secretary {
 
 
     /* SECRETARY FUNCTION: REMOVE A STUDENT FROM A CLASSROOM */
-    removeStudentFromClass(className,student)
+    removeStudentFromClass(className,studID)
     {
         var currClass = this.classExists(className); 
         
@@ -331,13 +331,13 @@ class Secretary {
         {
             for(var i = 0; i < currClass.length; i++)
             {
-                if(currClass.ClassList[i].Stdid == student.Stdid)
+                if(currClass.ClassList[i].Stdid == studID)
                 {
-                    var victim_stud = currClass.ClassList[i].indexOf(i); 
+                    var victim_stud = i; 
                 }
                 if (victim_stud > -1) 
                 {
-                    currClass.ClassList.splice(victim_employee_index, 1);
+                    currClass.ClassList.splice(victim_stud, 1);
                     setStudentList(StudentList);
                     setGlobalClassList(GlobalClassList);
                     return true;
@@ -503,8 +503,7 @@ class Parent {
         }
         return false;
     }
-    
-
+   
     // a helper function for checking if a child is enrolled in a class
     classExists(className) {
         for (var i = 0; i < this.GlobalClassList.length; i++) {
@@ -514,8 +513,7 @@ class Parent {
         }
         return false;
     }
-    
-
+  
     // Lets Parent link a student to their account
     addStudent(studId, studRegKey) {
         for (var i = 0; i < StudentList.length; i++) {
@@ -531,13 +529,11 @@ class Parent {
         return false;
     }
 
-
     // Displays the selected child's (Student) attendance record
     viewStudentAttendance(student) {
         var currChild = this.childExists(student.Stdid);        // fetch the student object from parent's child list
         return currChild.attendanceList;
     }
-
 
     // Report the selected child's (Student) attendance entry to reported absent for certain date/class
     reportStudentAbsence(student, date, className) {
@@ -560,9 +556,6 @@ class Parent {
         ParentList.push(currParent); 
         setParentList(ParentList); 
     }
-
-
-
 }
 
 class Classroom {
