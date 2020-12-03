@@ -1,67 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/css/generic.css">
-        <link rel="stylesheet" href="/css/main.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script type='text/javascript' src="/js/classes.js"></script>
-        <script type='text/javascript' src="/js/data.js"></script>
-        <title>Skoodle: Parent's Manage Child</title>
-    </head>
-    
-    <body>
-        <script>
-            var user;
-            var child;         
-            //set header
-            $(document).ready(function () {
-                user = Object.assign(new Admin, getActiveUser());
-                $("#username").text(user.type.toUpperCase() + ": " + user.username);
-                $("#name").text("Hello " + user.name + "!");
 
-                //get child
-                child = JSON.parse(sessionStorage.getItem("CheckChild"));
-                console.log(child);
-                $("#attendanceHead").append("Attendance for: " + child.name + "<br>Student ID: " + child.Stdid);
-                getAttendance();
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/generic.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type='text/javascript' src="/js/classes.js"></script>
+    <script type='text/javascript' src="/js/data.js"></script>
+    <title>Skoodle: Parent's Manage Child</title>
+</head>
+
+<body>
+    <script>
+        var user;
+        var child;
+        //set header
+        $(document).ready(function () {
+            user = Object.assign(new Admin, getActiveUser());
+            getGlobalClassList();
+            $("#classAttendance").empty();
+            $("#username").text(user.type.toUpperCase() + ": " + user.username);
+            $("#name").text("Hello " + user.name + "!");
+
+            //get child
+            child = JSON.parse(sessionStorage.getItem("CheckChild"));
+            console.log(child);
+            $("#attendanceHead").append("Attendance for: " + child.name + "<br>Student ID: " + child.Stdid);
+
+            //Populate the classes field
+            var classNames = child.classes;
+            classNames.forEach(function (cl) {
+                var uname = cl;
+                $("#classSelect").append("<option value=" + uname + ">" + uname + "</option>");
             });
 
-            function getAttendance(){
-                var attendance = child.attendanceList;
-            }
-            
-            //Logout button
-            $(document).on('click', "#logout", function(){
-                removeActiveUser();
-                window.location.href = "/index.html";
-            }); 
-        </script>
+            //selecting a class
+            $(document).on('change', "#classSelect", function () {
 
-        <div id="logo">
-            Skoodle
-        </div>
-        
-        <div class="nameLabel">
-            <span id="username"></span><br>
-            <span id="name"></span>
+                var toShow = $("#classSelect").find(":selected").text();
+                console.log(toShow);
+
+                var sec = new Secretary("", "", "");
+                var classObj = sec.classExists(toShow);
+                if (classObj) {
+                    $("#classAttendance").empty();
+
+                    displayAttendance(classObj);
+                }
+                else {
+                    $("#classAttendance").empty();
+                }
+            });
+
+        });
+
+        function displayAttendance(cl) {
+            var classAttendances = cl.Attendance;
+
+            classAttendances.forEach(function (classAttendance) {
+                $("#classAttendance").append(
+                    "<div class='classAttendanceEntry'>Date: " + classAttendance.date.substring(0, 10));
+                classAttendance.entries.forEach(function (entry) {
+                    if (entry.student.Stdid == child.Stdid) {
+                        $("#classAttendance").append(
+                            "Attended: " + entry.studentStatus + "<br><hr>"
+                        );
+                        return;
+                    }
+                });
+            });
+            $("#classAttendance").append(
+                "</div>"
+            );
+        }
+
+
+
+        //Logout button
+        $(document).on('click', "#logout", function () {
+            removeActiveUser();
+            window.location.href = "/index.html";
+        }); 
+    </script>
+
+    <div id="logo">
+        Skoodle
+    </div>
+
+    <div class="nameLabel">
+        <span id="username"></span><br>
+        <span id="name"></span>
+    </div>
+
+    <div id="logout">
+        <button>Logout</button>
+    </div>
+    <br>
+    <div id="back">
+        <button><a href="/pages/parent1.html" style="color: black; text-decoration: none;">Back</a></button>
+    </div>
+
+    <div id="actions">
+        <h2 id='attendanceHead'></h2>
+        <div>
+            <h3>Legend: P - Present</h3>
+            <ul style="text-decoration: none;">
+                <li>* - To be Recorded</li>
+                <li>P - Present</li>
+                <li>A - Absent (Undelcared)</li>
+                <li>AD - Absent (Declared)</li>
+            </ul>
         </div>
 
-        <div id="logout">
-            <button>Logout</button>
+        <h3>Attendance</h3>
+        <select id="classSelect">
+            <option value="selectOne">Select a Class</option>
+        </select>
+        <hr>
+        <div id="classAttendance">
+            <div class="classAttendanceEntry">
+                Date: 11/11/11
+                <ul style="text-decoration: none;">
+                    <li>Class1: *</li>
+                    <li>Class2: P</li>
+                </ul>
+                <hr>
+            </div>
         </div>
-        <br>
-        <div id="back">
-            <button><a href="/pages/parent1.html" style="color: black; text-decoration: none;">Back</a></button>
-        </div>
-        
-        <div id="actions">
-            <h2 id='attendanceHead'></h2>        
 
+    </div>
 
-        </div>
-        
-        <br><br>
-    </body>
+    <br><br>
+</body>
+
 </html>

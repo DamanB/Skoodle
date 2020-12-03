@@ -425,9 +425,9 @@ class Teacher {
 
     //helper method for teacher used in createAttendance 
     classExists(className) {
-        for (var i = 0; i < this.GlobalClassList.length; i++) {
-            if (className == this.GlobalClassList[i].name) {
-                return this.GlobalClassList[i];
+        for (var i = 0; i < GlobalClassList.length; i++) {
+            if (className == GlobalClassList[i].name) {
+                return GlobalClassList[i];
             }
         }
         return false;
@@ -454,8 +454,8 @@ class Teacher {
         return false;
     }
 
-    //create attendance for day and class
-    createAttendance(className)
+    //create attendance for day and class CLASSATTENDANCE
+    createAttendance(className, year, month, day)
     {
         var currClassroom = this.classExists(className); 
         var attendance_holder = [];  //mock attendance for holding student attendance entries
@@ -468,13 +468,14 @@ class Teacher {
                 
                 var attendance_entry = new AttendanceEntry(currStudent, className, "*");  //creating an attendance entry 
                                 
-                attendance_holder[i].push(attendance_entry);   //storing student attendance entries into mock holder
+                attendance_holder.push(attendance_entry);   //storing student attendance entries into mock holder
 
             }
         }
-        var new_date = new Date(); 
-        var d = new Date(new_date.getFullYear(), new_date.getMonth(), new_date.getDay());
-        var attendance_1 = new ClassAttendance(attendance_holder, d);  // creating the class attendance list from temp mock class attendance
+        var new_date = new Date(year, month, day);
+        console.log("Adding entry for: " + new_date); 
+        //var d = new Date(new_date.getFullYear(), new_date.getMonth(), new_date.getDay());
+        var attendance_1 = new ClassAttendance(attendance_holder, new_date);  // creating the class attendance list from temp mock class attendance
 
         currClassroom.Attendance.push(attendance_1); //putting the attendance made into the class 
         setGlobalClassList(GlobalClassList); 
@@ -486,26 +487,32 @@ class Teacher {
     }
     
     //mark student present/absent
-    markStatus(className, currDate, studId, status)
+    markStatus(className, currDate, stdId, status)
     {
         var currClass = this.classExists(className); //grabs the current class
         // var currStudent = this.studentExistsInClass(studId, currClass);
         var classAttendanceList = currClass.Attendance;
         var classAttendance_1;
         classAttendanceList.forEach(function(classAttend){
-            if (classAttend.date == currDate) {
+            if (classAttend.date.getFullYear() == currDate.getFullYear() && classAttend.date.getMonth() == currDate.getMonth() && classAttend.date.getDay() == currDate.getDay()) {
                 classAttendance_1 = classAttend;
                 return;
             }
         });
         
-        classAttendance_1.forEach(function(classEntry){
-            if (classEntry.student.Stdid == studId) {
-                classEntry.studentStatus = status;
-                return;
-            }
-        });
+        if (classAttendance_1)
+        {
+            classAttendance_1.entries.forEach(function(classEntry){
+                if (classEntry.student.Stdid == stdId) {
+                    classEntry.studentStatus = status;
+                    return;
+                }
+            });
+        }
         
+        setGlobalClassList(GlobalClassList); 
+        setGlobalAttendenceList(GlobalAttendenceList);  
+
         /*if (currStudent && currClass) 
         { 
 
