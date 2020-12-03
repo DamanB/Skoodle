@@ -417,6 +417,7 @@ class Teacher {
     }
 
     
+    //helper method for UI people
     getTeacherFromClass(className) {
         var currClassroom = this.classExists(className);
         return currClassroom.teacher;
@@ -475,7 +476,7 @@ class Teacher {
         var d = new Date(new_date.getFullYear(), new_date.getMonth(), new_date.getDay());
         var attendance_1 = new ClassAttendance(attendance_holder, d);  // creating the class attendance list from temp mock class attendance
 
-        currClassroom.Attendance.push(attendance_1); //putting the attendance made into the class 
+        currClassroom.Attendance = attendance_1; //putting the attendance made into the class 
         setGlobalClassList(GlobalClassList); 
         
         GlobalAttendenceList.push(attendance_1); //sending the attendance so secratery can access the attendances
@@ -487,7 +488,6 @@ class Teacher {
     //mark student present/absent
     markStatus(className, studId, status)
     {
-        
         var currClass = this.classExists(className); //grabs the current class
         var currStudent = this.studentExistsInClass(studId, currClass);  
         if (currStudent && currClass) 
@@ -502,6 +502,28 @@ class Teacher {
                     return true;  
                 }
             }
+        }
+        return false; 
+    }
+
+    //submitting a complete attendance to the secretary (updating global list)
+    submitAttendance(className)
+    {
+        var currClass = this.classExists(className); //grabs the current class
+
+        if(currClass)
+        {
+            for (var i = 0; i < currClass.Attendance.AttEntries.length; i++)
+            {
+                if(currClass.Attendance.AttEntries[i].studentStatus == "*")
+                {
+                    return false; 
+                }
+
+            }
+            //should update the global attendance list with the marked statuses 
+            setGlobalAttendenceList(GlobalAttendenceList);
+            return true; 
         }
         return false; 
     }
@@ -600,7 +622,7 @@ class Classroom {
         this.teacher = teacher;
         this.timeinterval = timeinterval;
         this.ClassList = ClassList;    // Array of Student Objects
-        this.Attendance = [];  //list of of Class attendance objects 
+        this.Attendance = null;  //list of of Class attendance objects 
     }
 
 
@@ -626,7 +648,6 @@ class ClassAttendance {
 
 
 }
-
 
 class Student {
     constructor(name, Stdid, classes, regKey) {
