@@ -67,6 +67,7 @@
                 
                 var valid_username = false;
                 var valid_password = false;
+                //var is_username_null_same = false;
 
                 // should check if username entered already exists
                 // if (username === "john123"){
@@ -74,7 +75,7 @@
                 // }
                 if (!username){
                     $("#error_invalid_username").show();
-                    valid = false;
+                    //is_username_null_same  = false;
                 }
                 else {
                     var parentList = getParentList();
@@ -82,22 +83,28 @@
                     parentList.forEach(function(pl) {
                         if (pl.username.toLowerCase() === username.toLowerCase()) {
                             $("#error_username").show();
-                            valid = false;
+                            //is_username_null_same  = false;
                             return
+                            valid_username = false;
+                        }
+                        else
+                        {
+                            valid_username = true;
+
                         }
                     })
                 }
                 
                 //link these ^^      vv
 
-                if (valid) {
-                    return
-                }
-                // else, username doesn't already exist (valid)
-                else {
-                    valid_username = true;
-                    $("#error_username").hide();
-                }
+                // if (is_username_null_same) {
+                //     return
+                // }
+                // // else, username doesn't already exist (valid)
+                // else {
+                //     valid_username = true;
+                //     $("#error_username").hide();
+                // }
                 // if password and confirm pwd is same AND username doesn't already exist, success
                 if (password != confirmpwd){
                     $("#error_password").show();
@@ -119,6 +126,7 @@
                     $("#error_username").hide();
                     alert("Registration successful")
                     window.location.href = "/index.html";
+                    //console.log
                 }
             });
             
