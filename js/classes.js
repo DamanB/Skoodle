@@ -329,7 +329,7 @@ class Secretary {
         //class exists 
         if(currClass)
         {
-            for(var i = 0; i < currClass.length; i++)
+            for(var i = 0; i < currClass.ClassList.length; i++)
             {
                 if(currClass.ClassList[i].Stdid == studID)
                 {
@@ -338,7 +338,7 @@ class Secretary {
                 if (victim_stud > -1) 
                 {
                     currClass.ClassList.splice(victim_stud, 1);
-                    setStudentList(StudentList);
+                    //setStudentList(StudentList);
                     setGlobalClassList(GlobalClassList);
                     return true;
                 }
