@@ -31,7 +31,7 @@
         <div id="logo">
             Skoodle
         </div>
-
+        <br >
         <div class="nameLabel">
             <span id="username"></span><br>
             <span id="name"></span>
@@ -45,15 +45,29 @@
             <button><a href="/pages/secretary_manageTeach.html" style="color: black; text-decoration: none;">Back</a></button>
         </div>
 
-        <p>Teacher: <span>Teacher's Name</span ></p> 
+        <p>Teacher: <span>"Teacher's Name"</span ></p> 
 
         <p>ID: <span>Teacher's ID</span ></p> 
+        
 
         <div id="actions">
             <ul>
                 <li><a href="/pages/class_details.html">View Class</a></li>
                 <li><a href="secretary_assignTeach.html">Assign a Class</a></li>
             </ul>
+            
+            <table id="classList" class="customTable">
+                <thead>
+                    <th>Class Name</th>
+                </thead>
+    
+                <tbody></tbody>
+            </table>
+            
+            <br>
+            <button id="addTeach">Assign a Class</button> 
+
+
         </div>
     </body>
 </html>
