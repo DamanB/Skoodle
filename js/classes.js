@@ -233,10 +233,11 @@ class Secretary {
     }
 
     modifyClassTeach(className, newTeach) {
-        if (this.employeeExists(newTeach)) {         // newTeach exists?
+        var newTeacher = this.employeeExists(newTeach); 
+        if (newTeacher) {         // newTeach exists?
             var classroom_1 = this.classExists(className);      
             if (classroom_1) {                  // classroom exists?
-                if (classroom_1.teacher.username == newTeach.username) {    // same teacher assigned?
+                if (classroom_1.teacher.username == newTeacher.username) {    // same teacher assigned?
                     return false;
                 }
                 //derolling current teacher from class so newTeach can teach it
@@ -255,8 +256,8 @@ class Secretary {
                         return true;
                     }
                 }
-                classroom_1.teacher = newTeach;
-                newTeach.taughtClasses.push(classroom_1.name); //adding the class to the new teacher's list of taught classes
+                classroom_1.teacher = newTeacher;
+                newTeacher.taughtClasses.push(classroom_1.name); //adding the class to the new teacher's list of taught classes
                 setEmployeeList(EmployeeList);
                 setGlobalClassList(GlobalClassList);
                 setStudentList(StudentList); 
@@ -332,18 +333,19 @@ class Secretary {
         if(currClass)
         {
             console.log("hjere");
-            for(var i = 0; i < currClass.ClassList.length; i++)
+            for(var i = 0; i < currClass.ClassList.length; i++) //loop over the class list to access students 
             {
-                if(currClass.ClassList[i].Stdid == studID)
+                if(currClass.ClassList[i].Stdid == studID) //if the student to remove from class is found?
                 {
-                    var victim_stud = i; 
+                    var victim_stud = i;  //grab the index of the student we want to remove from currClass ClassList 
                 }
                 if (victim_stud > -1) 
                 {
-                    currClass.ClassList.splice(victim_stud, 1);
+                    currClass.ClassList.splice(victim_stud, 1); //removing the targetted student from the currClass ClassList 
                     //setStudentList(StudentList);
                     console.log("remove student from class");
-                    setGlobalClassList(GlobalClassList);
+                    setGlobalClassList(GlobalClassList); //updating the global class list 
+                    setStudentList(StudentList); //updating the student list 
                     return true;
                 }
             }
@@ -392,7 +394,8 @@ class Secretary {
                 }
                 if (victim_index > -1) {
                     StudentList.splice(victim_index, 1);
-                    setStudentList(StudentList);
+                    setStudentList(StudentList); //updating the student list because student was removed from school
+                    setGlobalClassList(GlobalClassList); //do we have to also remove them from the class???????
                     // console.log("removing student");
                     return true;
                 }
