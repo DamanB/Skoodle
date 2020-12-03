@@ -44,10 +44,14 @@
             $(document).ready(function () {
                 $("#error_username").hide();
                 $("#error_password").hide();
+                $("error_invalid_username").hide();
             })
 
             //Perform login check 
             $(document).on('click', '#submit', function () {
+                $("#error_username").hide();
+                $("#error_password").hide();
+                $("#error_invalid_username").hide();
                 var username = $("#username").val();
                 var password = $("#pw").val();
                 var confirmpwd = $("#pw_confirm").val();
@@ -68,9 +72,26 @@
                 // if (username === "john123"){
                 //     $("#error_username").show();
                 // }
+                if (!username){
+                    $("#error_invalid_username").show();
+                    valid = false;
+                }
+                else {
+                    var parentList = getParentList();
+                    console.log(parentList);
+                    parentList.forEach(function(pl) {
+                        if (pl.username.toLowerCase() === username.toLowerCase()) {
+                            $("#error_username").show();
+                            valid = false;
+                            return
+                        }
+                    })
+                }
+                
+                //link these ^^      vv
 
-                if (pList) {
-                    //valid = auth(username);
+                if (valid) {
+                    return
                 }
                 // else, username doesn't already exist (valid)
                 else {
@@ -165,6 +186,8 @@
             <br>Username Already Exists</p>
         <p id="error_password" style="display: none; color: red; text-align: center; margin: 0; padding: 0">
             <br>Passwords Do Not Match</p>
+        <p id="error_invalid_username" style="display: none; color: red; text-align: center; margin: 0; padding: 0">
+            <br>Enter a valid username</p>
 
     </body>
 </html>
