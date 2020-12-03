@@ -553,6 +553,14 @@ class Parent {
         
     }
 
+    //registering parent into the system
+    registerParent(name, username, password, email)
+    {
+        var currParent = new Parent(name, username, password, email); 
+        ParentList.push(currParent); 
+        setParentList(ParentList); 
+    }
+
 
 
 }
