@@ -59,13 +59,12 @@ class Admin {
             for (var i = 0; i < EmployeeList.length; i++) {
                 if (username == EmployeeList[i].username) {
                     const victim_employee_index = EmployeeList.indexOf(i);
-                }
-            }
-
+                } 
             if (victim_employee_index > -1) {
                 EmployeeList.splice(victim_employee_index, 1);
                 setEmployeeList(EmployeeList); 
                 return true;
+                }
             }
         }
         else {
@@ -179,16 +178,17 @@ class Secretary {
                     const victim_class_index = GlobalClassList.indexOf(i);
                     var victim_classroom = GlobalClassList[i]; 
                 }
+                if (victim_class_index > -1) {
+                    victim_classroom.teacher.taughtClasses.splice(victim_class_index,1);  //unassigning teacher from removed class
+                    this.removeStudentFromClass(victim_classroom); //unassigning students from removed classroom 
+                    GlobalClassList.splice(victim_class_index, 1);
+                    setGlobalClassList(GlobalClassList);
+                    setEmployeeList(EmployeeList);
+                    setStudentList(StudentList);  
+                    return true;
+                }
             }
-            if (victim_class_index > -1) {
-                victim_classroom.teacher.taughtClasses.splice(victim_class_index,1);  //unassigning teacher from removed class
-                this.removeStudentFromClass(victim_classroom); //unassigning students from removed classroom 
-                GlobalClassList.splice(victim_class_index, 1);
-                setGlobalClassList(GlobalClassList);
-                setEmployeeList(EmployeeList);
-                setStudentList(StudentList);  
-                return true;
-            }
+
         }
         else {
             console.log("THIS DOES NOT EXISTS");
@@ -209,11 +209,12 @@ class Secretary {
                 {
                     var victim_enrolled_class_index = currStudent.classes.indexOf(j); 
                 }
+                if(victim_enrolled_class_index > -1)
+                {
+                    currStudent.classes.splice(victim_enrolled_class_index, 1); 
+                }
             }
-            if(victim_enrolled_class_index > -1)
-            {
-                currStudent.classes.splice(victim_enrolled_class_index, 1); 
-            }
+
         }
 
     }
@@ -246,13 +247,13 @@ class Secretary {
                     {
                         var victim_classroom = victim_teacher.taughtClasses.indexOf(i); 
                     }
-                }
-                if (victim_classroom > -1) {
-                    victim_teacher.taughtClasses.splice(victim_classroom,1);  //unassigning teacher from removed class
-                    setEmployeeList(EmployeeList);
-                    setGlobalClassList(GlobalClassList);
-                    setStudentList(StudentList); 
-                    return true;
+                    if (victim_classroom > -1) {
+                        victim_teacher.taughtClasses.splice(victim_classroom,1);  //unassigning teacher from removed class
+                        setEmployeeList(EmployeeList);
+                        setGlobalClassList(GlobalClassList);
+                        setStudentList(StudentList); 
+                        return true;
+                    }
                 }
                 classroom_1.teacher = newTeach;
                 newTeach.taughtClasses.push(classroom_1.name); //adding the class to the new teacher's list of taught classes
@@ -334,13 +335,13 @@ class Secretary {
                 {
                     var victim_stud = currClass.ClassList[i].indexOf(i); 
                 }
-            }
-            if (victim_stud > -1) 
-            {
-                currClass.ClassList.splice(victim_employee_index, 1);
-                setStudentList(StudentList);
-                setGlobalClassList(GlobalClassList);
-                return true;
+                if (victim_stud > -1) 
+                {
+                    currClass.ClassList.splice(victim_employee_index, 1);
+                    setStudentList(StudentList);
+                    setGlobalClassList(GlobalClassList);
+                    return true;
+                }
             }
         }
         else
