@@ -43,16 +43,15 @@
         <script>
             var user;
             $(document).ready(function () {
+                user = Object.assign(new Parent, getActiveUser());
                 $("#error_username").hide();
                 $("#error_password").hide();
-                $("error_invalid_username").hide();
+                $("#error_invalid_username").hide();
+                $("#error").hide();
             })
 
             //Perform login check 
             $(document).on('click', '#submit', function () {
-                $("#error_username").hide();
-                $("#error_password").hide();
-                $("#error_invalid_username").hide();
                 var username = $("#username").val();
                 var password = $("#pw").val();
                 var confirmpwd = $("#pw_confirm").val();
@@ -68,36 +67,35 @@
                 
                 var valid_username = true;
                 var valid_password = false;
-                //var is_username_null_same = false;
+                var valid = false;
 
-                // should check if username entered already exists
-                // if (username === "john123"){
-                //     $("#error_username").show();
-                // }
+                // if invalid username (blank) show error
                 if (!username){
                     $("#error_invalid_username").show();
-                    //is_username_null_same  = false;
+                    var valid_username = false;
                 }
+                else if (!fName){
+                    $("#error").text("Invalid full name");
+                    $("#error").show();
+                    var valid_username = false;
+                }
+                else if (!email){
+                    $("#error").text("Invalid email");
+                    $("#error").show();
+                    var valid_username = false;
+                }
+                // check if username already exists
                 else {
                     var parentList = getParentList();
                     console.log(parentList);
                     parentList.forEach(function(pl) {
                         if (pl.username.toLowerCase() === username.toLowerCase()) {
                             $("#error_username").show();
-                            //is_username_null_same  = false;
                             valid_username = false;
                             return
                         }
                     })
                 }
-                // if (is_username_null_same) {
-                //     return
-                // }
-                // // else, username doesn't already exist (valid)
-                // else {
-                //     valid_username = true;
-                //     $("#error_username").hide();
-                // }
                 // if password and confirm pwd is same AND username doesn't already exist, success
                 if (password != confirmpwd){
                     $("#error_password").show();
@@ -115,33 +113,25 @@
                 } 
                 // if both username and password are valid, go back to index.html
                 if (valid_username && valid_password){
+                    valid = true;
                     $("#error_password").hide();
                     $("#error_username").hide();
                     alert("Registration successful")
+                    regParent = user.registerParent(fName, username, password, email)
                     window.location.href = "/index.html";
                 }
             });
-            
-            // Check if username already exists
-            function auth(uname) {
-                var found = false;
-                list.forEach(function (user) {
-                    if (user.username === uname) {
-                        console.log("username exists");
-                        $("#error_username").show();
-                        found = user;
-                        return;
-                    }
-                })
-                return found;
-            }
 
         </script>
 
         <div id="logo">
             Skoodle
         </div>
+        <div id="back">
+            <button><a href="/index.html" style="color: black; text-decoration: none;">Back</a></button>
+        </div>
         <h2>Enter the following information in the following textbox</h2>
+        
 
         <form>
             <label for="username">Username:</label><br>
@@ -179,6 +169,9 @@
             <br>Passwords Do Not Match</p>
         <p id="error_invalid_username" style="display: none; color: red; text-align: center; margin: 0; padding: 0">
             <br>Enter a valid username</p>
+        <br>
+        <p id="error" style="display: none; color: red; text-align: center; margin: 0; padding: 0"></p>
+
 
     </body>
 </html>
