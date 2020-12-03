@@ -417,6 +417,7 @@ class Teacher {
     }
 
     
+    //helper method for UI people
     getTeacherFromClass(className) {
         var currClassroom = this.classExists(className);
         return currClassroom.teacher;
@@ -465,7 +466,7 @@ class Teacher {
             {
                 var currStudent = currClassroom.ClassList[i];  //creating student object 
                 
-                var attendance_entry = new AttendanceEntry(currStudent, className, "");  //creating an attendance entry 
+                var attendance_entry = new AttendanceEntry(currStudent, className, "*");  //creating an attendance entry 
                                 
                 attendance_holder[i].push(attendance_entry);   //storing student attendance entries into mock holder
 
@@ -485,13 +486,29 @@ class Teacher {
     }
     
     //mark student present/absent
-    markStatus(className, studId, status)
+    markStatus(className, currDate, studId, status)
     {
-        
         var currClass = this.classExists(className); //grabs the current class
-        var currStudent = this.studentExistsInClass(studId, currClass);  
-        if (currStudent && currClass) 
+        // var currStudent = this.studentExistsInClass(studId, currClass);
+        var classAttendanceList = currClass.Attendance;
+        var classAttendance_1;
+        classAttendanceList.forEach(function(classAttend){
+            if (classAttend.date == currDate) {
+                classAttendance_1 = classAttend;
+                return;
+            }
+        });
+        
+        classAttendance_1.forEach(function(classEntry){
+            if (classEntry.student.Stdid == studId) {
+                classEntry.studentStatus = status;
+                return;
+            }
+        });
+        
+        /*if (currStudent && currClass) 
         { 
+
             for (var i = 0; i < currClass.Attendance.length; i++)
             {
                 var stud_entry = currClass.Attendance[i];
@@ -502,6 +519,28 @@ class Teacher {
                     return true;  
                 }
             }
+        }
+        return false; */
+    }
+
+    //submitting a complete attendance to the secretary (updating global list)
+    submitAttendance(className)
+    {
+        var currClass = this.classExists(className); //grabs the current class
+
+        if(currClass)
+        {
+            for (var i = 0; i < currClass.Attendance.AttEntries.length; i++)
+            {
+                if(currClass.Attendance.AttEntries[i].studentStatus == "*")
+                {
+                    return false; 
+                }
+
+            }
+            //should update the global attendance list with the marked statuses 
+            setGlobalAttendenceList(GlobalAttendenceList);
+            return true; 
         }
         return false; 
     }
@@ -626,7 +665,6 @@ class ClassAttendance {
 
 
 }
-
 
 class Student {
     constructor(name, Stdid, classes, regKey) {
