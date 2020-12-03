@@ -2,7 +2,7 @@ var EmployeeList = []; //list of all employees (admins, secretaries, teachers)
 var GlobalClassList = []; //list of all classes offered at the school
 var StudentList = []; //list of all students in the class
 var ParentList = []; //list of all parents of the students in the school
-var GlobalDailyAttendenceList = [];  //the daily attendence 
+var GlobalAttendenceList = [];  //the daily attendence 
 
 class Admin {
     constructor(name, username, password) {
@@ -422,6 +422,7 @@ class Teacher {
         return currClassroom.teacher;
     }
 
+    //helper method for teacher used in createAttendance 
     classExists(className) {
         for (var i = 0; i < this.GlobalClassList.length; i++) {
             if (className == this.GlobalClassList[i].name) {
@@ -431,10 +432,22 @@ class Teacher {
         return false;
     }
     
+    //helper method for teacher used in markStatus 
     attendanceExists(className) {
         for (var i = 0; i < this.GlobalClassList.length; i++) {
             if (className == this.GlobalClassList[i].name) {
-                return this.GlobalClassList[i].Attendance;
+                return this.GlobalClassList[i].Attendance; //returns a specific classes attendance 
+            }
+        }
+        return false;
+    }
+
+    //helper method for teacher used in markStatus
+    studentExistsInClass(studID, currClass) 
+    {
+        for (var i = 0; i < currClass.ClassList.length; i++) {
+            if (studID == currClass.ClassList[i].Stdid) {
+                return currClass.ClassList[i]; 
             }
         }
         return false;
@@ -446,35 +459,51 @@ class Teacher {
         var currClassroom = this.classExists(className); 
         var attendance_holder = [];  //mock attendance for holding student attendance entries
         
-        if(currClassroom)
+        if(currClassroom) // checking if the current classroom exits 
         {
-            for(var i = 0; i < currClassroom.ClassList.length; i++)
+            for(var i = 0; i < currClassroom.ClassList.length; i++) //looping through classList to get students 
             {
-                var currStudent = currClassroom.ClassList[i]; 
+                var currStudent = currClassroom.ClassList[i];  //creating student object 
                 
-                var new_date = new Date(); 
-                var d = new Date(new_date.getFullYear(), new_date.getMonth(), new_date.getDay());
-                var attendance_entry = new AttendanceEntry(currStudent, className, d, false); 
-                currStudent.attendanceList.push(attendance_entry); 
-                
-                attendance_holder[i].push(attendance_entry);   //storing attendance entries into mock holder
+                var attendance_entry = new AttendanceEntry(currStudent, className, "");  //creating an attendance entry 
+                                
+                attendance_holder[i].push(attendance_entry);   //storing student attendance entries into mock holder
 
             }
         }
+        var new_date = new Date(); 
+        var d = new Date(new_date.getFullYear(), new_date.getMonth(), new_date.getDay());
+        var attendance_1 = new ClassAttendance(attendance_holder, d);  // creating the class attendance list from temp mock class attendance
+
+        currClassroom.Attendance.push(attendance_1); //putting the attendance made into the class 
+        setGlobalClassList(GlobalClassList); 
         
-        var attendance_1 = new ClassAttendance(attendance_holder);  // creating the class attendance list from temp mock class attendance
+        GlobalAttendenceList.push(attendance_1); //sending the attendance so secratery can access the attendances
+        setGlobalAttendenceList(GlobalAttendenceList);  
 
         return attendance_1; 
     }
     
     //mark student present/absent
-    markStatus(className, student, status)
+    markStatus(className, studId, status)
     {
-        var currClass = this.classExists(className);
-        if (currClass) {
-            var currAttendance = this.attendanceExists(className);
+        
+        var currClass = this.classExists(className); //grabs the current class
+        var currStudent = this.studentExistsInClass(studId, currClass);  
+        if (currStudent && currClass) 
+        { 
+            for (var i = 0; i < currClass.Attendance.length; i++)
+            {
+                var stud_entry = currClass.Attendance[i];
 
+                if(stud_entry.student.Stdid == studId)
+                {
+                    stud_entry.studentStatus = status;
+                    return true;  
+                }
+            }
         }
+        return false; 
     }
 
 }
@@ -571,7 +600,7 @@ class Classroom {
         this.teacher = teacher;
         this.timeinterval = timeinterval;
         this.ClassList = ClassList;    // Array of Student Objects
-        this.Attendance = [];  //list of of attendance entries where teacher can check present etc...
+        this.Attendance = [];  //list of of Class attendance objects 
     }
 
 
@@ -579,11 +608,10 @@ class Classroom {
 
 //this is just a single entry within the major attendance sheet for a single class for a single student
 class AttendanceEntry {
-    constructor(student, className, date) {
+    constructor(student, className) {
         this.student = student; 
         this.className = className;
-        this.date = new Date();
-        this.studentStatus = "P";
+        this.studentStatus = "*"; //this will be the different types of status (P - Present), (A - Absent), (RA - Reported Absent)
         this.successfullyLogged = false;
     }
 
@@ -591,8 +619,9 @@ class AttendanceEntry {
 
 //attendance which teacher fills out for their classes 
 class ClassAttendance {
-    constructor(AttEntries) {
+    constructor(AttEntries, date) {
         this.entries = AttEntries;
+        this.date = date;
     }
 
 
@@ -605,7 +634,6 @@ class Student {
         this.Stdid = Stdid;
         this.classes = []; //list of classes student is enrolled in
         this.regKey = regKey;
-        this.attendanceList = []; //list of particular student's attendance entries   
     }
 }
 
