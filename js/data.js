@@ -31,7 +31,8 @@ function InitData()
     sec_1.addStudentToClass("Math1", stud_4); 
     sec_1.addStudentToClass("Math1", stud_5); 
     sec_1.addStudentToClass("Math1", stud_6);
-    
+    sec_1.addStudentToClass("Math1", stud_1);
+
 
 
     var par_1 = new Parent("Mary", "par1", "1234567", "mary@gmail.com"); 
@@ -40,13 +41,20 @@ function InitData()
     ParentList.push(par_2);         // TEMPORARY
     par_1.addStudent(stud_1.Stdid, stud_1.regKey);
     
-   var class1_attendance = teach_1.createAttendance("French1"); 
-   teach_1.markStatus("French1", stud_1.Stdid ,"P"); 
-   teach_1.markStatus("French1", stud_2.Stdid ,"A"); 
+    var class1_attendance = teach_1.createAttendance("French1", 2020,11,01); 
+    var class1_attendance = teach_1.createAttendance("French1", 2020,11,02); 
+    var class1_attendance = teach_1.createAttendance("French1", 2020,11,03); 
 
-   var class2_attendance = teach_2.createAttendance("Math1"); 
-   teach_1.markStatus("Math1", stud_4.Stdid ,"P"); 
-   teach_1.markStatus("Math1", stud_5.Stdid ,"A"); 
+    teach_1.markStatus("French1", new Date(2020,11,01), stud_1.Stdid ,"P"); 
+    teach_1.markStatus("French1", new Date(2020,11,02), stud_1.Stdid ,"A"); 
+    teach_1.markStatus("French1", new Date(2020,11,03), stud_1.Stdid ,"RA"); 
+
+    teach_1.markStatus("French1", new Date(), stud_2.Stdid ,"A"); 
+
+    var class2_attendance = teach_2.createAttendance("Math1",2020,11,02); 
+    teach_1.markStatus("Math1", new Date(2020,11,02), stud_1.Stdid ,"P"); 
+    teach_1.markStatus("Math1", new Date(), stud_4.Stdid ,"P"); 
+    teach_1.markStatus("Math1", new Date(), stud_5.Stdid ,"A"); 
 
     setGlobalAttendenceList(GlobalAttendenceList); 
     setParentList(ParentList);
