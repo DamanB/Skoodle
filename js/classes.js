@@ -556,8 +556,6 @@ class Secretary {
             }
         }
     }
-
-
    
 }
 
@@ -728,6 +726,7 @@ class Parent {
         this.email = email;
         this.children = [];             // array of children (Student's ID #)  NOTE: FRONT-END CAN SORT BY NAMES INSTEAD OF ID
         this.type = "Parent";
+        this.notifications = []; 
     }
     
 
@@ -873,7 +872,6 @@ class ClassAttendance {
 
         return dateObj; 
     }
-
 
 }
 
