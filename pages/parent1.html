@@ -24,6 +24,7 @@
 
             //update child list
             var list = user.children;
+            console.log(list);
             list.forEach(function (cl) {
                 $('#classList tbody').append('<tr><td>' + cl.name + '</td><td>' + cl.Stdid + '</td><td>' + '<button class="modify">View/Report Absences</button> </td></tr>');
             });
