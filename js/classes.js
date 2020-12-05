@@ -495,6 +495,7 @@ class Teacher {
             })
             return false;
         }
+    }
 
     //helper method for teacher used in markStatus
     studentExistsInClass(studID, currClass) 
@@ -609,6 +610,7 @@ class Teacher {
     }
 
 }
+
 
 class SupplyTeacher {       // Substitute Teacher: same functionalities as FT-Teacher, but cannot view individual student 
     constructor(name, username, password) {
