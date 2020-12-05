@@ -75,6 +75,7 @@ class Admin {
 
     /* ADMIN FUNCTION: MODIFY EMPLOYEES NAME, USERNAME, OR PASSWORD */
     modifyEmployeeName(username, newName) {
+        getEmployeeList();
         var employee_1 = this.employeeExists(username);
         employee_1.name = newName;
         setEmployeeList(EmployeeList); 
@@ -85,6 +86,7 @@ class Admin {
             return false;
         }
         else {
+            getEmployeeList();
             var employee_1 = this.employeeExists(username);
             employee_1.username = newUser;
             setEmployeeList(EmployeeList); 
@@ -93,6 +95,7 @@ class Admin {
     }
 
     modifyEmployeePassword(username, newPass) {
+        getEmployeeList();
         var employee_1 = this.employeeExists(username);
         employee_1.password = newPass;
         setEmployeeList(EmployeeList); 
