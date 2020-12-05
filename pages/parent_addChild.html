@@ -1,63 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/css/generic.css">
-        <link rel="stylesheet" href="/css/main.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script type='text/javascript' src="/js/classes.js"></script>
-        <script type='text/javascript' src="/js/data.js"></script>
-        <title>Skoodle: Parent's Add Child</title>
-    </head>
-    <body>
-        <script>
-            var user;
-        
-            //set header
-            $(document).ready(function () {
-                user = Object.assign(new Parent, getActiveUser());
-                $("#username").text(user.type.toUpperCase() + ": " + user.username);
-                $("#name").text("Hello " + user.name + "!");
-            });
-            
-            //Logout button
-            $(document).on('click', "#logout", function(){
-                removeActiveUser();
-                window.location.href = "/index.html";
-            }); 
-        </script>
 
-        <div id="logo">
-            Skoodle
-        </div>
-        
-        <div class="nameLabel">
-            <span id="username"></span><br>
-            <span id="name"></span>
-        </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/generic.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type='text/javascript' src="/js/classes.js"></script>
+    <script type='text/javascript' src="/js/data.js"></script>
+    <title>Skoodle: Parent's Add Child</title>
+</head>
 
-        <div id="logout">
-            <button>Logout</button>
-        </div>
+<body>
+    <script>
+        var user;
 
-        <div id="actions">
-            <ul>
-                <!-- <li><a href="">Action 1</a></li> -->
-            </ul>
-        </div>
+        //set header
+        $(document).ready(function () {
+            user = Object.assign(new Parent, getActiveUser());
+            $("#username").text(user.type.toUpperCase() + ": " + user.username);
+            $("#name").text("Hello " + user.name + "!");
+        });
 
-        <p>
-            Please enter the following to register your child:</br>
-            1. Student ID of your child</br>
-            2. Verification key assigned to you by secretary 
-        </p>
-        <form>
-            <label for="studentid">Student ID: </label>
-            <input type="text" id="studentid" name="studentid"><br><br>
-            <label for="tempkey">Verification key: </label>
-            <input type="text" id="tempkey" name="tempkey"><br><br>
-            <input type="submit" value="Submit">
-        </form>
-    </body>
+        //Logout button
+        $(document).on('click', "#logout", function () {
+            removeActiveUser();
+            window.location.href = "/index.html";
+        });
+
+        // Add Students
+        $(document).on('click', "#submit", function () {
+            $("#error").hide();
+            var studentid = $("#studentid").val();
+            var registerKey = $("#registerKey").val();
+
+            var valid = true;
+            if (!studentid) {
+                $("#error").text("Enter a valid student ID");
+                $("#error").show();
+                valid = false;
+            }
+            if (!registerKey) {
+                $("#error1").text("Enter a valid verificaiton key");
+                $("#error1").show();
+                valid = false;
+            }
+            else {
+                var studentList = getStudentList();
+                console.log(studentList);
+                studentList.forEach(function (el) {
+                    if (el.Stdid === studentid && el.regKey === registerKey) {
+                        user.addStudent(studentid, registerKey);
+                        console.log(studentid + " " + registerKey);
+                        console.log(el.Stdid + " " + el.regKey);
+
+                        $("#addedList").append('<tr><td>' + el.Stdid + '</td>' + '<td>' + el.regKey + '</td><td>');
+                        $("#error").hide();
+                        $("#error1").hide();
+                        // $("#error").text("Student wit already exists");
+                        // $("#error").show();
+                        // valid = false;
+                        return
+                    }
+                })
+            }
+        });
+    </script>
+
+    <div id="logo">
+        Skoodle
+    </div>
+
+    <div class="nameLabel">
+        <span id="username"></span><br>
+        <span id="name"></span>
+    </div>
+
+    <div id="logout">
+        <button>Logout</button>
+    </div>
+
+    <div id="actions">
+        <ul>
+            <!-- <li><a href="">Action 1</a></li> -->
+        </ul>
+    </div>
+
+    <p>
+        Please enter the following to register your child:</br>
+        1. Student ID of your child</br>
+        2. Verification key assigned to you by secretary
+    </p>
+    <!-- <form> -->
+    <label for="studentid">Student ID: </label>
+    <input type="text" id="studentid" name="studentid"><br><br>
+    <label for="tempkey">Verification key: </label>
+    <input type="text" id="tempkey" name="tempkey"><br><br>
+    <!-- <input type="submit" value="Submit"> -->
+
+    <!-- </form> -->
+    <button id="submit" value="Submit">Submit</button>
+    <br>
+    <span id="error" style="display: none; color: red;"></span>
+    <br>
+    <span id="error1" style="display: none; color: red;"></span>
+
+    <table id="addedList" class="customTable">
+        <thead>
+            <th>student ID</th>
+            <th>Verification Key</th>
+
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</body>
+
 </html>
