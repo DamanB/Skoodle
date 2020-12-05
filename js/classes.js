@@ -569,22 +569,6 @@ class Teacher {
         
         setGlobalClassList(GlobalClassList); 
         setGlobalAttendenceList(GlobalAttendenceList);  
-
-        /*if (currStudent && currClass) 
-        { 
-
-            for (var i = 0; i < currClass.Attendance.length; i++)
-            {
-                var stud_entry = currClass.Attendance[i];
-
-                if(stud_entry.student.Stdid == studId)
-                {
-                    stud_entry.studentStatus = status;
-                    return true;  
-                }
-            }
-        }
-        return false; */
     }
 
     //submitting a complete attendance to the secretary (updating global list)
@@ -608,17 +592,13 @@ class Teacher {
         }
         return false; 
     }
-
 }
 
 
 class SupplyTeacher {       // Substitute Teacher: same functionalities as FT-Teacher, but cannot view individual student 
     constructor(name, username, password) {
-        this.name = name;
-        this.username = username;
-        this.password = password;
+        this.user = new Teacher(name, username, password); 
         this.type = "SupplyTeacher";
-        this.taughtClasses = [];
     }
 /*
     //helper method for UI people
@@ -761,7 +741,7 @@ class SupplyTeacher {       // Substitute Teacher: same functionalities as FT-Te
         }
         return false; 
     }
-*/
+
 }
 
 class Parent {
@@ -825,7 +805,6 @@ class Parent {
             }         
         }
         return false;
-
     }
 
     // Displays the selected child's (Student) attendance record
