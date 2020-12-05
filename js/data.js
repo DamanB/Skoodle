@@ -24,14 +24,14 @@ function InitData()
     var stud_6 = sec_1.registerStudent("Aaron Smith");  
     var stud_7 = sec_1.registerStudent("Matimbo Johnson");
 
-    sec_1.addStudentToClass("French1", stud_1); 
-    sec_1.addStudentToClass("French1", stud_2);
-    sec_1.addStudentToClass("French1", stud_3);
-    sec_1.addStudentToClass("French1", stud_7); 
-    sec_1.addStudentToClass("Math1", stud_4); 
-    sec_1.addStudentToClass("Math1", stud_5); 
-    sec_1.addStudentToClass("Math1", stud_6);
-    sec_1.addStudentToClass("Math1", stud_1);
+    sec_1.addStudentToClass("French1", stud_1.Stdid); 
+    sec_1.addStudentToClass("French1", stud_2.Stdid);
+    sec_1.addStudentToClass("French1", stud_3.Stdid);
+    sec_1.addStudentToClass("French1", stud_7.Stdid); 
+    sec_1.addStudentToClass("Math1", stud_4.Stdid); 
+    sec_1.addStudentToClass("Math1", stud_5.Stdid); 
+    sec_1.addStudentToClass("Math1", stud_6.Stdid);
+    sec_1.addStudentToClass("Math1", stud_1.Stdid);
     
     setStudentList(StudentList);
     setGlobalAttendenceList(GlobalAttendenceList); 
