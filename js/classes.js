@@ -653,24 +653,34 @@ class Teacher {
     submitAttendance(className, date)
     {
         var currClass = this.classExists(className); //grabs the current class
+        var idx;  
 
-        var currDate = currClass.Attendance.date; 
-
-        if(currClass && (currDate.getFullYear() == date.getFullYear() && currDate.getMonth() == date.getMonth() && currDate.getDay() == date.getDay()))
+        for(var i = 0; i < currClass.Attendance.length; i++)
         {
-            for (var i = 0; i < currClass.Attendance.AttEntries.length; i++)
+            var currDate = currClass.Attendance[i].date; 
+            
+            var splits = currDate.substring(0, 10);
+            splits = splits.split("-");
+            var dateObj = new Date (splits[0], splits[1] - 1, splits[2]);
+
+            if(dateObj.getFullYear() == date.getFullYear() && dateObj.getMonth() == date.getMonth() && dateObj.getDay() == date.getDay())
             {
-                if(currClass.Attendance.AttEntries[i].studentStatus == "*")
-                {
-                    return false; 
-                }
+                idx = i;  
             }
-            //should update the global attendance list with the marked statuses 
-            currClass.ClassAttendance.submitted = true; 
-            setGlobalAttendenceList(GlobalAttendenceList);
-            return true; 
+            
         }
-        return false; 
+        var currAttendanceEntry = currClass.Attendance[idx].entries; 
+        
+        for (var i = 0; i < currAttendanceEntry.length; i++)
+        {
+            if(currAttendanceEntry[i].studentStatus == "*")
+            {
+                return false; 
+            }
+        }
+        currClass.ClassAttendance.submitted = true; 
+        setGlobalAttendenceList(GlobalAttendenceList);
+        return true; 
     }
 }
 
