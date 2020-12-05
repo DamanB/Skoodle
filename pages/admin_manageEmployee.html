@@ -43,6 +43,7 @@
                 var curItem = toEdit.username;
                 var newItem = $("#nameEmployee").val();
                 user.modifyEmployeeName(curItem, newItem);
+                toEdit.name = newItem;
                 $("#nameToEdit").text(newItem);
                 $("#nameSuccess").show();
             });
@@ -56,11 +57,14 @@
                 if (ending)
                 {
                     $("#usernameToEdit").text(newItem);
+                    toEdit.username = newItem;
                     $("#usernameSuccess").show();
+                    $("#usernameError").hide();
                 }
                 else
                 {
                     $("#usernameError").show();
+                    $("#usernameSuccess").hide();
                 }
             });
 
@@ -69,6 +73,7 @@
                 var curItem = toEdit.username;
                 var newItem = $("#passwordEmployee").val();
                 user.modifyEmployeePassword(curItem, newItem);
+                toEdit.password = newItem;
                 $("#passwordToEdit").text(newItem);
                 $("#passwordSuccess").show();
             });

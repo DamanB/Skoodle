@@ -20,13 +20,50 @@
                 user = Object.assign(new Admin, getActiveUser());
                 $("#username").text(user.type.toUpperCase() + ": " + user.username);
                 $("#name").text("Hello " + user.name + "!");
+            
+                
+                //Get modify data
+                toEdit = JSON.parse(sessionStorage.getItem("ViewAttendance"));
+                console.log(toEdit);
+                $("#className").text(toEdit.name);
+
+                var list = toEdit.ClassList;
+
+                list.forEach(function(studentObj)
+                {
+                    $("#listOfStudents tbody").append
+                    (
+                        "<tr><td>"
+                        + studentObj.name
+                        + "</td><td>"
+                        + "<select>"
+                        + "<option value=A>Absent</option>"
+                        + "<option value=P>Present</option>"
+                        + "</select>"
+                    )
+                });
             });
 
             //Logout button
             $(document).on('click', "#logout", function(){
                 removeActiveUser();
                 window.location.href = "/index.html";
-            }); 
+            });
+
+            //Back button
+            $(document).on('click', "#back", function()
+            {
+                console.log(user.type);
+                if (user.type == "Teacher")
+                {
+                    window.location.href = "/pages/teach_full1.html";
+                }
+
+                if (user.type == "SupplyTeacher")
+                {
+                    window.location.href = "/pages/teach_supply1.html";
+                }
+            });
         </script>
         <div id="logo">
             Skoodle
@@ -39,10 +76,22 @@
             <button>Logout</button>
         </div>
 
-        <div id="actions">
-            <ul>
-                <li><a href="">Action 1</a></li>
-            </ul>
+        <div id="back">
+            <button style="color: black; text-decoration: none;">Back</button>
+        </div>
+
+        <div>
+            <span>Attendance for: </span>
+            <span id="className"></span>
+
+            <table id="listOfStudents">
+                <thead>
+                    <th>Student Name</th>
+                    <th>Attendance</th>
+                </thead>
+
+                <tbody></tbody>
+            </table>
         </div>
     </body>
 </html>

@@ -24,6 +24,8 @@
                 //Populate the classes drop-down
                 var list = user.taughtClasses;
                 
+                //console.log(user);
+
                 if (list.length == 0)
                 {
                     $("#listOfClasses").text("No Classes");
@@ -42,8 +44,23 @@
                             + '</td></tr>'
                         );
                     });
-                    console.log(user.taughtClasses);
                 }
+
+                $(document).on('click', "#viewAttendance", function()
+                {
+                    var className = $(this).parent().prev().text();
+                    getGlobalClassList();
+                    var data = user.classExists(className);
+                    //console.log(data);
+                    sessionStorage.setItem("ViewAttendance", JSON.stringify(data));
+                    window.location.href = "/pages/class_attendanceSubmission.html";                        
+                });
+
+                $(document).on('click', "#viewStudents", function()
+                {
+                    var className = $(this).parent().prev().prev().text();
+
+                });
             });
         
             //Logout button
@@ -77,6 +94,8 @@
             <table id="listOfClasses">
                 <thead>
                     <th>Class Name</th>
+                    <th>Attendance Submission</th>
+                    <th>Student List</th>
                 </thead>
 
                 <tbody></tbody>
