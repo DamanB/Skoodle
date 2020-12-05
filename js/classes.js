@@ -653,14 +653,12 @@ class Teacher {
     submitAttendance(className, date)
     {
         var currClass = this.classExists(className); //grabs the current class
-        var currDate; 
         var idx;  
 
         for(var i = 0; i < currClass.Attendance; i++)
         {
-            if((currDate.getFullYear() == date.getFullYear() && currDate.getMonth() == date.getMonth() && currDate.getDay() == date.getDay()))
+            if((currClass.Attendance[i].date.getFullYear() == date.getFullYear() && currClass.Attendance[i].date.getMonth() == date.getMonth() && currClass.Attendance[i].date.getDay() == date.getDay()))
             {
-                currDate = currClass.Attendance[i].date;
                 idx = i;  
             }
             
