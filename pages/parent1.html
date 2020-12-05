@@ -23,7 +23,9 @@
             $("#name").text("Hello " + user.name + "!");
 
             //update child list
+            console.log(getParentList());
             getParentList().forEach(function (rent) {
+                console.log(rent);
                 if (rent.username == user.username) {
                     var list = rent.children;
                     list.forEach(function (cl) {

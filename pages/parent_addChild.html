@@ -19,6 +19,7 @@
         //set header
         $(document).ready(function () {
             user = Object.assign(new Parent, getActiveUser());
+            getParentList();
             $("#username").text(user.type.toUpperCase() + ": " + user.username);
             $("#name").text("Hello " + user.name + "!");
             var studentList1 = getStudentList();
@@ -34,59 +35,51 @@
         // Add Students
         $(document).on('click', "#submit", function () {
             $("#error").hide();
+            $("#error1").hide();
+            $("#success").hide();
             var studentid = $("#studentid").val();
             var registerKey = $("#registerKey").val();
 
             var valid = true;
             var found = false;
 
-            //check if child already exists in parent children array
-            var duplicate = user.childExists(studentid)
-            console.log(duplicate);
-
-           
-
-            if (!studentid) {
-                $("#error").text("Enter a valid student ID");
-                $("#error").show();
-                valid = false;
+            // if (!studentid) {
+            //     $("#error").text("Enter a valid student ID");
+            //     $("#error").show();
+            //     valid = false;
                 
-            }
-            if (!registerKey) {
-                $("#error1").text("Enter a valid verificaiton key");
-                $("#error1").show();
-                valid = false;
-            }
-
-            if (duplicate = true) {
-                $("#error3").text("Student is already registered as your child");
-                $("#error3").show();
-            }
-
-            else {
+            // }
+            // if (!registerKey) {
+            //     $("#error1").text("Enter a valid verificaiton key");
+            //     $("#error1").show();
+            //     valid = false;
+            // }
+            
+            
+            // add student to parent
+            if(!found){
                 var studentList = getStudentList();
+                console.log(studentList);
                 studentList.forEach(function (el) {
+                    console.log(el.Stdid + " " + el.regKey);
                     if ((el.Stdid == studentid) && (el.regKey == registerKey)) {
                         found = true;
                         user.addStudent(studentid, registerKey);
+                        console.log(studentid + "- -" + registerKey);
                         $("#addedList").append('<tr><td>' + el.name + '</td>' + '<td>' + el.Stdid + '</td><td>' + el.regKey + '</td></tr>');
                         $("#error").hide();
                         $("#error1").hide();
-                        $("#error2").hide();
-                        $("#error3").hide();
-                        console.log(found);
-
+                        $("#success").show();
                     }
                 })
             }
+            // student doesn't exist
             if (found == false){
-                        $("#error2").text("This student does not exist");
-                        $("#error2").show();
+                        $("#error").text("This student does not exist");
+                        $("#error").show();
+                        $("#error1").hide();
                         console.log("no if statement");
-            }
-
-            //if child was already added
-           
+            }           
         });
     </script>
 
@@ -127,14 +120,11 @@
 
     <!-- </form> -->
     <button id="submit" value="Submit">Submit</button>
+    <span id="success" style="display: none; color: green;"></span>
     <br>
     <span id="error" style="display: none; color: red;"></span>
     <br>
     <span id="error1" style="display: none; color: red;"></span>
-    <br>
-    <span id="error2" style="display: none; color: red;"></span>
-    <br>
-    <span id="error3" style="display: none; color: red;"></span>
     <table id="addedList" class="customTable">
         <thead>
             <th>Student Name</th>
