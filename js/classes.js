@@ -656,8 +656,11 @@ class Teacher {
         var classAttendanceList = currClass.Attendance;
         var classAttendance_1;
         classAttendanceList.forEach(function(classAttend){
-            var tmpDate = classAttend.date; 
-            var betterDate = classAttend.getDate(tmpDate); 
+            var tmpDate = classAttend.date;
+            var splits = tmpDate.substring(0, 10);
+            splits = splits.split("-");
+            var betterDate = new Date (splits[0], splits[1] - 1, splits[2]);
+
             if (betterDate.getFullYear() == currDate.getFullYear() && betterDate.getMonth() == currDate.getMonth() && betterDate.getDay() == currDate.getDay()) {
                 classAttendance_1 = classAttend;
                 return;
@@ -688,7 +691,12 @@ class Teacher {
         {
             
             var tmpDate = currClass.Attendance[i].date;
-            var currDate =  currClass.Attendance[i].getDate(tmpDate); 
+
+            var splits = tmpDate.substring(0, 10);
+            splits = splits.split("-");
+            var currDate = new Date (splits[0], splits[1] - 1, splits[2]);
+
+            //var currDate =  currClass.Attendance[i].getDate(); 
 
             if(currDate.getFullYear() == date.getFullYear() && currDate.getMonth() == date.getMonth() && currDate.getDay() == date.getDay())
             {
@@ -728,6 +736,7 @@ class Parent {
         this.email = email;
         this.children = [];             // array of children (Student's ID #)  NOTE: FRONT-END CAN SORT BY NAMES INSTEAD OF ID
         this.type = "Parent";
+        this.notifications = [];
     }
     
 
@@ -864,15 +873,7 @@ class ClassAttendance {
         this.reportedAbsent;  
     }
 
-    //helper method to get a correct date
-    getDate(date)
-    {
-        var splits = date.substring(0, 10);
-        splits = splits.split("-");
-        var dateObj = new Date (splits[0], splits[1] - 1, splits[2]);
 
-        return dateObj; 
-    }
 
 
 }
