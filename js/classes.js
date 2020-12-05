@@ -485,7 +485,7 @@ class Teacher {
     
     //helper method for teacher used in markStatus 
     attendanceExists(className, date) {
-        var currClass = classExists(className);
+        var currClass = this.classExists(className);
         if (currClass) {
             var currAttendance = currClass.Attendance;
             currAttendance.forEach(function(att) {
@@ -803,9 +803,7 @@ class Parent {
                 var currStud = StudentList[i];
                 this.children.push(currStud);         // student ID # pushed onto parent's children list
                 setParentList(ParentList);
-            }
-            else {
-                return false;       // could not find student
+                return true;
             }
         }
         return false;
