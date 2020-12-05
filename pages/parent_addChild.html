@@ -48,9 +48,9 @@
             }
             else {
                 var studentList = getStudentList();
-                console.log(studentList);
                 studentList.forEach(function (el) {
-                    if (el.Stdid === studentid && el.regKey === registerKey) {
+                    if ((el.Stdid == studentid) && (el.regKey == registerKey)) {
+                        console.log("i am here");
                         user.addStudent(studentid, registerKey);
                         console.log(studentid + " " + registerKey);
                         console.log(el.Stdid + " " + el.regKey);
@@ -58,10 +58,10 @@
                         $("#addedList").append('<tr><td>' + el.Stdid + '</td>' + '<td>' + el.regKey + '</td><td>');
                         $("#error").hide();
                         $("#error1").hide();
-                        // $("#error").text("Student wit already exists");
-                        // $("#error").show();
-                        // valid = false;
                         return
+                    }
+                    else{
+                        console.log("no if statement");
                     }
                 })
             }
@@ -80,6 +80,10 @@
     <div id="logout">
         <button>Logout</button>
     </div>
+    <br>
+    <div id="back">
+        <button><a href="/pages/parent1.html" style="color: black; text-decoration: none;">Back</a></button>
+    </div>
 
     <div id="actions">
         <ul>
@@ -95,8 +99,8 @@
     <!-- <form> -->
     <label for="studentid">Student ID: </label>
     <input type="text" id="studentid" name="studentid"><br><br>
-    <label for="tempkey">Verification key: </label>
-    <input type="text" id="tempkey" name="tempkey"><br><br>
+    <label for="registerKey">Verification key: </label>
+    <input type="text" id="registerKey" name="registerKey"><br><br>
     <!-- <input type="submit" value="Submit"> -->
 
     <!-- </form> -->
