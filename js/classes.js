@@ -652,14 +652,18 @@ class Teacher {
     markStatus(className, currDate, stdId, status)
     {
         var currClass = this.classExists(className); //grabs the current class
+
         // var currStudent = this.studentExistsInClass(studId, currClass);
         var classAttendanceList = currClass.Attendance;
         var classAttendance_1;
         classAttendanceList.forEach(function(classAttend){
-            var tmpDate = classAttend.date;
-            var splits = tmpDate.substring(0, 10);
-            splits = splits.split("-");
-            var betterDate = new Date (splits[0], splits[1] - 1, splits[2]);
+            var betterDate = classAttend.date;            
+            if (typeof(betterDate) == "string")
+            {
+                var splits = betterDate.substring(0, 10);
+                splits = splits.split("-");
+                betterDate = new Date (splits[0], splits[1] - 1, splits[2]);
+            }
 
             if (betterDate.getFullYear() == currDate.getFullYear() && betterDate.getMonth() == currDate.getMonth() && betterDate.getDay() == currDate.getDay()) {
                 classAttendance_1 = classAttend;
@@ -690,11 +694,14 @@ class Teacher {
         for(var i = 0; i < currClass.Attendance.length; i++)
         {
             
-            var tmpDate = currClass.Attendance[i].date;
+            var currDate = currClass.Attendance[i].date;
 
-            var splits = tmpDate.substring(0, 10);
-            splits = splits.split("-");
-            var currDate = new Date (splits[0], splits[1] - 1, splits[2]);
+            if (typeof(currDate) == "string")
+            {
+                var splits = currDate.substring(0, 10);
+                splits = splits.split("-");
+                currDate = new Date (splits[0], splits[1] - 1, splits[2]);
+            }
 
             //var currDate =  currClass.Attendance[i].getDate(); 
 
@@ -713,7 +720,7 @@ class Teacher {
                 return false; 
             }
         }
-        currClass.ClassAttendance.submitted = true; 
+        currClass.Attendance[idx].submitted = true; 
         setGlobalAttendenceList(GlobalAttendenceList);
         return true; 
     }
