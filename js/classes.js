@@ -658,7 +658,12 @@ class Teacher {
         for(var i = 0; i < currClass.Attendance.length; i++)
         {
             var currDate = currClass.Attendance[i].date; 
-            if(currDate.getFullYear() == date.getFullYear() && currDate.getMonth() == date.getMonth() && currDate.getDay() == date.getDay())
+            
+            var splits = currDate.substring(0, 10);
+            splits = splits.split("-");
+            var dateObj = new Date (splits[0], splits[1] - 1, splits[2]);
+
+            if(dateObj.getFullYear() == date.getFullYear() && dateObj.getMonth() == date.getMonth() && dateObj.getDay() == date.getDay())
             {
                 idx = i;  
             }
