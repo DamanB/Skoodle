@@ -55,10 +55,11 @@ class Admin {
     /* ADMIN FUNCTION: REMOVING EMPLOYEES */
     //removing a employee
     removeEmployee(username) {
+        getEmployeeList();
         if (this.employeeExists(username)) {
             for (var i = 0; i < EmployeeList.length; i++) {
                 if (username == EmployeeList[i].username) {
-                    const victim_employee_index = EmployeeList.indexOf(i);
+                    var victim_employee_index = i;
                 } 
             if (victim_employee_index > -1) {
                 EmployeeList.splice(victim_employee_index, 1);
@@ -408,6 +409,21 @@ class Secretary {
             return false;
         }
     }
+
+    
+    // adding student to global student list (registering student to school)
+    registerStudent(studName)
+    {
+        var regKey = this.genKey(); 
+        var studID = this.genStudID(); 
+        var newStud = new Student(studName, studID, [], regKey);
+        StudentList.push(newStud);
+        setStudentList(StudentList);
+        return newStud;
+    }
+
+
+
 }
 
 class Teacher {
@@ -557,12 +573,147 @@ class Teacher {
 
 }
 
-class SupplyTeacher {
+class SupplyTeacher {       // Substitute Teacher: same functionalities as FT-Teacher, but cannot view individual student 
     constructor(name, username, password) {
         this.name = name;
         this.username = username;
         this.password = password;
         this.type = "SupplyTeacher";
+    }
+
+    //helper method for UI people
+    getTeacherFromClass(className) {
+        var currClassroom = this.classExists(className);
+        return currClassroom.teacher;
+    }
+
+    //helper method for teacher used in createAttendance 
+    classExists(className) {
+        for (var i = 0; i < GlobalClassList.length; i++) {
+            if (className == GlobalClassList[i].name) {
+                return GlobalClassList[i];
+            }
+        }
+        return false;
+    }
+    
+    //helper method for teacher used in markStatus 
+    attendanceExists(className) {
+        for (var i = 0; i < this.GlobalClassList.length; i++) {
+            if (className == this.GlobalClassList[i].name) {
+                return this.GlobalClassList[i].Attendance; //returns a specific classes attendance 
+            }
+        }
+        return false;
+    }
+
+    //helper method for teacher used in markStatus
+    studentExistsInClass(studID, currClass) 
+    {
+        for (var i = 0; i < currClass.ClassList.length; i++) {
+            if (studID == currClass.ClassList[i].Stdid) {
+                return currClass.ClassList[i]; 
+            }
+        }
+        return false;
+    }
+
+    //create attendance for day and class CLASSATTENDANCE
+    createAttendance(className, year, month, day)
+    {
+        var currClassroom = this.classExists(className); 
+        var attendance_holder = [];  //mock attendance for holding student attendance entries
+        
+        if(currClassroom) // checking if the current classroom exits 
+        {
+            for(var i = 0; i < currClassroom.ClassList.length; i++) //looping through classList to get students 
+            {
+                var currStudent = currClassroom.ClassList[i];  //creating student object 
+                
+                var attendance_entry = new AttendanceEntry(currStudent, className, "*");  //creating an attendance entry 
+                                
+                attendance_holder.push(attendance_entry);   //storing student attendance entries into mock holder
+
+            }
+        }
+        var new_date = new Date(year, month, day);
+        console.log("Adding entry for: " + new_date); 
+        //var d = new Date(new_date.getFullYear(), new_date.getMonth(), new_date.getDay());
+        var attendance_1 = new ClassAttendance(attendance_holder, new_date);  // creating the class attendance list from temp mock class attendance
+
+        currClassroom.Attendance.push(attendance_1); //putting the attendance made into the class 
+        setGlobalClassList(GlobalClassList); 
+        
+        GlobalAttendenceList.push(attendance_1); //sending the attendance so secratery can access the attendances
+        setGlobalAttendenceList(GlobalAttendenceList);  
+
+        return attendance_1; 
+    }
+    
+    //mark student present/absent
+    markStatus(className, currDate, stdId, status)
+    {
+        var currClass = this.classExists(className); //grabs the current class
+        // var currStudent = this.studentExistsInClass(studId, currClass);
+        var classAttendanceList = currClass.Attendance;
+        var classAttendance_1;
+        classAttendanceList.forEach(function(classAttend){
+            if (classAttend.date.getFullYear() == currDate.getFullYear() && classAttend.date.getMonth() == currDate.getMonth() && classAttend.date.getDay() == currDate.getDay()) {
+                classAttendance_1 = classAttend;
+                return;
+            }
+        });
+        
+        if (classAttendance_1)
+        {
+            classAttendance_1.entries.forEach(function(classEntry){
+                if (classEntry.student.Stdid == stdId) {
+                    classEntry.studentStatus = status;
+                    return;
+                }
+            });
+        }
+        
+        setGlobalClassList(GlobalClassList); 
+        setGlobalAttendenceList(GlobalAttendenceList);  
+
+        /*if (currStudent && currClass) 
+        { 
+
+            for (var i = 0; i < currClass.Attendance.length; i++)
+            {
+                var stud_entry = currClass.Attendance[i];
+
+                if(stud_entry.student.Stdid == studId)
+                {
+                    stud_entry.studentStatus = status;
+                    return true;  
+                }
+            }
+        }
+        return false; */
+    }
+
+    //submitting a complete attendance to the secretary (updating global list)
+    submitAttendance(className)
+    {
+        var currClass = this.classExists(className); //grabs the current class
+
+        if(currClass)
+        {
+            for (var i = 0; i < currClass.Attendance.AttEntries.length; i++)
+            {
+                if(currClass.Attendance.AttEntries[i].studentStatus == "*")
+                {
+                    return false; 
+                }
+
+            }
+            //should update the global attendance list with the marked statuses 
+            setGlobalAttendenceList(GlobalAttendenceList);
+            return true; 
+        }
+        return false; 
     }
 
 }
