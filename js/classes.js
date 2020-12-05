@@ -138,6 +138,31 @@ class Secretary {
         return false;
     }
 
+    //helper method to see if attendance was submitted successfully (date)
+    getSubmittedAttendances(date)
+    {
+        var submittedAttendances = []; 
+
+        for(var i = 0; i < GlobalAttendenceList.length; i++)
+        {
+            var currAttendance = GlobalAttendenceList[i];
+            if(currAttendance)
+            {
+                var currDate = currAttendance.date;
+
+                if(currAttendance.submitted && currDate.getFullYear() == date.getFullYear() && currDate.getMonth() == date.getMonth() && currDate.getDay() == date.getDay())
+                {
+                    submittedAttendances.push(currAttendance); 
+                }
+            }
+            else
+            {
+                return false; 
+            }
+        }
+        return submittedAttendances; 
+    }
+    
     //adding an employee to the system as an admin
     addClass(name, teacher, timeinterval, ClassList) {
         if (!this.classExists(name)) {
@@ -451,6 +476,34 @@ class Secretary {
             return false;
         }
 
+    }
+
+    //retrieve list of absent attendance (marked by teachers) entries based on a date 
+    getAbsentEntries(date)
+    {
+        var allAbsences = []; 
+        var subAttendances = this.getSubmittedAttendances(date); 
+        if(subAttendances)
+        {
+            for (var i = 0; i < subAttendances.length; i++)
+            {
+                var currAttendance = subAttendances[i]; 
+                if(currAttendance)
+                {
+                    for(var j = 0; j < currAttendance.length; j++)
+                    {
+                        var currAttendanceEntry = currAttendance[i].AttEntries;
+                        if(currAttendanceEntry.status == "A")
+                        {
+                            allAbsences.push(currAttendanceEntry);
+                             
+                        }  
+                    }
+                }
+            }
+            return allAbsences;  
+        }
+        return false; 
     }
 
 
@@ -780,8 +833,8 @@ class Student {
                     }
                 } 
             } 
-
         }
+        return false; 
     }
 }
 
