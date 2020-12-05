@@ -437,7 +437,6 @@ class Secretary {
         }
     }
 
-
     //generate random RegKey for Students
     genPass() {
         return Math.floor(Math.random()*100000);
@@ -506,8 +505,33 @@ class Secretary {
         return false; 
     }
 
-
-
+    //retrieve list of absent declared attendance (marked by parents) entries based on a date 
+    getAbsentDeclaredEntries(date)
+    {
+        var allAbsences = []; 
+        var subAttendances = this.getSubmittedAttendances(date); 
+        if(subAttendances)
+        {
+            for (var i = 0; i < subAttendances.length; i++)
+            {
+                var currAttendance = subAttendances[i]; 
+                if(currAttendance)
+                {
+                    for(var j = 0; j < currAttendance.length; j++)
+                        {
+                            var currAttendanceEntry = currAttendance[i].AttEntries;
+                            if(currAttendanceEntry.status == "AD")
+                            {
+                                allAbsences.push(currAttendanceEntry);
+                                 
+                            }  
+                        }
+                }
+            }
+            return allAbsences;  
+        }
+        return false; 
+    }
 }
 
 
