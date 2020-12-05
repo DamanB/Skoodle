@@ -21,6 +21,8 @@
             user = Object.assign(new Parent, getActiveUser());
             $("#username").text(user.type.toUpperCase() + ": " + user.username);
             $("#name").text("Hello " + user.name + "!");
+            var studentList1 = getStudentList();
+            console.log(studentList1);
         });
 
         //Logout button
@@ -36,6 +38,7 @@
             var registerKey = $("#registerKey").val();
 
             var valid = true;
+            var found = false;
             if (!studentid) {
                 $("#error").text("Enter a valid student ID");
                 $("#error").show();
@@ -46,24 +49,23 @@
                 $("#error1").show();
                 valid = false;
             }
-            else {
+            if (valid) {
                 var studentList = getStudentList();
                 studentList.forEach(function (el) {
                     if ((el.Stdid == studentid) && (el.regKey == registerKey)) {
-                        console.log("i am here");
+                        found = true;
                         user.addStudent(studentid, registerKey);
-                        console.log(studentid + " " + registerKey);
-                        console.log(el.Stdid + " " + el.regKey);
-
-                        $("#addedList").append('<tr><td>' + el.Stdid + '</td>' + '<td>' + el.regKey + '</td><td>');
+                        $("#addedList").append('<tr><td>' + el.name + '</td>' + '<td>' + el.Stdid + '</td><td>' + el.regKey + '</td></tr>');
                         $("#error").hide();
                         $("#error1").hide();
-                        return
-                    }
-                    else{
-                        console.log("no if statement");
+                        console.log(found);
                     }
                 })
+            }
+            else if (found == false){
+                        $("#error").text("This student does not exist");
+                        $("#error").show();
+                        console.log("no if statement");
             }
         });
     </script>
@@ -112,9 +114,9 @@
 
     <table id="addedList" class="customTable">
         <thead>
-            <th>student ID</th>
-            <th>Verification Key</th>
-
+            <th>Student Name</th>
+            <th>ID</th>
+            <th>regKey</th>
         </thead>
         <tbody>
 
