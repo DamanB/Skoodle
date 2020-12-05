@@ -70,6 +70,9 @@
                     if ((el.Stdid == studentid) && (el.regKey == registerKey)) {
                         found = true;
                         user.addStudent(studentid, registerKey, user.username);
+                        console.log(ParentList);
+                        console.log(getParentList());
+
                         console.log(studentid + "- -" + registerKey);
                         $("#addedList").append('<tr><td>' + el.name + '</td>' + '<td>' + el.Stdid + '</td><td>' + el.regKey + '</td></tr>');
                         $("#error").hide();

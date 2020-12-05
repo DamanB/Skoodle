@@ -23,11 +23,13 @@
             $("#name").text("Hello " + user.name + "!");
 
             //update child list
-            var list = user.children;
+            var list = getParentList();
             console.log(list);
-            list.forEach(function (cl) {
+            list.forEach(function(rent){
+                rent.children.forEach(function (cl) {
                 $('#classList tbody').append('<tr><td>' + cl.name + '</td><td>' + cl.Stdid + '</td><td>' + '<button class="modify">View/Report Absences</button> </td></tr>');
             });
+            })
         });
 
         //Logout button
