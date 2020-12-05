@@ -31,7 +31,8 @@
             removeActiveUser();
             window.location.href = "/index.html";
         });
-
+        
+        //back button
         $(document).on('click', "#backbutton", function () {
             setActiveUser(user);
             window.location.href = "/pages/parent1.html";
@@ -47,19 +48,6 @@
 
             var valid = true;
             var found = false;
-
-            // if (!studentid) {
-            //     $("#error").text("Enter a valid student ID");
-            //     $("#error").show();
-            //     valid = false;
-                
-            // }
-            // if (!registerKey) {
-            //     $("#error1").text("Enter a valid verificaiton key");
-            //     $("#error1").show();
-            //     valid = false;
-            // }
-            
             
             // add student to parent
             if(!found){
@@ -86,7 +74,6 @@
                         $("#error").text("This student does not exist");
                         $("#error").show();
                         $("#error1").hide();
-                        console.log("no if statement");
             }           
         });
     </script>
