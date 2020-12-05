@@ -32,6 +32,11 @@
             window.location.href = "/index.html";
         });
 
+        $(document).on('click', "#backbutton", function () {
+            setActiveUser(user);
+            window.location.href = "/pages/parent1.html";
+        });
+
         // Add Students
         $(document).on('click', "#submit", function () {
             $("#error").hide();
@@ -64,7 +69,7 @@
                     console.log(el.Stdid + " " + el.regKey);
                     if ((el.Stdid == studentid) && (el.regKey == registerKey)) {
                         found = true;
-                        user.addStudent(studentid, registerKey);
+                        user.addStudent(studentid, registerKey, user.username);
                         console.log(studentid + "- -" + registerKey);
                         $("#addedList").append('<tr><td>' + el.name + '</td>' + '<td>' + el.Stdid + '</td><td>' + el.regKey + '</td></tr>');
                         $("#error").hide();
@@ -97,7 +102,7 @@
     </div>
     <br>
     <div id="back">
-        <button><a href="/pages/parent1.html" style="color: black; text-decoration: none;">Back</a></button>
+        <button id="backbutton">Back</button>
     </div>
 
     <div id="actions">
