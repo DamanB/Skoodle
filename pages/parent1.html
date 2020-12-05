@@ -18,7 +18,15 @@
 
         //set header
         $(document).ready(function () {
-            user = Object.assign(new Parent, getActiveUser());
+            var u = Object.assign(new Parent, getActiveUser());
+            var l = getParentList();
+            l.forEach(function(rent){
+                if (rent.username == u.username)
+                {
+                    user = rent;
+                    return;
+                }
+            });
             $("#username").text(user.type.toUpperCase() + ": " + user.username);
             $("#name").text("Hello " + user.name + "!");
 
