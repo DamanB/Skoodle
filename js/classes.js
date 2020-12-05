@@ -484,14 +484,17 @@ class Teacher {
     }
     
     //helper method for teacher used in markStatus 
-    attendanceExists(className) {
-        for (var i = 0; i < this.GlobalClassList.length; i++) {
-            if (className == this.GlobalClassList[i].name) {
-                return this.GlobalClassList[i].Attendance; //returns a specific classes attendance 
-            }
+    attendanceExists(className, date) {
+        var currClass = classExists(className);
+        if (currClass) {
+            var currAttendance = currClass.Attendance;
+            currAttendance.forEach(function(att) {
+                if (att.date.getFullYear() == date.getFullYear() && att.date.getMonth() == date.getMonth() && att.date.getDay() == date.getDay()) {
+                    return att;
+                }
+            })
+            return false;
         }
-        return false;
-    }
 
     //helper method for teacher used in markStatus
     studentExistsInClass(studID, currClass) 
@@ -507,6 +510,10 @@ class Teacher {
     //create attendance for day and class CLASSATTENDANCE
     createAttendance(className, year, month, day)
     {
+        var new_date = new Date(year, month, day);
+        if (this.attendanceExists(className, new_date)) {
+            return;
+        }
         var currClassroom = this.classExists(className); 
         var attendance_holder = [];  //mock attendance for holding student attendance entries
         
@@ -522,8 +529,6 @@ class Teacher {
 
             }
         }
-        var new_date = new Date(year, month, day);
-
         //var d = new Date(new_date.getFullYear(), new_date.getMonth(), new_date.getDay());
         var attendance_1 = new ClassAttendance(attendance_holder, new_date);  // creating the class attendance list from temp mock class attendance
         console.log(attendance_1.date); 
@@ -811,13 +816,21 @@ class Parent {
     }
 
     // Report the selected child's (Student) attendance entry to reported absent for certain date/class
+    // if the ClassAttendance does not exist on that date, create it using CreateAttendance (from dummy_teacher), then recursively call reportStudentAbsence after it
+    // (CHANGES FOR CreateAttendance include: if it sees that the ClassAttendance already exists, it should not overwrite that dates attendances)
     reportStudentAbsence(studId, date, className) {
+        var dummy_teacher = new Teacher("","","");
         var studClass = this.classExists(className);
         var classAttendance = studClass.Attendance;
+        
+        var succ = false;
+
+
         classAttendance.forEach(function(att) {
             att.date = new Date(att.date)
             console.log(att.date)
             if (att.date.getFullYear() == date.getFullYear() && att.date.getMonth() == date.getMonth() && att.date.getDay() == date.getDay()) {
+                succ = true;
                 att.entries.forEach(function(ent) {
                     if (ent.student.Stdid == studId) {
                         ent.studentStatus = "AD";
@@ -828,7 +841,11 @@ class Parent {
                 })
                 return;
             }
-        })        
+        })
+        if (!succ) {
+            dummy_teacher.createAttendance(className, date.getFullYear(), date.getMonth(), date.getDay());
+            this.reportStudentAbsence(studId, date, className);
+        }
     }
 
     //registering parent into the system
