@@ -14,17 +14,19 @@
     <body>
         <script>
             var user;
+            var toEdit;
+            var dateString;
+            var dateObj;
             
             //set header
             $(document).ready(function () {
-                user = Object.assign(new Admin, getActiveUser());
+                user = Object.assign(new Teacher, getActiveUser());
                 $("#username").text(user.type.toUpperCase() + ": " + user.username);
                 $("#name").text("Hello " + user.name + "!");
             
                 
                 //Get modify data
                 toEdit = JSON.parse(sessionStorage.getItem("ViewAttendance"));
-                console.log(toEdit);
                 $("#className").text(toEdit.name);
 
                 var list = toEdit.ClassList;
@@ -36,12 +38,14 @@
                         "<tr><td>"
                         + studentObj.name
                         + "</td><td>"
-                        + "<select>"
+                        + "<select id='options'>"
                         + "<option value=A>Absent</option>"
                         + "<option value=P>Present</option>"
                         + "</select>"
+                        + "</td></tr>"
                     )
                 });
+
             });
 
             //Logout button
@@ -64,6 +68,109 @@
                     window.location.href = "/pages/teach_supply1.html";
                 }
             });
+
+            $(document).on('click', "#dateAbs", function()
+            {
+                $("#confirmDate").show();
+                $("tbody").empty();
+            });
+
+            $(document).on('click', "#confirmDate", function()
+            {
+                dateString = $("#dateAbs").val();
+                var splits = dateString.split("-");
+                $("#selectedDate").text(dateString);
+                dateObj = new Date(+splits[0], splits[1] - 1, +splits[2]);
+                $("#listOfStudents").show();
+                $("#confirmDate").hide();
+                
+                var attendance = toEdit.Attendance;
+
+                attendance.forEach(function(entry)
+                {  
+                    if (entry.date.substring(0, 10) == dateString)
+                    {                    
+                        console.log(entry.date); 
+                        console.log(getGlobalAttendenceList());
+                        var listEntries = entry.entries;
+
+                        listEntries.forEach(function(entryAttendance)
+                        {
+                            var studName = entryAttendance.student.name;
+                            var studStat = entryAttendance.studentStatus;
+                            
+                            if(!(studStat == "AD"))
+                            {
+                                $("#listOfStudents tbody").append
+                                (
+                                    "<tr><td>"
+                                    + studName
+                                    + "</td><td>"   
+                                    + "<select id='options'>"
+                                    + "<option value='*'>None</option>"
+                                    + "<option value='A'>Absent</option>"
+                                    + "<option value='P'>Present</option>"
+                                    + "</select>"
+                                    + "</td><td>"
+                                    + "<button id='mark'>Confirm Status</button>"
+                                    + "</td></tr>"
+                                );
+                            }
+                            else
+                            {
+                                $("#listOfStudents tbody").append
+                                (
+                                    "<tr><td>"
+                                    + studName
+                                    + "</td><td>"
+                                    + studStat
+                                    + "</td></tr>"
+                                );
+                            }
+                        });
+                    }
+                });
+            });
+
+            $(document).on('click', "#mark", function()
+            {
+                getStudentList();
+                getGlobalClassList();
+                var studName = $(this).parent().prev().prev().text();
+                var studId;
+                var studStatus = $(this).parent().prev().find(":selected").text();
+
+                for(var i = 0; i < StudentList.length; i++)
+                {
+                    if (StudentList[i].name == studName)
+                    {
+                        studId = StudentList[i].Stdid;
+                    }
+                }
+                
+                console.log(toEdit.name);
+                console.log(dateObj);
+                console.log(studId);
+                console.log(studStatus);
+
+                user.markStatus(toEdit.name, dateObj, studId, studStatus);
+            });        
+
+            $(document).on('click', "#submitAttendance", function()
+            {
+                getGlobalClassList();
+                
+                var status = user.submitAttendance(toEdit.name, dateObj);
+
+                if (status)
+                {
+                    $("#submitStatus").text("Success");
+                }
+                else
+                {
+                    $("#submitStatus").text("Failure");
+                }
+            });
         </script>
         <div id="logo">
             Skoodle
@@ -80,18 +187,37 @@
             <button style="color: black; text-decoration: none;">Back</button>
         </div>
 
+        <br>
+
+        <div>
+            <span>Select date in DD-MM-YYYY format: </span>
+            <input type="date" id="dateAbs">
+            <button id="confirmDate" style="display:none">Confirm Date</button>
+
+            <br>
+            
+            <span>Selected Date: </span>
+            <span id="selectedDate"></span>
+        </div>
+
+        <br>
+
         <div>
             <span>Attendance for: </span>
             <span id="className"></span>
 
-            <table id="listOfStudents">
+            <table id="listOfStudents" style="display:none">
                 <thead>
                     <th>Student Name</th>
                     <th>Attendance</th>
+                    <th>Confirm Attendance</th>
                 </thead>
 
                 <tbody></tbody>
             </table>
         </div>
+
+        <button id="submitAttendance">Submit Attendance</button>
+        <span id="submitStatus"></span>
     </body>
 </html>

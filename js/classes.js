@@ -532,6 +532,33 @@ class Secretary {
         }
         return false; 
     }
+
+    //confirming attendance
+    confirmAttendance(classAttendance)
+    {
+        for(var i = 0; i < classAttendance.entries.length; i++)
+        {
+            var currEntry = classAttendance.entries[i]; 
+            
+            currEntry.successfullyLogged = true;
+
+            if(currEntry.status == "P")
+            {
+                classAttendance.present++; 
+            }
+            else if (currEntry.status == "A")
+            {
+                classAttendance.absent++; 
+            }
+            else if (currEntry.status == "AD")
+            {
+                classAttendance.reportedAbsent++; 
+            }
+        }
+    }
+
+
+   
 }
 
 
@@ -625,11 +652,20 @@ class Teacher {
     markStatus(className, currDate, stdId, status)
     {
         var currClass = this.classExists(className); //grabs the current class
+
         // var currStudent = this.studentExistsInClass(studId, currClass);
         var classAttendanceList = currClass.Attendance;
         var classAttendance_1;
         classAttendanceList.forEach(function(classAttend){
-            if (classAttend.date.getFullYear() == currDate.getFullYear() && classAttend.date.getMonth() == currDate.getMonth() && classAttend.date.getDay() == currDate.getDay()) {
+            var betterDate = classAttend.date;            
+            if (typeof(betterDate) == "string")
+            {
+                var splits = betterDate.substring(0, 10);
+                splits = splits.split("-");
+                betterDate = new Date (splits[0], splits[1] - 1, splits[2]);
+            }
+
+            if (betterDate.getFullYear() == currDate.getFullYear() && betterDate.getMonth() == currDate.getMonth() && betterDate.getDay() == currDate.getDay()) {
                 classAttendance_1 = classAttend;
                 return;
             }
@@ -657,13 +693,19 @@ class Teacher {
 
         for(var i = 0; i < currClass.Attendance.length; i++)
         {
-            var currDate = currClass.Attendance[i].date; 
             
-            var splits = currDate.substring(0, 10);
-            splits = splits.split("-");
-            var dateObj = new Date (splits[0], splits[1] - 1, splits[2]);
+            var currDate = currClass.Attendance[i].date;
 
-            if(dateObj.getFullYear() == date.getFullYear() && dateObj.getMonth() == date.getMonth() && dateObj.getDay() == date.getDay())
+            if (typeof(currDate) == "string")
+            {
+                var splits = currDate.substring(0, 10);
+                splits = splits.split("-");
+                currDate = new Date (splits[0], splits[1] - 1, splits[2]);
+            }
+
+            //var currDate =  currClass.Attendance[i].getDate(); 
+
+            if(currDate.getFullYear() == date.getFullYear() && currDate.getMonth() == date.getMonth() && currDate.getDay() == date.getDay())
             {
                 idx = i;  
             }
@@ -678,7 +720,7 @@ class Teacher {
                 return false; 
             }
         }
-        currClass.ClassAttendance.submitted = true; 
+        currClass.Attendance[idx].submitted = true; 
         setGlobalAttendenceList(GlobalAttendenceList);
         return true; 
     }
@@ -701,6 +743,7 @@ class Parent {
         this.email = email;
         this.children = [];             // array of children (Student's ID #)  NOTE: FRONT-END CAN SORT BY NAMES INSTEAD OF ID
         this.type = "Parent";
+        this.notifications = [];
     }
     
 
@@ -821,7 +864,7 @@ class AttendanceEntry {
         this.student = student; 
         this.className = className;
         this.studentStatus = "*"; //this will be the different types of status (P - Present), (A - Absent), (RA - Reported Absent)
-        this.successfullyLogged = false;
+        this.successfullyLogged = false; //method used by the secretary to log the attendance 
     }
 
 }
@@ -831,8 +874,13 @@ class ClassAttendance {
     constructor(AttEntries, date) {
         this.entries = AttEntries;
         this.date = date;
-        this.submitted = false; 
+        this.submitted = false;
+        this.present; 
+        this.absent; 
+        this.reportedAbsent;  
     }
+
+
 
 
 }
