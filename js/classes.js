@@ -655,15 +655,16 @@ class Teacher {
         var currClass = this.classExists(className); //grabs the current class
         var idx;  
 
-        for(var i = 0; i < currClass.Attendance; i++)
+        for(var i = 0; i < currClass.Attendance.length; i++)
         {
-            if((currClass.Attendance[i].date.getFullYear() == date.getFullYear() && currClass.Attendance[i].date.getMonth() == date.getMonth() && currClass.Attendance[i].date.getDay() == date.getDay()))
+            var currDate = currClass.Attendance[i].date; 
+            if(currDate.getFullYear() == date.getFullYear() && currDate.getMonth() == date.getMonth() && currDate.getDay() == date.getDay())
             {
                 idx = i;  
             }
             
         }
-        var currAttendanceEntry = currClass.Attendance[idx].AttEntries; 
+        var currAttendanceEntry = currClass.Attendance[idx].entries; 
         
         for (var i = 0; i < currAttendanceEntry.length; i++)
         {
