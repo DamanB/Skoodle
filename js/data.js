@@ -45,7 +45,7 @@ function InitData()
     var par_2 = new Parent("Ostroff", "par2", "1234567", "ostroff@gmail.com"); 
     ParentList.push(par_1);         // TEMPORARY
     ParentList.push(par_2);         // TEMPORARY
-    par_1.addStudent(stud_1.Stdid, stud_1.regKey);
+    par_1.addStudent(stud_1.Stdid, stud_1.regKey, par_1.username);
     
     var class1_attendance = teach_1.createAttendance("French1", 2020,11,01); 
     var class1_attendance = teach_1.createAttendance("French1", 2020,11,02); 
