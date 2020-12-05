@@ -795,18 +795,37 @@ class Parent {
         }
         return false;
     }
-  
-    // Lets Parent link a student to their account
-    addStudent(studId, studRegKey) {
-        for (var i = 0; i < StudentList.length; i++) {
-            if (StudentList[i].Stdid == studId && StudentList[i].regKey == studRegKey) {   // if student found + regKey matches
-                var currStud = StudentList[i];
-                this.children.push(currStud);         // student ID # pushed onto parent's children list
-                setParentList(ParentList);
-                return true;
+
+    //helper method to see if parent exists will be used by addStudent
+    parentExists(username)
+    {
+        for(var i = 0; i < ParentList.length; i++)
+        {
+            if(ParentList[i].username == username)
+            {
+                return ParentList[i]; 
             }
         }
+        return false; 
+    }
+  
+    // Lets Parent link a student to their account
+    addStudent(studId, studRegKey, parUsername) {
+
+        var currParent = this.parentExists(parUsername); 
+        if(currParent)
+        {
+            for (var i = 0; i < StudentList.length; i++) {
+                if (StudentList[i].Stdid == studId && StudentList[i].regKey == studRegKey) {   // if student found + regKey matches
+                    var currStud = StudentList[i];
+                    currParent.children.push(currStud);         // student ID # pushed onto parent's children list
+                    setParentList(ParentList);
+                    return true;
+                }
+            }         
+        }
         return false;
+
     }
 
     // Displays the selected child's (Student) attendance record
