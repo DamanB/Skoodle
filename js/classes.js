@@ -103,6 +103,7 @@ class Admin {
     }
 }
 
+var numOfSupply = 1;        // global helper var to be used by Secretary to count the num of supply teacher accounts (also used in creation of supplyTeach username)
 
 class Secretary {
     constructor(name, username, password) {
@@ -410,21 +411,53 @@ class Secretary {
         }
     }
 
+
+    //generate random RegKey for Students
+    genPass() {
+        return Math.floor(Math.random()*100000);
+    }
+
     
-    // adding student to global student list (registering student to school)
-    registerStudent(studName)
+    
+    // creating SUPPLY TEACHER a "temporary" account
+    createTempSupply(supplyName)
     {
-        var regKey = this.genKey(); 
-        var studID = this.genStudID(); 
-        var newStud = new Student(studName, studID, [], regKey);
-        StudentList.push(newStud);
-        setStudentList(StudentList);
-        return newStud;
+        getEmployeeList();
+        var tempUsername = "supply_".concat(numOfSupply.toString());
+        numOfSupply++;
+        var tempPass = this.genPass().toString();
+        var newSupplyTeach = new SupplyTeacher(supplyName, tempUsername, tempPass);
+        setEmployeeList(EmployeeList);
+        return newSupplyTeach;
+    }
+
+
+    // removing SUPPLY TEACHER account (SECRETARY MUST REMOVE IT ON THEIR OWN, WE ARE NOT HAVING THE TEMP ACCOUNT DISABLE ON ITS OWN AFTER SOME TIME <-- ARJUN)
+    removeTempSupply(supplyUsername) {
+        getEmployeeList();
+        var supplyTeacher = this.employeeExists(supplyUsername);
+        if (supplyTeacher) {
+            for (var i = 0; i < EmployeeList.length; i++) {
+                if (supplyUsername == EmployeeList[i].username) {
+                    var victim_supplyTeacher_index = i;
+                }
+                if (victim_supplyTeacher_index > -1) {
+                    EmployeeList.splice(victim_supplyTeacher_index, 1);
+                    setEmployeeList(EmployeeList);
+                    return true;
+                }
+            }
+        }
+        else {
+            return false;
+        }
+
     }
 
 
 
 }
+
 
 class Teacher {
     constructor(name, username, password) {
@@ -579,6 +612,7 @@ class SupplyTeacher {       // Substitute Teacher: same functionalities as FT-Te
         this.username = username;
         this.password = password;
         this.type = "SupplyTeacher";
+        this.taughtClasses = [];
     }
 
     //helper method for UI people
