@@ -839,17 +839,24 @@ class Parent {
     }
 
     // Report the selected child's (Student) attendance entry to reported absent for certain date/class
-    reportStudentAbsence(student, date, className) {
-        var currChild = this.childExists(student.Stdid);        // fetch the student object from parent's child list
-        for (var i = 0; i < currChild.attendanceList.length; i++) {
-            if (currChild.attendanceList[i].className == className && currChild.attendanceList[i].date == date && !currChild.attendanceList[i].successfullyLogged) {
-                currChild.attendanceList[i].studentStatus = "RA";
-                setGlobalDailyAttendenceList(GlobalDailyAttendenceList);
-                return true;            // Parent successfully set student's attendance entry for that day/class to Reported Absence (RA)
+    reportStudentAbsence(studId, date, className) {
+        getGlobalClassList();
+        getGlobalAttendenceList();
+        var studClass = classExists(className);
+        var classAttendance = studClass.Attendance;
+        classAttendance.forEach(function(att) {
+            if (att.date.getFullYear() == date.getFullYear() && att.date.getMonth() == date.getMonth() && att.date.getDay() == date.getDay()) {
+                att.entries.forEach(function(ent) {
+                    if (ent.student.Stdid == studId) {
+                        ent.studentStatus = "AD";
+                        setGlobalDailyAttendenceList(GlobalDailyAttendenceList);
+                        setGlobalClassList(GlobalClassList);
+                        return;
+                    }
+                })
+                return;
             }
-            return false;
-        }
-        
+        })        
     }
 
     //registering parent into the system
