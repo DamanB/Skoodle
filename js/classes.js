@@ -148,7 +148,7 @@ class Secretary {
                     GlobalClassList.push(classroom_1);
                     teacher.taughtClasses.push(classroom_1.name); 
                     setGlobalClassList(GlobalClassList); 
-                    setStudentList(StudentList); 
+                    //setStudentList(StudentList); 
                     setEmployeeList(EmployeeList); 
 
                     return classroom_1;
@@ -158,7 +158,7 @@ class Secretary {
                     GlobalClassList.push(classroom_1);
                     teacher.taughtClasses.push(classroom_1.name); 
                     setGlobalClassList(GlobalClassList);
-                    setStudentList(StudentList);
+                    //setStudentList(StudentList);
                     setEmployeeList(EmployeeList); 
                     return classroom_1;
                 }
@@ -296,21 +296,22 @@ class Secretary {
         return false;
     }
 
-    addStudentToClass(className, student) {
+    addStudentToClass(className, studId) {
         if (this.classExists(className)) {
-            if (this.studentExists(student.Stdid)) {
+            var currStudent = this.studentExists(studId); 
+            if (currStudent) {
                 for (var i = 0; i < GlobalClassList.length; i++) {
                     if (className == GlobalClassList[i].name) {
 
                         // found correct class
                         var holder_class = GlobalClassList[i];
                         for (var j = 0; j < holder_class.ClassList.length; j++) {    // does the student already exist in the class?
-                            if (student.Stdid == holder_class.ClassList[j].Stdid) {
+                            if (currStudent.Stdid == holder_class.ClassList[j].Stdid) {
                                 return false;
                             }
                         }
-                        holder_class.ClassList.push(student);       // add student into specified class
-                        student.classes.push(holder_class.name);         // add class to list of student's enrolled class list
+                        holder_class.ClassList.push(currStudent);       // add student into specified class
+                        currStudent.classes.push(holder_class.name);         // add class to list of student's enrolled class list
                         setGlobalClassList(GlobalClassList);
                         setStudentList(StudentList); 
                         return true;
@@ -572,11 +573,13 @@ class Teacher {
     }
 
     //submitting a complete attendance to the secretary (updating global list)
-    submitAttendance(className)
+    submitAttendance(className, date)
     {
         var currClass = this.classExists(className); //grabs the current class
 
-        if(currClass)
+        var currDate = currClass.Attendance.date; 
+
+        if(currClass && (currDate.getFullYear() == date.getFullYear() && currDate.getMonth() == date.getMonth() && currDate.getDay() == date.getDay()))
         {
             for (var i = 0; i < currClass.Attendance.AttEntries.length; i++)
             {
@@ -584,9 +587,9 @@ class Teacher {
                 {
                     return false; 
                 }
-
             }
             //should update the global attendance list with the marked statuses 
+            currClass.ClassAttendance.submitted = true; 
             setGlobalAttendenceList(GlobalAttendenceList);
             return true; 
         }
@@ -741,6 +744,7 @@ class ClassAttendance {
     constructor(AttEntries, date) {
         this.entries = AttEntries;
         this.date = date;
+        this.submitted = false; 
     }
 
 
@@ -752,6 +756,32 @@ class Student {
         this.Stdid = Stdid;
         this.classes = []; //list of classes student is enrolled in
         this.regKey = regKey;
+    }
+
+    //helper method to get the parent attached to a student
+    getParent()
+    {
+        for (var i = 0; i < ParentList.length; i++)
+        {
+            var currParent = ParentList[i];
+            if(currParent)
+            {
+                var currChildlist = currParent.children;
+                if(currChildlist)
+                {
+                    for(var j = 0; j < currChildlist.length; j++)
+                    {
+                        var currChild = currChildlist[i];
+                        
+                        if(currChild.Stdid == this.Stdid && currChild.regKey == this.regKey)
+                        {
+                            return currParent; 
+                        }
+                    }
+                } 
+            } 
+
+        }
     }
 }
 
