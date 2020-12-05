@@ -82,11 +82,11 @@ class Admin {
     }
 
     modifyEmployeeUsername(username, newUser) {
+        getEmployeeList();
         if (this.employeeExists(newUser)) {
             return false;
         }
         else {
-            getEmployeeList();
             var employee_1 = this.employeeExists(username);
             employee_1.username = newUser;
             setEmployeeList(EmployeeList); 

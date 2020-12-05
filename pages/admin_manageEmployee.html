@@ -42,7 +42,7 @@
             {
                 var curItem = toEdit.username;
                 var newItem = $("#nameEmployee").val();
-                //user.modifyEmployeeName(curItem, newItem);
+                user.modifyEmployeeName(curItem, newItem);
                 $("#nameToEdit").text(newItem);
                 $("#nameSuccess").show();
             });
@@ -51,18 +51,43 @@
             {
                 var curItem = toEdit.username;
                 var newItem = $("#usernameEmployee").val();
-                //user.modifyEmployeeUsername(curItem, newItem);
-                $("#usernameToEdit").text(newItem);
-                $("#usernameSuccess").show();
+                var ending = user.modifyEmployeeUsername(curItem, newItem);
+                console.log(ending);
+                if (ending)
+                {
+                    $("#usernameToEdit").text(newItem);
+                    $("#usernameSuccess").show();
+                }
+                else
+                {
+                    $("#usernameError").show();
+                }
             });
 
             $(document).on('click', "#submitPassword", function()
             {
                 var curItem = toEdit.username;
                 var newItem = $("#passwordEmployee").val();
-                //user.modifyEmployeePassword(curItem, newItem);
+                user.modifyEmployeePassword(curItem, newItem);
                 $("#passwordToEdit").text(newItem);
                 $("#passwordSuccess").show();
+            });
+
+            $(document).on('click', "#removeEmployee", function()
+            {
+                var txt = "Removal successful.";
+                var r = confirm("Confirm removal of employee?");
+
+                if (r == true)
+                {
+                    txt = "Removal successful.";
+                }
+                else
+                {
+                    txt = "Removal cancelled.";
+                }
+
+                $("#decision").text(txt);
             });
         </script>
 
@@ -128,26 +153,8 @@
         <br>
 
         
-        <button onclick="removeEmployee()">Remove Employee</button>
+        <button id="removeEmployee">Remove Employee</button>
         <span id="decision"></span>
-
-        <script>
-            function removeEmployee()
-            {
-                var txt = "Removal successful.";
-                var r = confirm("Confirm removal of employee?");
-
-                if (r == true)
-                {
-                    txt = "Removal successful.";
-                }
-                else
-                {
-                    txt = "Removal cancelled.";
-                }
-
-                document.getElementById("decision").innerHTML = txt;
-            }
         </script>
     </body>
 </html>
