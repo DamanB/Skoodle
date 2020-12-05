@@ -47,7 +47,7 @@ function InitData()
 
     teach_1.markStatus("French1", new Date(2020,11,01), stud_1.Stdid ,"P"); 
     teach_1.markStatus("French1", new Date(2020,11,02), stud_1.Stdid ,"A"); 
-    teach_1.markStatus("French1", new Date(2020,11,03), stud_1.Stdid ,"RA"); 
+    teach_1.markStatus("French1", new Date(2020,11,03), stud_1.Stdid ,"AD"); 
 
     teach_1.markStatus("French1", new Date(), stud_2.Stdid ,"A"); 
 
