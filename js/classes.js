@@ -32,7 +32,6 @@ class Admin {
 
     //adding an employee to the system as an admin
     addEmployee(name, username, password, type) {
-        getEmployeeList();
         if (!this.employeeExists(username)) {
             if (type == "Secretary") {
                 var secretary_1 = new Secretary(name, username, password);
@@ -141,9 +140,6 @@ class Secretary {
 
     //adding an employee to the system as an admin
     addClass(name, teacher, timeinterval, ClassList) {
-        getGlobalClassList();
-        getStudentList();
-        getEmployeeList();
         if (!this.classExists(name)) {
             if (this.employeeExists(teacher.username)) {
                 if (ClassList.length == 1) {                 // no students in given class list
@@ -180,9 +176,6 @@ class Secretary {
     //remove class from student list 
     removeClass(name) {
         var i;
-        getGlobalClassList();
-        getEmployeeList();
-        getStudentList();
         if (this.classExists(name)) {
             for (i = 0; i < GlobalClassList.length; i++) {
                 if (name == GlobalClassList[i].name) {
@@ -210,7 +203,6 @@ class Secretary {
     //helper method for removeClass function
     removeStudentsFromClass(currClassroom)
     {
-        getGlobalClassList();
         for (var i = 0; i < currClassroom.ClassList.length; i++)
         {
             var currStudent = currClassroom.ClassList[i]; 
@@ -234,8 +226,6 @@ class Secretary {
 
     /* SECRETARY FUNCTION: MODIFY A CLASSROOM'S INFORMATION */
     modifyClassName(className, newName) {
-        getGlobalClassList();
-        getStudentList();
         if (this.classExists(newName)) {
             return false;
         }
@@ -248,9 +238,6 @@ class Secretary {
     }
 
     modifyClassTeach(className, newTeach) {
-        getGlobalClassList();
-        getEmployeeList();
-        getStudentList();
         var newTeacher = this.employeeExists(newTeach); 
         if (newTeacher) {         // newTeach exists?
             var classroom_1 = this.classExists(className);      
@@ -285,8 +272,6 @@ class Secretary {
     }
 
     modifyClassTime(className, newTime) {
-        getGlobalClassList();
-        getStudentList();
         var classroom_1 = this.classExists(className);  
         if (classroom_1) {                              // class exists?
             classroom_1.timeinterval = newTime;         // set new time interval
@@ -312,8 +297,6 @@ class Secretary {
     }
 
     addStudentToClass(className, student) {
-        getGlobalClassList();
-        getStudentList();
         if (this.classExists(className)) {
             if (this.studentExists(student.Stdid)) {
                 for (var i = 0; i < GlobalClassList.length; i++) {
@@ -349,8 +332,6 @@ class Secretary {
     removeStudentFromClass(className,studID)
     {
         // console.log("remove student now?");
-        getGlobalClassList();
-        getStudentList();
         var currClass = this.classExists(className); 
         
         //class exists 
@@ -397,7 +378,6 @@ class Secretary {
     //adding student to global student list (registering student to school)
     registerStudent(studName)
     {
-        getStudentList();
         var regKey = this.genKey(); 
         var studID = this.genStudID(); 
         var newStud = new Student(studName, studID, [], regKey);
@@ -409,8 +389,6 @@ class Secretary {
     //removing student from global student list (deregistering student from school)
     deregisterStudent(studId)
     {
-        getGlobalClassList();
-        getStudentList();
         // console.log("deregister student now?");
         var currStud = this.studentExists(studId);
         if (currStud) {
@@ -444,7 +422,6 @@ class Secretary {
     // creating SUPPLY TEACHER a "temporary" account
     createTempSupply(supplyName)
     {
-        getEmployeeList();
         var tempUsername = "supply_".concat(numOfSupply.toString());
         numOfSupply++;
         var tempPass = this.genPass().toString();
@@ -456,7 +433,6 @@ class Secretary {
 
     // removing SUPPLY TEACHER account (SECRETARY MUST REMOVE IT ON THEIR OWN, WE ARE NOT HAVING THE TEMP ACCOUNT DISABLE ON ITS OWN AFTER SOME TIME <-- ARJUN)
     removeTempSupply(supplyUsername) {
-        getEmployeeList();
         var supplyTeacher = this.employeeExists(supplyUsername);
         if (supplyTeacher) {
             for (var i = 0; i < EmployeeList.length; i++) {
@@ -531,8 +507,6 @@ class Teacher {
     //create attendance for day and class CLASSATTENDANCE
     createAttendance(className, year, month, day)
     {
-        getGlobalClassList();
-        getGlobalAttendenceList();
         var currClassroom = this.classExists(className); 
         var attendance_holder = [];  //mock attendance for holding student attendance entries
         
@@ -549,9 +523,10 @@ class Teacher {
             }
         }
         var new_date = new Date(year, month, day);
-        console.log("Adding entry for: " + new_date); 
+
         //var d = new Date(new_date.getFullYear(), new_date.getMonth(), new_date.getDay());
         var attendance_1 = new ClassAttendance(attendance_holder, new_date);  // creating the class attendance list from temp mock class attendance
+        console.log(attendance_1.date); 
 
         currClassroom.Attendance.push(attendance_1); //putting the attendance made into the class 
         setGlobalClassList(GlobalClassList); 
@@ -565,8 +540,6 @@ class Teacher {
     //mark student present/absent
     markStatus(className, currDate, stdId, status)
     {
-        getGlobalClassList();
-        getGlobalAttendenceList();
         var currClass = this.classExists(className); //grabs the current class
         // var currStudent = this.studentExistsInClass(studId, currClass);
         var classAttendanceList = currClass.Attendance;
@@ -611,7 +584,6 @@ class Teacher {
     //submitting a complete attendance to the secretary (updating global list)
     submitAttendance(className)
     {
-        getGlobalAttendenceList();
         var currClass = this.classExists(className); //grabs the current class
 
         if(currClass)
@@ -641,7 +613,7 @@ class SupplyTeacher {       // Substitute Teacher: same functionalities as FT-Te
         this.type = "SupplyTeacher";
         this.taughtClasses = [];
     }
-
+/*
     //helper method for UI people
     getTeacherFromClass(className) {
         var currClassroom = this.classExists(className);
@@ -742,7 +714,7 @@ class SupplyTeacher {       // Substitute Teacher: same functionalities as FT-Te
         setGlobalClassList(GlobalClassList); 
         setGlobalAttendenceList(GlobalAttendenceList);  
 
-        /*if (currStudent && currClass) 
+        if (currStudent && currClass) 
         { 
 
             for (var i = 0; i < currClass.Attendance.length; i++)
@@ -756,7 +728,8 @@ class SupplyTeacher {       // Substitute Teacher: same functionalities as FT-Te
                 }
             }
         }
-        return false; */
+        return false;
+        
     }
 
     //submitting a complete attendance to the secretary (updating global list)
@@ -781,7 +754,7 @@ class SupplyTeacher {       // Substitute Teacher: same functionalities as FT-Te
         }
         return false; 
     }
-
+*/
 }
 
 class Parent {
@@ -808,9 +781,9 @@ class Parent {
    
     // a helper function for checking if a child is enrolled in a class
     classExists(className) {
-        for (var i = 0; i < this.GlobalClassList.length; i++) {
-            if (className == this.GlobalClassList[i].name) {
-                return this.GlobalClassList[i];
+        for (var i = 0; i < GlobalClassList.length; i++) {
+            if (className == GlobalClassList[i].name) {
+                return GlobalClassList[i];
             }
         }
         return false;
@@ -818,7 +791,6 @@ class Parent {
   
     // Lets Parent link a student to their account
     addStudent(studId, studRegKey) {
-        getParentList();
         for (var i = 0; i < StudentList.length; i++) {
             if (StudentList[i].Stdid == studId && StudentList[i].regKey == studRegKey) {   // if student found + regKey matches
                 var currStud = StudentList[i];
@@ -840,16 +812,16 @@ class Parent {
 
     // Report the selected child's (Student) attendance entry to reported absent for certain date/class
     reportStudentAbsence(studId, date, className) {
-        getGlobalClassList();
-        getGlobalAttendenceList();
-        var studClass = classExists(className);
+        var studClass = this.classExists(className);
         var classAttendance = studClass.Attendance;
         classAttendance.forEach(function(att) {
+            att.date = new Date(att.date)
+            console.log(att.date)
             if (att.date.getFullYear() == date.getFullYear() && att.date.getMonth() == date.getMonth() && att.date.getDay() == date.getDay()) {
                 att.entries.forEach(function(ent) {
                     if (ent.student.Stdid == studId) {
                         ent.studentStatus = "AD";
-                        setGlobalDailyAttendenceList(GlobalDailyAttendenceList);
+                        setGlobalAttendenceList(GlobalAttendenceList);
                         setGlobalClassList(GlobalClassList);
                         return;
                     }
@@ -862,7 +834,6 @@ class Parent {
     //registering parent into the system
     registerParent(name, username, password, email)
     {
-        getParentList();
         var currParent = new Parent(name, username, password, email); 
         ParentList.push(currParent); 
         setParentList(ParentList); 
