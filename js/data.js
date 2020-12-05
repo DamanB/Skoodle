@@ -11,11 +11,11 @@ function InitData()
     var teach_2 = admin_1.addEmployee("Jerry", "teach2", "123456", "Teacher"); 
 
     var teach_3 = admin_1.addEmployee("Hina", "teach3", "123456", "Teacher"); 
-
+    
     var class1 = sec_1.addClass("French1", teach_1, "1:00pm - 2:00pm",[]); 
 
     var class2 = sec_1.addClass("Math1", teach_2, "2:00pm - 3:00pm",[]); 
-
+    
     var stud_1 = sec_1.registerStudent("Maninder Bassi");
     var stud_2 = sec_1.registerStudent("Jagveer Singh");
     var stud_3 = sec_1.registerStudent("Tina Kelly");
@@ -32,6 +32,12 @@ function InitData()
     sec_1.addStudentToClass("Math1", stud_5); 
     sec_1.addStudentToClass("Math1", stud_6);
     sec_1.addStudentToClass("Math1", stud_1);
+    
+    setStudentList(StudentList);
+    setGlobalAttendenceList(GlobalAttendenceList); 
+    setParentList(ParentList);
+    setEmployeeList(EmployeeList); 
+    setGlobalClassList(GlobalClassList);  
 
 
 
