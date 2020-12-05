@@ -130,8 +130,11 @@
 
         function displayAttendance(cl) {
             var classAttendances = cl.Attendance;
-            var revd = classAttendances.reverse();
-            revd.reverse().forEach(function (classAttendance) {
+            classAttendances.forEach(function (classAttendance) {
+                if (classAttendance.date > new Date())
+                {
+                    return;
+                }
                 $("#classAttendance").append(
                     "<div class='classAttendanceEntry'>Date: " + classAttendance.date.toString().substring(0, 10));
                 classAttendance.entries.forEach(function (entry) {
