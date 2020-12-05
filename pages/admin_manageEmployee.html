@@ -51,8 +51,8 @@
             {
                 var curItem = toEdit.username;
                 var newItem = $("#usernameEmployee").val();
+                
                 var ending = user.modifyEmployeeUsername(curItem, newItem);
-                console.log(ending);
                 if (ending)
                 {
                     $("#usernameToEdit").text(newItem);
@@ -75,19 +75,29 @@
 
             $(document).on('click', "#removeEmployee", function()
             {
-                var txt = "Removal successful.";
-                var r = confirm("Confirm removal of employee?");
-
-                if (r == true)
+                var curItem = toEdit.username;
+                var ending = user.removeEmployee(curItem);
+                var txt = "";
+                if (ending)
                 {
                     txt = "Removal successful.";
+                    var r = confirm("Confirm removal of employee?");
+
+                    if (r == true)
+                    {
+                        txt = "Removal successful.";
+                    }
+                    else
+                    {
+                        txt = "Removal cancelled.";
+                    }
+
+                    $("#decision").text(txt);
                 }
                 else
                 {
-                    txt = "Removal cancelled.";
+                    $("#decision").text("This employee does not exist");
                 }
-
-                $("#decision").text(txt);
             });
         </script>
 
@@ -151,7 +161,6 @@
         <span style="display: none; color:green" id="passwordSuccess">Success</span>
 
         <br>
-
         
         <button id="removeEmployee">Remove Employee</button>
         <span id="decision"></span>
