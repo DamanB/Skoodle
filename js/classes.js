@@ -532,6 +532,33 @@ class Secretary {
         }
         return false; 
     }
+
+    //confirming attendance
+    confirmAttendance(classAttendance)
+    {
+        for(var i = 0; i < classAttendance.entries.length; i++)
+        {
+            var currEntry = classAttendance.entries[i]; 
+            
+            currEntry.successfullyLogged = true;
+
+            if(currEntry.status == "P")
+            {
+                classAttendance.present++; 
+            }
+            else if (currEntry.status == "A")
+            {
+                classAttendance.absent++; 
+            }
+            else if (currEntry.status == "AD")
+            {
+                classAttendance.reportedAbsent++; 
+            }
+        }
+    }
+
+
+   
 }
 
 
@@ -629,7 +656,9 @@ class Teacher {
         var classAttendanceList = currClass.Attendance;
         var classAttendance_1;
         classAttendanceList.forEach(function(classAttend){
-            if (classAttend.date.getFullYear() == currDate.getFullYear() && classAttend.date.getMonth() == currDate.getMonth() && classAttend.date.getDay() == currDate.getDay()) {
+            var tmpDate = classAttend.date; 
+            var betterDate = classAttend.getDate(tmpDate); 
+            if (betterDate.getFullYear() == currDate.getFullYear() && betterDate.getMonth() == currDate.getMonth() && betterDate.getDay() == currDate.getDay()) {
                 classAttendance_1 = classAttend;
                 return;
             }
@@ -657,13 +686,11 @@ class Teacher {
 
         for(var i = 0; i < currClass.Attendance.length; i++)
         {
-            var currDate = currClass.Attendance[i].date; 
             
-            var splits = currDate.substring(0, 10);
-            splits = splits.split("-");
-            var dateObj = new Date (splits[0], splits[1] - 1, splits[2]);
+            var tmpDate = currClass.Attendance[i].date;
+            var currDate =  currClass.Attendance[i].getDate(tmpDate); 
 
-            if(dateObj.getFullYear() == date.getFullYear() && dateObj.getMonth() == date.getMonth() && dateObj.getDay() == date.getDay())
+            if(currDate.getFullYear() == date.getFullYear() && currDate.getMonth() == date.getMonth() && currDate.getDay() == date.getDay())
             {
                 idx = i;  
             }
@@ -821,7 +848,7 @@ class AttendanceEntry {
         this.student = student; 
         this.className = className;
         this.studentStatus = "*"; //this will be the different types of status (P - Present), (A - Absent), (RA - Reported Absent)
-        this.successfullyLogged = false;
+        this.successfullyLogged = false; //method used by the secretary to log the attendance 
     }
 
 }
@@ -831,7 +858,20 @@ class ClassAttendance {
     constructor(AttEntries, date) {
         this.entries = AttEntries;
         this.date = date;
-        this.submitted = false; 
+        this.submitted = false;
+        this.present; 
+        this.absent; 
+        this.reportedAbsent;  
+    }
+
+    //helper method to get a correct date
+    getDate(date)
+    {
+        var splits = date.substring(0, 10);
+        splits = splits.split("-");
+        var dateObj = new Date (splits[0], splits[1] - 1, splits[2]);
+
+        return dateObj; 
     }
 
 
