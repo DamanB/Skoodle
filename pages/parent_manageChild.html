@@ -18,7 +18,7 @@
         var child;
         //set header
         $(document).ready(function () {
-            user = Object.assign(new Admin, getActiveUser());
+            user = Object.assign(new Parent, getActiveUser());
             getGlobalClassList();
             $("#classAttendance").empty();
             $("#username").text(user.type.toUpperCase() + ": " + user.username);
@@ -27,7 +27,8 @@
             //get child
             child = JSON.parse(sessionStorage.getItem("CheckChild"));
             console.log(child);
-            $("#attendanceHead").append("Attendance for: " + child.name + "<br>Student ID: " + child.Stdid);
+            $("#attendanceHead").append("Attendance for: <span style='color: blue;'>" + child.name + "</span>");
+            $("#attendanceAbsHead").append("Report an Absence for: <span style='color: blue;'>" + child.name + "</span> Student ID: <span style='color: blue;'>" + child.Stdid + "</span>");
 
             //Populate the classes field
             var classNames = child.classes;
@@ -54,14 +55,85 @@
                 }
             });
 
+            //Reporting a student abs
+            addReportToScreen();
+
+            //submit report
+            $(document).on('click', '#confirmAbs', function () {
+                //confirm date is there
+                var valid = false;
+
+                //date
+                var date;
+                var dateString = document.getElementById("dateAbs").value;
+                var setAbs = [];
+                if (!dateString) {
+                    $('#msg').text(" Please input a valid date");
+                    $('#msg').css("color", "red");
+                }
+                else {
+                    var splits = document.getElementById("dateAbs").value.split('-');
+                    //Needed for parsing date html el to correct date obj
+                    date = new Date(+splits[0], splits[1] - 1, +splits[2]);
+                    //check ticks
+                    var ticked = false;
+                    child.classes.forEach(function (cl) {
+                        if (document.getElementById(cl).checked) {
+                            ticked = true;
+                            setAbs.push(cl);
+                        }
+                    });
+                    if (!ticked) {
+                        $('#msg').text(" Please check at least one class");
+                        $('#msg').css("color", "red");
+                    }
+                    else {
+                        valid = true;
+                    }
+                }
+
+                //do task
+                if (valid) {
+
+                    setAbs.forEach(function (cl) {
+                        console.log(dateString);
+                        console.log(date);
+                        user.reportStudentAbsence(child.Stdid, date, cl)
+                    });
+
+                    $('#msg').text(" Absence on: " + dateString + " successfully noted!");
+                    $('#msg').css("color", "green");
+                }
+            });
         });
+
+        function addReportToScreen() {
+            //Reporting a student abs
+            $("#report").append(
+                "<span id='name' style='color: blue;'>" + child.name + " </span>" +
+                "<span>will be absent on </span>" +
+                "<input type='date' id='dateAbs'>" +
+                "<span> for classes (check all that apply):</span><br>"
+            );
+            //Add their classes
+            child.classes.forEach(function (cl) {
+                $("#report").append(
+                    "<input type='checkbox' class='classroom' id='" + cl + "'>" +
+                    "<label for='" + cl + "'>" + cl + "</label><br>"
+                );
+            });
+            $("#report").append(
+                "<br><button id='confirmAbs'>Confirm</button>" +
+                "<span id='msg'></span>"
+            );
+        }
 
         function displayAttendance(cl) {
             var classAttendances = cl.Attendance;
-
-            classAttendances.forEach(function (classAttendance) {
+            var revd = classAttendances.reverse();
+            revd.reverse().forEach(function (classAttendance) {
                 $("#classAttendance").append(
-                    "<div class='classAttendanceEntry'>Date: " + classAttendance.date.substring(0, 10));
+                    "<div class='classAttendanceEntry'>Date: " + classAttendance.date.toString().substring(0, 10));
                 classAttendance.entries.forEach(function (entry) {
                     if (entry.student.Stdid == child.Stdid) {
                         $("#classAttendance").append(
@@ -76,13 +148,12 @@
             );
         }
 
-
-
         //Logout button
         $(document).on('click', "#logout", function () {
             removeActiveUser();
             window.location.href = "/index.html";
-        }); 
+        });
+
     </script>
 
     <div id="logo">
@@ -103,6 +174,11 @@
     </div>
 
     <div id="actions">
+        <div id="reportAbs">
+            <h2 id=attendanceAbsHead></h2>
+            <div id='report'>
+            </div>
+        </div>
         <h2 id='attendanceHead'></h2>
         <div>
             <h3>*Date is YYYY-MM-DD format*</h3>
