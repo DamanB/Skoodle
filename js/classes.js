@@ -680,7 +680,6 @@ class Teacher {
         //console.log(tmpBool);
         if (tmpBool) 
         {
-            //console.log("test");
             return false;
         }
 
