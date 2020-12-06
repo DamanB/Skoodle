@@ -24,12 +24,24 @@
 
             //update child list
             var list = getParentList();
-            console.log(list);
-            list.forEach(function(rent){
-                rent.children.forEach(function (cl) {
-                $('#classList tbody').append('<tr><td>' + cl.name + '</td><td>' + cl.Stdid + '</td><td>' + '<button class="modify">View/Report Absences</button> </td></tr>');
-            });
+            list.forEach(function (rent) {
+                if (rent.username == user.username) {
+                    console.log(rent);
+                    rent.children.forEach(function (cl) {
+                        $('#classList tbody').append('<tr><td>' + cl.name + '</td><td>' + cl.Stdid + '</td><td>' + '<button class="modify">View/Report Absences</button> </td></tr>');
+                    });
+
+                    rent.notifications.forEach(function(notif){
+                        $("#notifs").append(
+                            "<li>" + notif + "</li>"
+                        );
+                    })
+                    return;
+                }
             })
+
+            //notifs
+            
         });
 
         //Logout button
@@ -64,14 +76,13 @@
         <h2>Absence Records: </h2>
         <p>Your children's absences: </p>
         <div>
-            <ul id='notif'>
-                <li>Help me</li>
-
+            <ul id='notifs'>
             </ul>
         </div>
         <h2>Add A Child: </h2>
         <div id="addChild">
-            <button><a href="/pages/parent_addChild.html" style="color: black; text-decoration: none;">Add a Child</a></button>
+            <button><a href="/pages/parent_addChild.html" style="color: black; text-decoration: none;">Add a
+                    Child</a></button>
         </div>
         <h2>Here are your Children: </h2>
         <table id="classList" class="customTable">
