@@ -181,7 +181,7 @@ class Secretary {
                     currDate = new Date (splits[0], splits[1] - 1, splits[2]);
                 }
 
-                if(currAttendance.submitted && currDate.getFullYear() == date.getFullYear() && currDate.getMonth() == date.getMonth() && currDate.getDay() == date.getDay())
+                if(currAttendance.submitted && currDate.getFullYear() == date.getFullYear() && currDate.getMonth() == date.getMonth() && currDate.getDate() == date.getDate())
                 {
                     submittedAttendances.push(currAttendance); 
                 }
@@ -621,7 +621,7 @@ class Teacher {
     //helper method for teacher used in markStatus 
     attendanceExists(className, date) {
         var currClass = this.classExists(className);
-        var toReturn;
+        var toReturn = false;
         if (currClass) {
             var currAttendance = currClass.Attendance;
             currAttendance.forEach(function(att) 
@@ -635,12 +635,13 @@ class Teacher {
                     currDate = new Date (splits[0], splits[1] - 1, splits[2]);
                 }
 
-                console.log(currDate);
-                console.log(date);
-
-                if (currDate.getFullYear() == date.getFullYear() && currDate.getMonth() == date.getMonth() && currDate.getDay() == date.getDay()) {
-                    console.log("RETURN");
-                    console.log(att);
+                if (currDate.getFullYear() == date.getFullYear() && currDate.getMonth() == date.getMonth() && currDate.getDate() == date.getDate()) {
+                    //console.log(currDate.getFullYear() + " vs " + date.getFullYear());
+                   // console.log(currDate.getMonth() + " vs " +  date.getMonth());
+                    //console.log(currDate.getDate() + " vs " + date.getDate())
+                    
+                    //console.log(currDate);
+                    //console.log(att);
                     
                     toReturn = att;
                     return;
@@ -672,17 +673,18 @@ class Teacher {
     createAttendance(className, year, month, day)
     {
         var new_date = new Date(year, month, day);
-
-        console.log(new_date);
-
-        var tmpBool = this.attendanceExists(className, new_date);        
+        //console.log(new_date);
+ 
+        var tmpBool = this.attendanceExists(className, new_date);       
         
-        console.log(tmpBool);
+        //console.log(tmpBool);
         if (tmpBool) 
         {
+            //console.log("test");
             return false;
         }
 
+        //console.log("Here");
         var currClassroom = this.classExists(className); 
         var attendance_holder = [];  //mock attendance for holding student attendance entries
         
@@ -700,7 +702,7 @@ class Teacher {
         }
         //var d = new Date(new_date.getFullYear(), new_date.getMonth(), new_date.getDay());
         var attendance_1 = new ClassAttendance(attendance_holder, new_date);  // creating the class attendance list from temp mock class attendance
-        console.log(attendance_1); 
+        //console.log(attendance_1); 
 
         currClassroom.Attendance.push(attendance_1); //putting the attendance made into the class 
         setGlobalClassList(GlobalClassList); 
@@ -728,7 +730,7 @@ class Teacher {
                 betterDate = new Date (splits[0], splits[1] - 1, splits[2]);
             }
 
-            if (betterDate.getFullYear() == currDate.getFullYear() && betterDate.getMonth() == currDate.getMonth() && betterDate.getDay() == currDate.getDay()) {
+            if (betterDate.getFullYear() == currDate.getFullYear() && betterDate.getMonth() == currDate.getMonth() && betterDate.getDate() == currDate.getDate()) {
                 classAttendance_1 = classAttend;
                 return;
             }
@@ -768,7 +770,7 @@ class Teacher {
 
             //var currDate =  currClass.Attendance[i].getDate(); 
 
-            if(currDate.getFullYear() == date.getFullYear() && currDate.getMonth() == date.getMonth() && currDate.getDay() == date.getDay())
+            if(currDate.getFullYear() == date.getFullYear() && currDate.getMonth() == date.getMonth() && currDate.getDate() == date.getDate())
             {
                 idx = i;  
             }
@@ -881,7 +883,7 @@ class Parent {
         classAttendance.forEach(function(att) {
             att.date = new Date(att.date)
             console.log(att.date)
-            if (att.date.getFullYear() == date.getFullYear() && att.date.getMonth() == date.getMonth() && att.date.getDay() == date.getDay()) {
+            if (att.date.getFullYear() == date.getFullYear() && att.date.getMonth() == date.getMonth() && att.date.getDate() == date.getDate()) {
                 succ = true;
                 att.entries.forEach(function(ent) {
                     if (ent.student.Stdid == studId) {
@@ -895,7 +897,7 @@ class Parent {
             }
         })
         if (!succ) {
-            dummy_teacher.createAttendance(className, date.getFullYear(), date.getMonth(), date.getDay());
+            dummy_teacher.createAttendance(className, date.getFullYear(), date.getMonth(), date.getDate());
             this.reportStudentAbsence(studId, date, className);
         }
     }
