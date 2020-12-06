@@ -647,7 +647,7 @@ class Teacher {
     {
         var new_date = new Date(year, month, day);
         if (this.attendanceExists(className, new_date)) {
-            return;
+            return false;
         }
         var currClassroom = this.classExists(className); 
         var attendance_holder = [];  //mock attendance for holding student attendance entries
