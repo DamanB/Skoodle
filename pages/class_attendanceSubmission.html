@@ -57,7 +57,6 @@
             //Back button
             $(document).on('click', "#back", function()
             {
-                console.log(user.type);
                 if (user.type == "Teacher")
                 {
                     window.location.href = "/pages/teach_full1.html";
@@ -77,6 +76,8 @@
 
             $(document).on('click', "#confirmDate", function()
             {
+                getGlobalClassList();
+                getGlobalAttendenceList();
                 dateString = $("#dateAbs").val();
                 var splits = dateString.split("-");
                 $("#selectedDate").text(dateString);
@@ -84,14 +85,32 @@
                 $("#listOfStudents").show();
                 $("#confirmDate").hide();
                 
-                var attendance = toEdit.Attendance;
+                var year = dateObj.getFullYear();
+                var month = dateObj.getMonth();
+                var date = dateObj.getDate();
 
+                var existingAttendance = user.createAttendance(toEdit.name, year, month, date);
+                var attendance = [];
+                getGlobalClassList().forEach(function(classroom)
+                {
+                    if (classroom.name == toEdit.name)
+                    {
+                        attendance = classroom.Attendance;
+                    }
+                });
+                
                 attendance.forEach(function(entry)
                 {  
-                    if (entry.date.substring(0, 10) == dateString)
+                    var currDate = entry.date;
+                    if (typeof(currDate) == "string")
+                    {
+                        var splits = currDate.substring(0, 10);
+                        splits = splits.split("-");
+                        currDate = new Date (splits[0], splits[1] - 1, splits[2]);
+                    }
+
+                    if ((currDate.getFullYear() == year && currDate.getMonth() == month && currDate.getDate() == date))
                     {                    
-                        console.log(entry.date); 
-                        console.log(getGlobalAttendenceList());
                         var listEntries = entry.entries;
 
                         listEntries.forEach(function(entryAttendance)
@@ -103,16 +122,14 @@
                             {
                                 $("#listOfStudents tbody").append
                                 (
-                                    "<tr><td>"
+                                    "<tr><td id='studentName'>"
                                     + studName
-                                    + "</td><td>"   
+                                    + "</td><td id='studentStatus'>"   
                                     + "<select id='options'>"
                                     + "<option value='*'>None</option>"
                                     + "<option value='A'>Absent</option>"
                                     + "<option value='P'>Present</option>"
                                     + "</select>"
-                                    + "</td><td>"
-                                    + "<button id='mark'>Confirm Status</button>"
                                     + "</td></tr>"
                                 );
                             }
@@ -120,9 +137,9 @@
                             {
                                 $("#listOfStudents tbody").append
                                 (
-                                    "<tr><td>"
+                                    "<tr><td id='studentName'>"
                                     + studName
-                                    + "</td><td>"
+                                    + "</td><td id='studentStatus'>" 
                                     + studStat
                                     + "</td></tr>"
                                 );
@@ -132,44 +149,83 @@
                 });
             });
 
-            $(document).on('click', "#mark", function()
+            $(document).on('click', "#submitAttendance", function()
             {
                 getStudentList();
                 getGlobalClassList();
-                var studName = $(this).parent().prev().prev().text();
-                var studId;
-                var studStatus = $(this).parent().prev().find(":selected").text();
 
-                for(var i = 0; i < StudentList.length; i++)
+                $("#listOfStudents tr").each(function()
                 {
-                    if (StudentList[i].name == studName)
+                    var studName = "test";
+                    var studStatus = "test";
+                    var studId;
+
+                    //console.log($(this).text()); //Prints Row
+
+                    $(this).find('td').each(function(test)
                     {
-                        studId = StudentList[i].Stdid;
+                        //console.log($(this).text()); //Prints cell text
+                        //console.log($(this).attr("id") + " : " + $(this).text()); //Prints id of the cell and cell text
+
+                        if ($(this).attr("id") == 'studentName')
+                        {
+                            studName = $(this).text();
+                            //console.log("1 - " + $(this).attr("id") + " - " + studName); //Prints id and student name
+                        }
+
+                        if ($(this).attr("id") == 'studentStatus')
+                        {
+                            var tmpStatus = $(this).text(); //Gets the text
+                            
+                            if (tmpStatus == 'AD')
+                            {
+                                studStatus = 'AD';
+                            }
+                            else
+                            {
+                                studStatus = $(this).find(":selected").text();
+                            }
+                            
+                            //console.log("2 - " + $(this).attr("id") + " - " + studStatus); //Prints id and student status
+                        }
+
+                        // if (!(studStatus == 'test'))
+                        // {
+                        //     console.log("1 - " + studName + " : " + studStatus);
+                        // }
+                    });
+
+                    if (!(studStatus == 'test'))
+                    {
+                        //console.log("2 - " + studName + " : " + studStatus); //Prints student name and status
+
+                        for(var i = 0; i < StudentList.length; i++)
+                        {
+                            if (StudentList[i].name == studName)
+                            {
+                                studId = StudentList[i].Stdid;
+                            }
+                        }
+
+                        //console.log("1 - " + studId + " : " + studName + " : " + studStatus); //Prints student ID, name, and status
+
+                        user.markStatus(toEdit.name, dateObj, studId, studStatus);
+                        //console.log(getGlobalClassList()); //Check the back-end Global Class List
                     }
-                }
-                
-                console.log(toEdit.name);
-                console.log(dateObj);
-                console.log(studId);
-                console.log(studStatus);
+                });
 
-                user.markStatus(toEdit.name, dateObj, studId, studStatus);
-            });        
-
-            $(document).on('click', "#submitAttendance", function()
-            {
-                getGlobalClassList();
-                
                 var status = user.submitAttendance(toEdit.name, dateObj);
 
-                if (status)
-                {
-                    $("#submitStatus").text("Success");
-                }
-                else
-                {
-                    $("#submitStatus").text("Failure");
-                }
+                console.log(getGlobalClassList()); //Check the back-end Global Class List
+                console.log(getGlobalAttendenceList()); //Check the back-end Global Class List
+                // if (status)
+                // {
+                //     $("#submitStatus").text("Success");
+                // }
+                // else
+                // {
+                //     $("#submitStatus").text("Failure");
+                // }
             });
         </script>
         <div id="logo">
@@ -210,7 +266,6 @@
                 <thead>
                     <th>Student Name</th>
                     <th>Attendance</th>
-                    <th>Confirm Attendance</th>
                 </thead>
 
                 <tbody></tbody>

@@ -779,7 +779,7 @@ class Teacher {
         
         for (var i = 0; i < currAttendanceEntry.length; i++)
         {
-            if(currAttendanceEntry[i].studentStatus == "*")
+            if(currAttendanceEntry[i].studentStatus == "None" || currAttendanceEntry[i].studentStatus == "*" )
             {
                 return false; 
             }
