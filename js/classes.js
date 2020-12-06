@@ -621,9 +621,11 @@ class Teacher {
     //helper method for teacher used in markStatus 
     attendanceExists(className, date) {
         var currClass = this.classExists(className);
+        var toReturn;
         if (currClass) {
             var currAttendance = currClass.Attendance;
-            currAttendance.forEach(function(att) {
+            currAttendance.forEach(function(att) 
+            {
                 var currDate = att.date;
 
                 if (typeof(currDate) == "string")
@@ -633,11 +635,25 @@ class Teacher {
                     currDate = new Date (splits[0], splits[1] - 1, splits[2]);
                 }
 
+                console.log(currDate);
+                console.log(date);
+
                 if (currDate.getFullYear() == date.getFullYear() && currDate.getMonth() == date.getMonth() && currDate.getDay() == date.getDay()) {
-                    return att;
+                    console.log("RETURN");
+                    console.log(att);
+                    
+                    toReturn = att;
+                    return;
                 }
-            })
-            return false;
+            });
+            if (toReturn)
+            {
+                return toReturn;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 
@@ -656,11 +672,16 @@ class Teacher {
     createAttendance(className, year, month, day)
     {
         var new_date = new Date(year, month, day);
-        if (this.attendanceExists(className, new_date)) {
+
+        console.log(new_date);
+
+        var tmpBool = this.attendanceExists(className, new_date);        
+        
+        console.log(tmpBool);
+        if (tmpBool) 
+        {
             return false;
         }
-
-        console.log(this.attendanceExists(className, new_date));
 
         var currClassroom = this.classExists(className); 
         var attendance_holder = [];  //mock attendance for holding student attendance entries
