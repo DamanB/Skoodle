@@ -594,7 +594,16 @@ class Teacher {
         if (currClass) {
             var currAttendance = currClass.Attendance;
             currAttendance.forEach(function(att) {
-                if (att.date.getFullYear() == date.getFullYear() && att.date.getMonth() == date.getMonth() && att.date.getDay() == date.getDay()) {
+                var currDate = att.date;
+
+                if (typeof(currDate) == "string")
+                {
+                    var splits = currDate.substring(0, 10);
+                    splits = splits.split("-");
+                    currDate = new Date (splits[0], splits[1] - 1, splits[2]);
+                }
+
+                if (currDate.getFullYear() == date.getFullYear() && currDate.getMonth() == date.getMonth() && currDate.getDay() == date.getDay()) {
                     return att;
                 }
             })
@@ -620,6 +629,9 @@ class Teacher {
         if (this.attendanceExists(className, new_date)) {
             return false;
         }
+
+        console.log(this.attendanceExists(className, new_date));
+
         var currClassroom = this.classExists(className); 
         var attendance_holder = [];  //mock attendance for holding student attendance entries
         
@@ -637,7 +649,7 @@ class Teacher {
         }
         //var d = new Date(new_date.getFullYear(), new_date.getMonth(), new_date.getDay());
         var attendance_1 = new ClassAttendance(attendance_holder, new_date);  // creating the class attendance list from temp mock class attendance
-        console.log(attendance_1.date); 
+        console.log(attendance_1); 
 
         currClassroom.Attendance.push(attendance_1); //putting the attendance made into the class 
         setGlobalClassList(GlobalClassList); 
