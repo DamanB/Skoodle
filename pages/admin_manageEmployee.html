@@ -42,10 +42,19 @@
             {
                 var curItem = toEdit.username;
                 var newItem = $("#nameEmployee").val();
-                user.modifyEmployeeName(curItem, newItem);
-                toEdit.name = newItem;
-                $("#nameToEdit").text(newItem);
-                $("#nameSuccess").show();
+                if(!newItem){
+                    $("#nameSuccess").text("Please enter a valid new name");
+                    $("#nameSuccess").css("color", "red");
+                    $("#nameSuccess").show();
+                }
+                else{
+                    user.modifyEmployeeName(curItem, newItem);
+                    toEdit.name = newItem;
+                    $("#nameToEdit").text(newItem);
+                    $("#nameSuccess").text("Success");
+                    $("#nameSuccess").css("color", "green");
+                    $("#nameSuccess").show();
+                }
             });
 
              $(document).on('click', "#submitUsername", function()
@@ -53,29 +62,46 @@
                 var curItem = toEdit.username;
                 var newItem = $("#usernameEmployee").val();
                 
-                var ending = user.modifyEmployeeUsername(curItem, newItem);
-                if (ending)
-                {
-                    $("#usernameToEdit").text(newItem);
-                    toEdit.username = newItem;
-                    $("#usernameSuccess").show();
-                    $("#usernameError").hide();
-                }
-                else
-                {
+                if (!newItem){
+                    $("#usernameError").text("Please enter a valid username");
                     $("#usernameError").show();
                     $("#usernameSuccess").hide();
                 }
+                else {
+                    var ending = user.modifyEmployeeUsername(curItem, newItem);
+                    if (ending)
+                    {
+                        $("#usernameToEdit").text(newItem);
+                        toEdit.username = newItem;
+                        $("#usernameSuccess").show();
+                        $("#usernameError").hide();
+                    }
+                    else
+                    {
+                        $("#usernameError").show();
+                        $("#usernameSuccess").hide();
+                    }
+                }
+
             });
 
             $(document).on('click', "#submitPassword", function()
             {
                 var curItem = toEdit.username;
                 var newItem = $("#passwordEmployee").val();
-                user.modifyEmployeePassword(curItem, newItem);
-                toEdit.password = newItem;
-                $("#passwordToEdit").text(newItem);
-                $("#passwordSuccess").show();
+                if(!newItem){
+                    $("#passwordSuccess").text("Please enter a valid password");
+                    $("#passwordSuccess").css("color", "red");
+                    $("#passwordSuccess").show();
+                }
+                else{
+                    user.modifyEmployeePassword(curItem, newItem);
+                    toEdit.password = newItem;
+                    $("#passwordToEdit").text(newItem);
+                    $("#passwordSuccess").text("Success");
+                    $("#passwordSuccess").css("color", "green");
+                    $("#passwordSuccess").show();
+                }
             });
 
             $(document).on('click', "#removeEmployee", function()

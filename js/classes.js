@@ -571,18 +571,19 @@ class Secretary {
             
             currEntry.successfullyLogged = true;
 
-            if(currEntry.status == "P")
+            if(currEntry.studentStatus == "P")
             {
                 classAttendance.present++; 
             }
-            else if (currEntry.status == "A")
+            else if (currEntry.studentStatus == "A")
             {
                 classAttendance.absent++; 
             }
-            else if (currEntry.status == "AD")
+            else if (currEntry.studentStatus == "AD")
             {
                 classAttendance.reportedAbsent++; 
             }
+        
         }
     }
 
@@ -916,9 +917,9 @@ class ClassAttendance {
         this.entries = AttEntries;
         this.date = date;
         this.submitted = false;
-        this.present; 
-        this.absent; 
-        this.reportedAbsent;  
+        this.present = 0; 
+        this.absent = 0; 
+        this.reportedAbsent = 0;  
     }
 
 
