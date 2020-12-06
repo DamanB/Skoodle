@@ -18,8 +18,8 @@ function InitData()
 
 
     // Creation of Supply-Teachers
-    var supply_1 = sec_1.createTempSupply("Blerim Meehmoti");
-    var supply_2 = sec_1.createTempSupply("Dom Anastazi");
+    sec_1.createTempSupply("Blerim Meehmoti");
+    sec_1.createTempSupply("Dom Anastazi");
 
 
     // Creation of Students
@@ -115,14 +115,14 @@ function InitData()
     ParentList.push(par_5);
 
     // Linking Parents to Existing Students
-    par_1.addStudent(stud_1.Stdid, stud_1.regKey, par_1.username);
+    par_1.addStudent(stud_1.Stdid, stud_1.regKey, par_1.username);          // Mary = {Maninder Bassi, Tina Kelly}
     par_1.addStudent(stud_3.Stdid, stud_3.regKey, par_1.username);
-    par_2.addStudent(stud_4.Stdid, stud_4.regKey, par_2.username);
+    par_2.addStudent(stud_4.Stdid, stud_4.regKey, par_2.username);          // Ossington - {Johnny Sin, Jack Black, Matimbo Johnson}
     par_2.addStudent(stud_5.Stdid, stud_5.regKey, par_2.username);
     par_2.addStudent(stud_7.Stdid, stud_7.regKey, par_2.username);
-    par_3.addStudent(stud_8.Stdid, stud_8.regKey, par_3.username);
-    par_4.addStudent(stud_15.Stdid, stud_15.regKey, par_4.username);
-    par_5.addStudent(stud_19.Stdid, stud_19.regKey, par_5.username);
+    par_3.addStudent(stud_8.Stdid, stud_8.regKey, par_3.username);          // Dan - {Harley Dean}
+    par_4.addStudent(stud_15.Stdid, stud_15.regKey, par_4.username);        // Connie - {Sidhu Moosewala}
+    par_5.addStudent(stud_19.Stdid, stud_19.regKey, par_5.username);        // Sasha - {Goolius Boozler, Coznester Smiff}
     par_5.addStudent(stud_26.Stdid, stud_26.regKey, par_5.username);
 
     
