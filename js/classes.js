@@ -635,14 +635,7 @@ class Teacher {
                     currDate = new Date (splits[0], splits[1] - 1, splits[2]);
                 }
 
-                if (currDate.getFullYear() == date.getFullYear() && currDate.getMonth() == date.getMonth() && currDate.getDate() == date.getDate()) {
-                    //console.log(currDate.getFullYear() + " vs " + date.getFullYear());
-                   // console.log(currDate.getMonth() + " vs " +  date.getMonth());
-                    //console.log(currDate.getDate() + " vs " + date.getDate())
-                    
-                    //console.log(currDate);
-                    //console.log(att);
-                    
+                if (currDate.getFullYear() == date.getFullYear() && currDate.getMonth() == date.getMonth() && currDate.getDate() == date.getDate()) {                  
                     toReturn = att;
                     return;
                 }
