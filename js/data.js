@@ -104,7 +104,7 @@ function InitData()
 
     // Creation of Parents
     var par_1 = new Parent("Mary", "par1", "1234567", "mary@gmail.com");
-    var par_2 = new Parent("Ostroff", "par2", "1234567", "ostroff@gmail.com");
+    var par_2 = new Parent("Ossington", "par2", "1234567", "ossington@gmail.com");
     var par_3 = new Parent("Dan", "par3", "1234567", "dan@gmail.com")
     var par_4 = new Parent("Connie", "par4", "1234567", "connie@gmail.com")
     var par_5 = new Parent("Sasha", "par5", "1234567", "sasha@gmail.com")
