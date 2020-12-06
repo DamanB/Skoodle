@@ -37,8 +37,27 @@
             EmployeeList = getEmployeeList();
             //add employee
             var valid = user.addEmployee(name, username, password, type);
+            getEmployeeList();
             console.log("Added: " + valid);
             //notify user
+            if (!name){
+                $("#error").text("Please enter a valid name");
+                $("#error").show();
+                valid = false;
+            }
+            else if (!username){
+                $("#error").text("Please enter a valid username");
+                $("#error").show();
+                valid = false;
+            }
+            else if (!password){
+                $("#error").text("Please enter a valid password");
+                $("#error").show();
+                valid = false;
+            }
+            else{
+                valid = true;
+            }
             if (valid) {
                 $("#addedList").append('<tr><td>' + type + '</td><td>' + username + '</td></tr>');
                 $("#error").hide();
