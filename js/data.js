@@ -56,9 +56,9 @@ function InitData()
 
 
     // Creation of Classes    
-    var class1 = sec_1.addClass("French", teach_1, "9:00am - 10:30am",[]); 
-    var class2 = sec_1.addClass("Math", teach_2, "10:30am - 12:00pm",[]);
-    var class3 = sec_1.addClass("English", teach_3, "1:00pm - 2:30pm",[]); 
+    sec_1.addClass("French", teach_1, "9:00am - 10:30am",[]); 
+    sec_1.addClass("Math", teach_2, "10:30am - 12:00pm",[]);
+    sec_1.addClass("English", teach_3, "1:00pm - 2:30pm",[]); 
     
 
     // Adding Students to Classes
@@ -222,24 +222,24 @@ function InitData()
     teach_1.markStatus("English", new Date(2020,11,03), stud_1.Stdid, "P");      teach_1.markStatus("English", new Date(2020,11,03), stud_11.Stdid, "P");
     teach_1.markStatus("English", new Date(2020,11,03), stud_2.Stdid, "P");      teach_1.markStatus("English", new Date(2020,11,03), stud_12.Stdid, "P");
     teach_1.markStatus("English", new Date(2020,11,03), stud_3.Stdid, "P");      teach_1.markStatus("English", new Date(2020,11,03), stud_13.Stdid, "P");
-    teach_1.markStatus("English", new Date(2020,11,03), stud_4.Stdid, "P");      teach_1.markStatus("English", new Date(2020,11,03), stud_14.Stdid, "P");
+    teach_1.markStatus("English", new Date(2020,11,03), stud_4.Stdid, "A");      teach_1.markStatus("English", new Date(2020,11,03), stud_14.Stdid, "P");
     teach_1.markStatus("English", new Date(2020,11,03), stud_5.Stdid, "P");      teach_1.markStatus("English", new Date(2020,11,03), stud_15.Stdid, "P");
     teach_1.markStatus("English", new Date(2020,11,03), stud_6.Stdid, "P");      teach_1.markStatus("English", new Date(2020,11,03), stud_16.Stdid, "P");
-    teach_1.markStatus("English", new Date(2020,11,03), stud_7.Stdid, "P");      teach_1.markStatus("English", new Date(2020,11,03), stud_17.Stdid, "P");
+    teach_1.markStatus("English", new Date(2020,11,03), stud_7.Stdid, "AD");      teach_1.markStatus("English", new Date(2020,11,03), stud_17.Stdid, "P");
     teach_1.markStatus("English", new Date(2020,11,03), stud_8.Stdid, "P");      teach_1.markStatus("English", new Date(2020,11,03), stud_18.Stdid, "P");
-    teach_1.markStatus("English", new Date(2020,11,03), stud_9.Stdid, "P");      teach_1.markStatus("English", new Date(2020,11,03), stud_19.Stdid, "P");
+    teach_1.markStatus("English", new Date(2020,11,03), stud_9.Stdid, "A");      teach_1.markStatus("English", new Date(2020,11,03), stud_19.Stdid, "P");
     teach_1.markStatus("English", new Date(2020,11,03), stud_10.Stdid, "P");     teach_1.markStatus("English", new Date(2020,11,03), stud_20.Stdid, "P");
     teach_1.submitAttendance("English", new Date(2020,11,03));
    
     teach_1.createAttendance("English", 2020,11,04);
     // Marking Status of Student in English Class (on 2020/11/04)
     teach_1.markStatus("English", new Date(2020,11,04), stud_1.Stdid, "P");      teach_1.markStatus("English", new Date(2020,11,04), stud_11.Stdid, "P");
-    teach_1.markStatus("English", new Date(2020,11,04), stud_2.Stdid, "P");      teach_1.markStatus("English", new Date(2020,11,04), stud_12.Stdid, "P");
-    teach_1.markStatus("English", new Date(2020,11,04), stud_3.Stdid, "P");      teach_1.markStatus("English", new Date(2020,11,04), stud_13.Stdid, "P");
+    teach_1.markStatus("English", new Date(2020,11,04), stud_2.Stdid, "P");      teach_1.markStatus("English", new Date(2020,11,04), stud_12.Stdid, "A");
+    teach_1.markStatus("English", new Date(2020,11,04), stud_3.Stdid, "P");      teach_1.markStatus("English", new Date(2020,11,04), stud_13.Stdid, "A");
     teach_1.markStatus("English", new Date(2020,11,04), stud_4.Stdid, "P");      teach_1.markStatus("English", new Date(2020,11,04), stud_14.Stdid, "P");
     teach_1.markStatus("English", new Date(2020,11,04), stud_5.Stdid, "P");      teach_1.markStatus("English", new Date(2020,11,04), stud_15.Stdid, "P");
     teach_1.markStatus("English", new Date(2020,11,04), stud_6.Stdid, "P");      teach_1.markStatus("English", new Date(2020,11,04), stud_16.Stdid, "P");
-    teach_1.markStatus("English", new Date(2020,11,04), stud_7.Stdid, "P");      teach_1.markStatus("English", new Date(2020,11,04), stud_17.Stdid, "P");
+    teach_1.markStatus("English", new Date(2020,11,04), stud_7.Stdid, "P");      teach_1.markStatus("English", new Date(2020,11,04), stud_17.Stdid, "AD");
     teach_1.markStatus("English", new Date(2020,11,04), stud_18.Stdid, "P");      teach_1.markStatus("English", new Date(2020,11,04), stud_18.Stdid, "P");
     teach_1.markStatus("English", new Date(2020,11,04), stud_19.Stdid, "P");      teach_1.markStatus("English", new Date(2020,11,04), stud_19.Stdid, "P");
     teach_1.markStatus("English", new Date(2020,11,04), stud_20.Stdid, "P");     teach_1.markStatus("English", new Date(2020,11,04), stud_20.Stdid, "P");
@@ -251,9 +251,9 @@ function InitData()
     teach_1.markStatus("English", new Date(2020,11,05), stud_2.Stdid, "P");      teach_1.markStatus("English", new Date(2020,11,05), stud_12.Stdid, "P");
     teach_1.markStatus("English", new Date(2020,11,05), stud_3.Stdid, "P");      teach_1.markStatus("English", new Date(2020,11,05), stud_13.Stdid, "P");
     teach_1.markStatus("English", new Date(2020,11,05), stud_4.Stdid, "P");      teach_1.markStatus("English", new Date(2020,11,05), stud_14.Stdid, "P");
-    teach_1.markStatus("English", new Date(2020,11,05), stud_5.Stdid, "P");      teach_1.markStatus("English", new Date(2020,11,05), stud_15.Stdid, "P");
+    teach_1.markStatus("English", new Date(2020,11,05), stud_5.Stdid, "AD");      teach_1.markStatus("English", new Date(2020,11,05), stud_15.Stdid, "A");
     teach_1.markStatus("English", new Date(2020,11,05), stud_6.Stdid, "P");      teach_1.markStatus("English", new Date(2020,11,05), stud_16.Stdid, "P");
-    teach_1.markStatus("English", new Date(2020,11,05), stud_7.Stdid, "P");      teach_1.markStatus("English", new Date(2020,11,05), stud_17.Stdid, "P");
+    teach_1.markStatus("English", new Date(2020,11,05), stud_7.Stdid, "P");      teach_1.markStatus("English", new Date(2020,11,05), stud_17.Stdid, "AD");
     teach_1.markStatus("English", new Date(2020,11,05), stud_18.Stdid, "P");      teach_1.markStatus("English", new Date(2020,11,05), stud_18.Stdid, "P");
     teach_1.markStatus("English", new Date(2020,11,05), stud_19.Stdid, "P");      teach_1.markStatus("English", new Date(2020,11,05), stud_19.Stdid, "P");
     teach_1.markStatus("English", new Date(2020,11,05), stud_20.Stdid, "P");     teach_1.markStatus("English", new Date(2020,11,05), stud_20.Stdid, "P");
