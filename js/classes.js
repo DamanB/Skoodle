@@ -115,6 +115,31 @@ class Secretary {
         this.type = "Secretary";
     }
 
+        //helper method to get the parent attached to a student
+        getParent(student)
+        {
+            for (var i = 0; i < ParentList.length; i++)
+            {
+                var currParent = ParentList[i];
+                if(currParent)
+                {
+                    var currChildlist = currParent.children;
+                    if(currChildlist)
+                    {
+                        for(var j = 0; j < currChildlist.length; j++)
+                        {
+                            var currChild = currChildlist[j];
+                            
+                            if(currChild.Stdid == student.Stdid && currChild.regKey == student.regKey)
+                            {
+                                return currParent; 
+                            }
+                        }
+                    } 
+                } 
+            }
+            return false; 
+        }
 
     /* SECRETARY FUNCTION: ADD CLASSROOM TO GLOBAL CLASS LIST */
     employeeExists(username) {
@@ -149,6 +174,12 @@ class Secretary {
             if(currAttendance)
             {
                 var currDate = currAttendance.date;
+                if (typeof(currDate) == "string")
+                {
+                    var splits = currDate.substring(0, 10);
+                    splits = splits.split("-");
+                    currDate = new Date (splits[0], splits[1] - 1, splits[2]);
+                }
 
                 if(currAttendance.submitted && currDate.getFullYear() == date.getFullYear() && currDate.getMonth() == date.getMonth() && currDate.getDay() == date.getDay())
                 {
@@ -489,13 +520,12 @@ class Secretary {
                 var currAttendance = subAttendances[i]; 
                 if(currAttendance)
                 {
-                    for(var j = 0; j < currAttendance.length; j++)
+                    for(var j = 0; j < currAttendance.entries.length; j++)
                     {
-                        var currAttendanceEntry = currAttendance[i].AttEntries;
-                        if(currAttendanceEntry.status == "A")
+                        var currAttendanceEntry = currAttendance.entries[j];
+                        if(currAttendanceEntry.studentStatus == "A")
                         {
-                            allAbsences.push(currAttendanceEntry);
-                             
+                            allAbsences.push(currAttendanceEntry);                             
                         }  
                     }
                 }
@@ -517,15 +547,14 @@ class Secretary {
                 var currAttendance = subAttendances[i]; 
                 if(currAttendance)
                 {
-                    for(var j = 0; j < currAttendance.length; j++)
+                    for(var j = 0; j < currAttendance.entries.length; j++)
+                    {
+                        var currAttendanceEntry = currAttendance.entries[j];
+                        if(currAttendanceEntry.studentStatus == "AD")
                         {
-                            var currAttendanceEntry = currAttendance[i].AttEntries;
-                            if(currAttendanceEntry.status == "AD")
-                            {
-                                allAbsences.push(currAttendanceEntry);
-                                 
-                            }  
-                        }
+                            allAbsences.push(currAttendanceEntry);                             
+                        }  
+                    }
                 }
             }
             return allAbsences;  
@@ -891,32 +920,6 @@ class Student {
         this.Stdid = Stdid;
         this.classes = []; //list of classes student is enrolled in
         this.regKey = regKey;
-    }
-
-    //helper method to get the parent attached to a student
-    getParent()
-    {
-        for (var i = 0; i < ParentList.length; i++)
-        {
-            var currParent = ParentList[i];
-            if(currParent)
-            {
-                var currChildlist = currParent.children;
-                if(currChildlist)
-                {
-                    for(var j = 0; j < currChildlist.length; j++)
-                    {
-                        var currChild = currChildlist[i];
-                        
-                        if(currChild.Stdid == this.Stdid && currChild.regKey == this.regKey)
-                        {
-                            return currParent; 
-                        }
-                    }
-                } 
-            } 
-        }
-        return false; 
     }
 }
 
