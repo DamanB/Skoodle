@@ -701,7 +701,7 @@ class Teacher {
         setGlobalClassList(GlobalClassList); 
         
         GlobalAttendenceList.push(attendance_1); //sending the attendance so secratery can access the attendances
-        setGlobalAttendenceList(GlobalAttendenceList);  
+        setGlobalAttendenceList(GlobalAttendenceList);
 
         return attendance_1; 
     }
@@ -743,6 +743,51 @@ class Teacher {
         setGlobalAttendenceList(GlobalAttendenceList);  
     }
 
+    markStatus2(className, currDate, stdId, status)
+    {
+        var foundAtt;
+        GlobalAttendenceList.forEach(function(classAttend) {
+
+            var betterDate = classAttend.date;            
+            if (typeof(betterDate) == "string")
+            {
+                var splits = betterDate.substring(0, 10);
+                splits = splits.split("-");
+                betterDate = new Date (splits[0], splits[1] - 1, splits[2]);
+            }
+            if (betterDate.getFullYear() == currDate.getFullYear() && betterDate.getMonth() == currDate.getMonth() && betterDate.getDate() == currDate.getDate()) {
+                classAttend.entries.forEach(function(ent) {
+                    if (ent.className == className) {
+                        foundAtt = classAttend;
+                        return;
+                    }
+                    else {
+                        return;
+                    }
+                })
+            }
+            if (foundAtt) {
+                return;
+            }
+        })
+
+        var classAttendance_1 = foundAtt;
+        if (classAttendance_1)
+        {
+            classAttendance_1.entries.forEach(function(classEntry){
+                if (classEntry.student.Stdid == stdId) {
+                    classEntry.studentStatus = status;
+                    return;
+                }
+            });
+        }
+        
+        setGlobalClassList(GlobalClassList); 
+        setGlobalAttendenceList(GlobalAttendenceList);  
+    }
+
+    
+
     //submitting a complete attendance to the secretary (updating global list)
     submitAttendance(className, date)
     {
@@ -778,10 +823,63 @@ class Teacher {
                 return false; 
             }
         }
-        currClass.Attendance[idx].submitted = true; 
+        currClass.Attendance[idx].submitted = true;
+        setGlobalClassList(GlobalClassList);
         setGlobalAttendenceList(GlobalAttendenceList);
         return true; 
     }
+
+
+    //submitting a complete attendance to the secretary (updating global list)
+    submitAttendance2(className, date)
+    {
+        var foundAtt;
+        GlobalAttendenceList.forEach(function(classAttend) {
+
+            var betterDate = classAttend.date;            
+            if (typeof(betterDate) == "string")
+            {
+                var splits = betterDate.substring(0, 10);
+                splits = splits.split("-");
+                betterDate = new Date (splits[0], splits[1] - 1, splits[2]);
+            }
+            if (betterDate.getFullYear() == date.getFullYear() && betterDate.getMonth() == date.getMonth() && betterDate.getDate() == date.getDate()) {
+                classAttend.entries.forEach(function(ent) {
+                    if (ent.className == className) {
+                        foundAtt = classAttend;
+                        return;
+                    }
+                    else {
+                        return;
+                    }
+                })
+            }
+            if (foundAtt) {
+                return;
+            }
+        })
+        
+        if (foundAtt) {
+            var currAttendanceEntry = foundAtt.entries; 
+        
+            for (var i = 0; i < currAttendanceEntry.length; i++)
+            {
+                if(currAttendanceEntry[i].studentStatus == "None" || currAttendanceEntry[i].studentStatus == "*" )
+                {
+                    return false; 
+                }
+            }
+            currClass.Attendance[idx].submitted = true;
+            setGlobalClassList(GlobalClassList);
+            setGlobalAttendenceList(GlobalAttendenceList);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    
 }
 
 
