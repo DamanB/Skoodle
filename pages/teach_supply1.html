@@ -1,50 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/css/generic.css">
-        <link rel="stylesheet" href="/css/main.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script type='text/javascript' src="/js/classes.js"></script>
-        <script type='text/javascript' src="/js/data.js"></script>
-        <title>Skoodle: Supply Teacher</title>
-    </head>
 
-    <body>
-        <script>
-            var user;
-        
-            //set header
-            $(document).ready(function () {
-                user = Object.assign(new Admin, getActiveUser());
-                $("#username").text(user.type.toUpperCase() + ": " + user.username);
-                $("#name").text("Hello " + user.name + "!");
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/generic.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type='text/javascript' src="/js/classes.js"></script>
+    <script type='text/javascript' src="/js/data.js"></script>
+    <title>Skoodle: Supply Teacher</title>
+</head>
+
+<body>
+    <script>
+        var user;
+        var teach;
+
+        //set header
+        $(document).ready(function () {
+            user = Object.assign(new SupplyTeacher, getActiveUser());
+            teach = Object.assign(new Teacher, getActiveUser().user);
+            $("#username").text(user.type.toUpperCase() + ": " + user.username);
+            $("#name").text("Hello " + user.name + "!")
+
+            //Populate the classes drop-down
+            var list = user.taughtClasses;
+
+            //console.log(user);
+
+            if (list.length == 0) {
+                $("#listOfClasses").text("No Classes");
+            }
+            else {
+                list.forEach(function (classroom) {
+                    $("#listOfClasses").append
+                        (
+                            '<tr><td>'
+                            + classroom
+                            + '</td><td>'
+                            + '<button id="viewAttendance">View Attendance</button>'
+                            + '</td>'
+                            + '</tr>'
+                        );
+                });
+            }
+
+            $(document).on('click', "#viewAttendance", function () {
+                var className = $(this).parent().prev().text();
+                getGlobalClassList();
+                var data = teach.classExists(className);
+                //console.log(data);
+                sessionStorage.setItem("ViewAttendance", JSON.stringify(data));
+                window.location.href = "/pages/class_attendanceSubmission.html";
             });
-        
-            //Logout button
-            $(document).on('click', "#logout", function(){
-                removeActiveUser();
-                window.location.href = "/index.html";
-            }); 
-        </script>
-        
-        <div id="logo">
-            Skoodle
-        </div>
 
-        <div class="nameLabel">
-            <span id="username"></span><br>
-            <span id="name"></span>
-        </div>
+            $(document).on('click', "#viewStudents", function () {
+                var className = $(this).parent().prev().prev().text();
 
-        <div id="logout">
-            <button>Logout</button>
-        </div>
-        <p>Class: <span>Class Name</span ></p> 
+            });
+        });
 
-        <p>Attendance Section</p>
+        //Logout button
+        $(document).on('click', "#logout", function () {
+            removeActiveUser();
+            window.location.href = "/index.html";
+        }); 
+    </script>
 
-        <button>Submit Attendance</button>
-    </body>
+    <div id="logo">
+        Skoodle
+    </div>
+
+    <div class="nameLabel">
+        <span id="username"></span><br>
+        <span id="name"></span>
+    </div>
+
+    <div id="logout">
+        <button>Logout</button>
+    </div>
+
+    <div id="back">
+        <button><a href="/pages/secretary_manageClass.html"
+                style="color: black; text-decoration: none;">Back</a></button>
+    </div>
+
+    <div>
+        <!--Maybe make table with 3 columns (Class Name | View Student List | View Class Attendance)-->
+        <span>Classes this teacher teaches: </span>
+        <table id="listOfClasses">
+            <thead>
+                <th>Class Name</th>
+                <th>Attendance Submission</th>
+                <th>Student List</th>
+            </thead>
+
+            <tbody></tbody>
+        </table>
+    </div>
+</body>
+
 </html>

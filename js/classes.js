@@ -482,6 +482,7 @@ class Secretary {
         numOfSupply++;
         var tempPass = this.genPass().toString();
         var newSupplyTeach = new SupplyTeacher(supplyName, tempUsername, tempPass);
+        EmployeeList.push(newSupplyTeach);
         setEmployeeList(EmployeeList);
         return newSupplyTeach;
     }
@@ -786,8 +787,12 @@ class Teacher {
 
 class SupplyTeacher {       // Substitute Teacher: same functionalities as FT-Teacher, but cannot view individual student 
     constructor(name, username, password) {
+        this.name = name;
+        this.username = username;
+        this.password = password;
         this.user = new Teacher(name, username, password); 
         this.type = "SupplyTeacher";
+        this.taughtClasses = []; //list of classrooms assigned to teacher 
     }
 }
 
