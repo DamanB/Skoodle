@@ -419,6 +419,7 @@ class Secretary {
 
     //removing student from global student list (deregistering student from school)
     deregisterStudent(studId) {
+        var u = this;
         // console.log("deregister student now?");
         var currStud = this.studentExists(studId);
         if (currStud) {
@@ -429,6 +430,9 @@ class Secretary {
                 }
                 if (victim_index > -1) {
                     StudentList.splice(victim_index, 1);
+                    currStud.classes.forEach(function(cl){
+                        u.removeStudentFromClass(cl, currStud.Stdid);
+                    })
                     setStudentList(StudentList); //updating the student list because student was removed from school
                     setGlobalClassList(GlobalClassList); //do we have to also remove them from the class???????
                     // console.log("removing student");
