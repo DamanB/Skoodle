@@ -32,9 +32,20 @@
             $("#employeeList tbody").empty();
             var type = $("#typeSelect").find(":selected").text();
             list = getEmployeeList();
+            //console.log(list);
             list.forEach(function (emp) {
                 if (emp.type === type) {
-                    $('#employeeList tbody').append('<tr><td>' + emp.type + '</td><td>' + emp.name + '</td><td>' + emp.username + '</td><td>' + '<button class="modify">Modify</button> </td></tr>');
+                    var name; 
+                    var username;
+                    if (type == "SupplyTeacher") {
+                        name = emp.name;
+                        username = emp.username;
+                    }
+                    else {
+                        name = emp.name;
+                        username = emp.username;
+                    }
+                    $('#employeeList tbody').append('<tr><td>' + emp.type + '</td><td>' + name + '</td><td>' + username + '</td><td>' + '<button class="modify">Modify</button> </td></tr>');
                 }
             });
         });
@@ -78,6 +89,7 @@
                 <option value Type>Select Employee Type</option>
                 <option value="secretary">Secretary</option>
                 <option value="teacher">Teacher</option>
+                <option value="supplyteacher">SupplyTeacher</option>
             </select>
 
             <table id="addedList">
