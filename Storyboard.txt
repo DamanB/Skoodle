@@ -1,19 +1,57 @@
-Storyboarding for Video Demo + Testing Purposes
+Storyboarding for Video Demo + Testing Purposes (in sequential order)
+** means not working :(((
 
 ADMIN:
+- login, show employees ** add in feature for seeing supply teachers admin1.html
  - Add Employees
-    - Add 
+    - Click all buttons with empty fields for error check
+    - Try to add an employee with same username for error check
+    - Enter valid fields for employee and add it in
+    - Show that employee was added by going back and looking at list
  - Manage/Remove Emloyees (Sorted by Type: FT-Teacher, Supply-Teacher, Secretary)
-
-SECRETARY:
-
+   - Do empty fields again
+   - Show a secretary username change success
+      - login with new credentials
+   - Remove the employee
 
 FT-TEACHER:
-
+** when recording attendance, always select a date before clicking button
+- login
+- explain teacher info (see the classes being taught by teacher), can submit attendance, or view students
+- click on view students **error teach_full1.html
+- submit attendance
 
 SUPPLY-TEACHER:
+** when recording attendance, always select a date before clicking button
+SECRETARY:
+ - login
+ - click on register/deregister student
+   - add a valid student
+   - show that ID and regkey is generated
+ - show remove kid functionality
+   - show search functionality first, then remove?
+- go to view/add/modify class
+- show add class funcitonality
+   - enter name, assign teacher, set time interval, click create classroom
+   - show that it shows on the list below
+   - go back one page and show that class shows up in global class list
+- modify the class just added, change name, time, teacher
+   - show update on prev page
+   - add student to the class based on ID
+- ** removing kid from class list, breaks the entire student list and vice versa
 
 
 PARENT:
+- login
+- show that kids are displayed
+- go to register child page
+   - empty field error check
+- add child with valid regkey and ID
+- go back and show that child was added into list
+- click on a child and show that their attendance is recorded
+   - can do per class for one student
+- show functionality of declaring absence
+   - show that it was listed on bottom of page that absence is declared
+
 
 
