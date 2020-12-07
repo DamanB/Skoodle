@@ -12,14 +12,14 @@ function InitData()
 
 
     // Creation of FT-Teachers
-    var teach_1 = admin_1.addEmployee("John Marston", "teach1", "12345", "Teacher"); 
-    var teach_2 = admin_1.addEmployee("Jerry King", "teach2", "123456", "Teacher"); 
+    var teach_1 = admin_1.addEmployee("John Marston", "teach1", "12345", "Teacher");
+    var teach_2 = admin_1.addEmployee("Jerry King", "teach2", "123456", "Teacher");
     var teach_3 = admin_1.addEmployee("Hina Yamamoto", "teach3", "123456", "Teacher");
 
 
     // Creation of Supply-Teachers
     sec_1.createTempSupply("Blerim Meehmoti");
-    sec_1.createTempSupply("Dom Anastazi");
+    var supply_1 = sec_1.createTempSupply("Dom Anastazi");
 
 
     // Creation of Students
@@ -57,7 +57,7 @@ function InitData()
 
     // Creation of Classes    
     sec_1.addClass("French", teach_1, "9:00am - 10:30am",[]); 
-    sec_1.addClass("Math", teach_2, "10:30am - 12:00pm",[]);
+    sec_1.addClass("Math", supply_1, "10:30am - 12:00pm",[]);
     sec_1.addClass("English", teach_3, "1:00pm - 2:30pm",[]); 
     
 
