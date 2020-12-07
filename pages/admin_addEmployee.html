@@ -22,10 +22,10 @@
             $("#name").text("Hello " + user.name + "!");
         });
         //Logout button
-        $(document).on('click', "#logout", function(){
+        $(document).on('click', "#logout", function () {
             removeActiveUser();
             window.location.href = "/index.html";
-        }); 
+        });
 
         //Add the employee
         $(document).on('click', "#addEmployee", function () {
@@ -36,42 +36,41 @@
             //EmployeeList = getEmployeeList();
             EmployeeList = getEmployeeList();
             //add employee
-            var valid = true;
-            valid = user.addEmployee(name, username, password, type);
-            getEmployeeList();
-            console.log("Added: " + valid);
+            var valid = false;
             //notify user
-            if (!valid){
-                $("#error").text("This username already exists");
-                $("#error").show();
-                valid = false;
-            }
-            if (!name){
+            if (!name) {
                 $("#error").text("Please enter a valid name");
                 $("#error").show();
                 valid = false;
             }
-            else if (!username){
+            else if (!username) {
                 $("#error").text("Please enter a valid username");
                 $("#error").show();
                 valid = false;
             }
-            else if (!password){
+            else if (!password) {
                 $("#error").text("Please enter a valid password");
                 $("#error").show();
                 valid = false;
             }
-            else{
-                //valid = true;
+            else {
+                if (user.employeeExists(username)) {
+                    $("#error").text("This username already exists");
+                    $("#error").show();
+                    valid = false;
+                }
+                else
+                {
+                    valid = true;
+                }
             }
+            console.log("Added: " + valid);
             if (valid) {
                 $("#addedList").append('<tr><td>' + type + '</td><td>' + username + '</td></tr>');
                 $("#error").hide();
                 //save
+                user.addEmployee(name, username, password, type);
                 setEmployeeList(EmployeeList);
-            }
-            else {
-                //$("#error").show();
             }
         });
     </script>
