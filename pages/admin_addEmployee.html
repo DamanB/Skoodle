@@ -36,10 +36,16 @@
             //EmployeeList = getEmployeeList();
             EmployeeList = getEmployeeList();
             //add employee
-            var valid = user.addEmployee(name, username, password, type);
+            var valid = true;
+            valid = user.addEmployee(name, username, password, type);
             getEmployeeList();
             console.log("Added: " + valid);
             //notify user
+            if (!valid){
+                $("#error").text("This username already exists");
+                $("#error").show();
+                valid = false;
+            }
             if (!name){
                 $("#error").text("Please enter a valid name");
                 $("#error").show();
@@ -56,7 +62,7 @@
                 valid = false;
             }
             else{
-                valid = true;
+                //valid = true;
             }
             if (valid) {
                 $("#addedList").append('<tr><td>' + type + '</td><td>' + username + '</td></tr>');
@@ -65,7 +71,7 @@
                 setEmployeeList(EmployeeList);
             }
             else {
-                $("#error").show();
+                //$("#error").show();
             }
         });
     </script>
