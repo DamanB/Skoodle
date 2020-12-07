@@ -20,7 +20,18 @@
             
             //set header
             $(document).ready(function () {
-                user = Object.assign(new Teacher, getActiveUser());
+                var tmp = getActiveUser();
+                if (tmp.type == "Teacher")
+                {
+                    user = Object.assign(new Teacher, getActiveUser());
+                    console.log("Teacher");
+                }
+                else
+                {
+                    user = Object.assign(new SupplyTeacher, getActiveUser());
+                    console.log(user);
+                }
+                
                 $("#username").text(user.type.toUpperCase() + ": " + user.username);
                 $("#name").text("Hello " + user.name + "!");
             
@@ -39,8 +50,8 @@
                         + studentObj.name
                         + "</td><td>"
                         + "<select id='options'>"
-                        + "<option value=A>Absent</option>"
-                        + "<option value=P>Present</option>"
+                        + "<option value=A>A</option>"
+                        + "<option value=P>P</option>"
                         + "</select>"
                         + "</td></tr>"
                     )
@@ -78,7 +89,6 @@
             {
                 getGlobalClassList();
                 getGlobalAttendenceList();
-                getGlobalAttendenceList();
                 dateString = $("#dateAbs").val();
                 var splits = dateString.split("-");
                 $("#selectedDate").text(dateString);
@@ -91,6 +101,7 @@
                 var date = dateObj.getDate();
 
                 var existingAttendance = user.createAttendance(toEdit.name, year, month, date);
+
                 var attendance = [];
                 getGlobalClassList().forEach(function(classroom)
                 {
@@ -128,8 +139,8 @@
                                     + "</td><td id='studentStatus'>"   
                                     + "<select id='options'>"
                                     + "<option value='*'>None</option>"
-                                    + "<option value='A'>Absent</option>"
-                                    + "<option value='P'>Present</option>"
+                                    + "<option value='A'>A</option>"
+                                    + "<option value='P'>P</option>"
                                     + "</select>"
                                     + "</td></tr>"
                                 );
@@ -158,6 +169,7 @@
 
                 $("#listOfStudents tr").each(function()
                 {
+                    console.log("Test 1");
                     var studName = "test";
                     var studStatus = "test";
                     var studId;
@@ -166,6 +178,7 @@
 
                     $(this).find('td').each(function(test)
                     {
+                        console.log("Test 2");
                         //console.log($(this).text()); //Prints cell text
                         //console.log($(this).attr("id") + " : " + $(this).text()); //Prints id of the cell and cell text
 
@@ -212,11 +225,17 @@
                         //console.log("1 - " + studId + " : " + studName + " : " + studStatus); //Prints student ID, name, and status
 
                         user.markStatus(toEdit.name, dateObj, studId, studStatus);
+                        user.markStatus2(toEdit.name, dateObj, studId, studStatus);
+                        console.log(user.type + "MarkStatus");
+
+                        
                         //console.log(getGlobalClassList()); //Check the back-end Global Class List
                     }
                 });
 
+
                 var status = user.submitAttendance(toEdit.name, dateObj);
+                var status2 = user.submitAttendance2(toEdit.name, dateObj);
 
                 console.log(getGlobalClassList()); //Check the back-end Global Class List
                 console.log(getGlobalAttendenceList()); //Check the back-end Global Class List

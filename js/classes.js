@@ -36,13 +36,13 @@ class Admin {
             if (type == "Secretary") {
                 var secretary_1 = new Secretary(name, username, password);
                 EmployeeList.push(secretary_1);
-                setEmployeeList(EmployeeList); 
+                setEmployeeList(EmployeeList);
                 return secretary_1;
             }
             else if (type == "Teacher") {
                 var teacher_1 = new Teacher(name, username, password);
                 EmployeeList.push(teacher_1);
-                setEmployeeList(EmployeeList); 
+                setEmployeeList(EmployeeList);
                 return teacher_1;
             }
         }
@@ -60,11 +60,11 @@ class Admin {
             for (var i = 0; i < EmployeeList.length; i++) {
                 if (username == EmployeeList[i].username) {
                     var victim_employee_index = i;
-                } 
-            if (victim_employee_index > -1) {
-                EmployeeList.splice(victim_employee_index, 1);
-                setEmployeeList(EmployeeList); 
-                return true;
+                }
+                if (victim_employee_index > -1) {
+                    EmployeeList.splice(victim_employee_index, 1);
+                    setEmployeeList(EmployeeList);
+                    return true;
                 }
             }
         }
@@ -79,7 +79,7 @@ class Admin {
         getEmployeeList();
         var employee_1 = this.employeeExists(username);
         employee_1.name = newName;
-        setEmployeeList(EmployeeList); 
+        setEmployeeList(EmployeeList);
     }
 
     modifyEmployeeUsername(username, newUser) {
@@ -90,7 +90,7 @@ class Admin {
         else {
             var employee_1 = this.employeeExists(username);
             employee_1.username = newUser;
-            setEmployeeList(EmployeeList); 
+            setEmployeeList(EmployeeList);
             return true;
         }
     }
@@ -99,7 +99,7 @@ class Admin {
         getEmployeeList();
         var employee_1 = this.employeeExists(username);
         employee_1.password = newPass;
-        setEmployeeList(EmployeeList); 
+        setEmployeeList(EmployeeList);
     }
 }
 
@@ -115,31 +115,25 @@ class Secretary {
         this.type = "Secretary";
     }
 
-        //helper method to get the parent attached to a student
-        getParent(student)
-        {
-            for (var i = 0; i < ParentList.length; i++)
-            {
-                var currParent = ParentList[i];
-                if(currParent)
-                {
-                    var currChildlist = currParent.children;
-                    if(currChildlist)
-                    {
-                        for(var j = 0; j < currChildlist.length; j++)
-                        {
-                            var currChild = currChildlist[j];
-                            
-                            if(currChild.Stdid == student.Stdid && currChild.regKey == student.regKey)
-                            {
-                                return currParent; 
-                            }
+    //helper method to get the parent attached to a student
+    getParent(student) {
+        for (var i = 0; i < ParentList.length; i++) {
+            var currParent = ParentList[i];
+            if (currParent) {
+                var currChildlist = currParent.children;
+                if (currChildlist) {
+                    for (var j = 0; j < currChildlist.length; j++) {
+                        var currChild = currChildlist[j];
+
+                        if (currChild.Stdid == student.Stdid && currChild.regKey == student.regKey) {
+                            return currParent;
                         }
-                    } 
-                } 
+                    }
+                }
             }
-            return false; 
         }
+        return false;
+    }
 
     /* SECRETARY FUNCTION: ADD CLASSROOM TO GLOBAL CLASS LIST */
     employeeExists(username) {
@@ -164,36 +158,30 @@ class Secretary {
     }
 
     //helper method to see if attendance was submitted successfully (date)
-    getSubmittedAttendances(date)
-    {
-        var submittedAttendances = []; 
+    getSubmittedAttendances(date) {
+        var submittedAttendances = [];
 
-        for(var i = 0; i < GlobalAttendenceList.length; i++)
-        {
+        for (var i = 0; i < GlobalAttendenceList.length; i++) {
             var currAttendance = GlobalAttendenceList[i];
-            if(currAttendance)
-            {
+            if (currAttendance) {
                 var currDate = currAttendance.date;
-                if (typeof(currDate) == "string")
-                {
+                if (typeof (currDate) == "string") {
                     var splits = currDate.substring(0, 10);
                     splits = splits.split("-");
-                    currDate = new Date (splits[0], splits[1] - 1, splits[2]);
+                    currDate = new Date(splits[0], splits[1] - 1, splits[2]);
                 }
 
-                if(currAttendance.submitted && currDate.getFullYear() == date.getFullYear() && currDate.getMonth() == date.getMonth() && currDate.getDate() == date.getDate())
-                {
-                    submittedAttendances.push(currAttendance); 
+                if (currAttendance.submitted && currDate.getFullYear() == date.getFullYear() && currDate.getMonth() == date.getMonth() && currDate.getDate() == date.getDate()) {
+                    submittedAttendances.push(currAttendance);
                 }
             }
-            else
-            {
-                return false; 
+            else {
+                return false;
             }
         }
-        return submittedAttendances; 
+        return submittedAttendances;
     }
-    
+
     //adding an employee to the system as an admin
     addClass(name, teacher, timeinterval, ClassList) {
         if (!this.classExists(name)) {
@@ -202,20 +190,20 @@ class Secretary {
                     ClassList.push(StudentList[0]);         // need minimum 1 student in a class list before instantiation
                     var classroom_1 = new Classroom(name, teacher, timeinterval, ClassList, []);
                     GlobalClassList.push(classroom_1);
-                    teacher.taughtClasses.push(classroom_1.name); 
-                    setGlobalClassList(GlobalClassList); 
+                    teacher.taughtClasses.push(classroom_1.name);
+                    setGlobalClassList(GlobalClassList);
                     //setStudentList(StudentList); 
-                    setEmployeeList(EmployeeList); 
+                    setEmployeeList(EmployeeList);
 
                     return classroom_1;
                 }
                 else {
                     var classroom_1 = new Classroom(name, teacher, timeinterval, ClassList, []);
                     GlobalClassList.push(classroom_1);
-                    teacher.taughtClasses.push(classroom_1.name); 
+                    teacher.taughtClasses.push(classroom_1.name);
                     setGlobalClassList(GlobalClassList);
                     //setStudentList(StudentList);
-                    setEmployeeList(EmployeeList); 
+                    setEmployeeList(EmployeeList);
                     return classroom_1;
                 }
 
@@ -236,15 +224,15 @@ class Secretary {
             for (i = 0; i < GlobalClassList.length; i++) {
                 if (name == GlobalClassList[i].name) {
                     const victim_class_index = GlobalClassList.indexOf(i);
-                    var victim_classroom = GlobalClassList[i]; 
+                    var victim_classroom = GlobalClassList[i];
                 }
                 if (victim_class_index > -1) {
-                    victim_classroom.teacher.taughtClasses.splice(victim_class_index,1);  //unassigning teacher from removed class
+                    victim_classroom.teacher.taughtClasses.splice(victim_class_index, 1);  //unassigning teacher from removed class
                     this.removeStudentFromClass(victim_classroom); //unassigning students from removed classroom 
                     GlobalClassList.splice(victim_class_index, 1);
                     setGlobalClassList(GlobalClassList);
                     setEmployeeList(EmployeeList);
-                    setStudentList(StudentList);  
+                    setStudentList(StudentList);
                     return true;
                 }
             }
@@ -257,20 +245,15 @@ class Secretary {
     }
 
     //helper method for removeClass function
-    removeStudentsFromClass(currClassroom)
-    {
-        for (var i = 0; i < currClassroom.ClassList.length; i++)
-        {
-            var currStudent = currClassroom.ClassList[i]; 
-            
-            for(var j = 0; j < currStudent.classes.length; j++)
-            {
-                if(currStudent.classes[j].name == currClassroom.name)
-                {
-                    var victim_enrolled_class_index = currStudent.classes.indexOf(j); 
+    removeStudentsFromClass(currClassroom) {
+        for (var i = 0; i < currClassroom.ClassList.length; i++) {
+            var currStudent = currClassroom.ClassList[i];
+
+            for (var j = 0; j < currStudent.classes.length; j++) {
+                if (currStudent.classes[j].name == currClassroom.name) {
+                    var victim_enrolled_class_index = currStudent.classes.indexOf(j);
                 }
-                if(victim_enrolled_class_index > -1)
-                {
+                if (victim_enrolled_class_index > -1) {
                     currStudent.classes.splice(victim_enrolled_class_index, 1);
                     setGlobalClassList();
                 }
@@ -289,31 +272,29 @@ class Secretary {
             var classroom_1 = this.classExists(className);
             classroom_1.name = newName;
             setGlobalClassList(GlobalClassList);
-            setStudentList(StudentList); 
+            setStudentList(StudentList);
         }
     }
 
     modifyClassTeach(className, newTeach) {
-        var newTeacher = this.employeeExists(newTeach); 
+        var newTeacher = this.employeeExists(newTeach);
         if (newTeacher) {         // newTeach exists?
-            var classroom_1 = this.classExists(className);      
+            var classroom_1 = this.classExists(className);
             if (classroom_1) {                  // classroom exists?
                 if (classroom_1.teacher.username == newTeacher.username) {    // same teacher assigned?
                     return false;
                 }
                 //derolling current teacher from class so newTeach can teach it
-                var victim_teacher = classroom_1.teacher; 
-                for(var i = 0; i<victim_teacher.taughtClasses.length; i++)
-                {
-                    if(victim_teacher.taughtClasses[i].name == classroom_1.name)
-                    {
-                        var victim_classroom = victim_teacher.taughtClasses.indexOf(i); 
+                var victim_teacher = classroom_1.teacher;
+                for (var i = 0; i < victim_teacher.taughtClasses.length; i++) {
+                    if (victim_teacher.taughtClasses[i].name == classroom_1.name) {
+                        var victim_classroom = victim_teacher.taughtClasses.indexOf(i);
                     }
                     if (victim_classroom > -1) {
-                        victim_teacher.taughtClasses.splice(victim_classroom,1);  //unassigning teacher from removed class
+                        victim_teacher.taughtClasses.splice(victim_classroom, 1);  //unassigning teacher from removed class
                         setEmployeeList(EmployeeList);
                         setGlobalClassList(GlobalClassList);
-                        setStudentList(StudentList); 
+                        setStudentList(StudentList);
                         return true;
                     }
                 }
@@ -321,14 +302,14 @@ class Secretary {
                 newTeacher.taughtClasses.push(classroom_1.name); //adding the class to the new teacher's list of taught classes
                 setEmployeeList(EmployeeList);
                 setGlobalClassList(GlobalClassList);
-                setStudentList(StudentList); 
+                setStudentList(StudentList);
             }
         }
         return false;
     }
 
     modifyClassTime(className, newTime) {
-        var classroom_1 = this.classExists(className);  
+        var classroom_1 = this.classExists(className);
         if (classroom_1) {                              // class exists?
             classroom_1.timeinterval = newTime;         // set new time interval
             setGlobalClassList(GlobalClassList);
@@ -354,7 +335,7 @@ class Secretary {
 
     addStudentToClass(className, studId) {
         if (this.classExists(className)) {
-            var currStudent = this.studentExists(studId); 
+            var currStudent = this.studentExists(studId);
             if (currStudent) {
                 for (var i = 0; i < GlobalClassList.length; i++) {
                     if (className == GlobalClassList[i].name) {
@@ -369,7 +350,7 @@ class Secretary {
                         holder_class.ClassList.push(currStudent);       // add student into specified class
                         currStudent.classes.push(holder_class.name);         // add class to list of student's enrolled class list
                         setGlobalClassList(GlobalClassList);
-                        setStudentList(StudentList); 
+                        setStudentList(StudentList);
                         return true;
                     }
                 }
@@ -384,25 +365,22 @@ class Secretary {
     }
 
 
-    
+
     /* SECRETARY FUNCTION: REMOVE A STUDENT FROM A CLASSROOM */
-    removeStudentFromClass(className,studID)
-    {
+    removeStudentFromClass(className, studID) {
         // console.log("remove student now?");
-        var currClass = this.classExists(className); 
-        
+        var currClass = this.classExists(className);
+
         //class exists 
-        if(currClass)
-        {
+        if (currClass) {
             console.log("hjere");
-            for(var i = 0; i < currClass.ClassList.length; i++) //loop over the class list to access students 
+            for (var i = 0; i < currClass.ClassList.length; i++) //loop over the class list to access students 
             {
-                if(currClass.ClassList[i].Stdid == studID) //if the student to remove from class is found?
+                if (currClass.ClassList[i].Stdid == studID) //if the student to remove from class is found?
                 {
                     var victim_stud = i;  //grab the index of the student we want to remove from currClass ClassList 
                 }
-                if (victim_stud > -1) 
-                {
+                if (victim_stud > -1) {
                     currClass.ClassList.splice(victim_stud, 1); //removing the targetted student from the currClass ClassList 
                     //setStudentList(StudentList);
                     console.log("remove student from class");
@@ -412,31 +390,27 @@ class Secretary {
                 }
             }
         }
-        else
-        {
-            return false; 
+        else {
+            return false;
         }
     }
 
     //generate random RegKey for Students
-    genKey()
-    {
-       return Math.floor(Math.random()*1000); 
+    genKey() {
+        return Math.floor(Math.random() * 1000);
     }
-    
+
     //generate student ID
-    genStudID()
-    {
-        var ID = Math.floor(Math.random()*1000000); 
+    genStudID() {
+        var ID = Math.floor(Math.random() * 1000000);
         ID = ID + 1;
-        return ID;   
+        return ID;
     }
 
     //adding student to global student list (registering student to school)
-    registerStudent(studName)
-    {
-        var regKey = this.genKey(); 
-        var studID = this.genStudID(); 
+    registerStudent(studName) {
+        var regKey = this.genKey();
+        var studID = this.genStudID();
         var newStud = new Student(studName, studID, [], regKey);
         StudentList.push(newStud);
         setStudentList(StudentList);
@@ -444,8 +418,7 @@ class Secretary {
     }
 
     //removing student from global student list (deregistering student from school)
-    deregisterStudent(studId)
-    {
+    deregisterStudent(studId) {
         // console.log("deregister student now?");
         var currStud = this.studentExists(studId);
         if (currStud) {
@@ -470,14 +443,13 @@ class Secretary {
 
     //generate random RegKey for Students
     genPass() {
-        return Math.floor(Math.random()*100000);
+        return Math.floor(Math.random() * 100000);
     }
 
-    
-    
+
+
     // creating SUPPLY TEACHER a "temporary" account
-    createTempSupply(supplyName)
-    {
+    createTempSupply(supplyName) {
         var tempUsername = "supply_".concat(numOfSupply.toString());
         numOfSupply++;
         var tempPass = this.genPass().toString();
@@ -510,86 +482,69 @@ class Secretary {
     }
 
     //retrieve list of absent attendance (marked by teachers) entries based on a date 
-    getAbsentEntries(date)
-    {
-        var allAbsences = []; 
-        var subAttendances = this.getSubmittedAttendances(date); 
-        if(subAttendances)
-        {
-            for (var i = 0; i < subAttendances.length; i++)
-            {
-                var currAttendance = subAttendances[i]; 
-                if(currAttendance)
-                {
-                    for(var j = 0; j < currAttendance.entries.length; j++)
-                    {
+    getAbsentEntries(date) {
+        var allAbsences = [];
+        var subAttendances = this.getSubmittedAttendances(date);
+        if (subAttendances) {
+            for (var i = 0; i < subAttendances.length; i++) {
+                var currAttendance = subAttendances[i];
+                if (currAttendance) {
+                    for (var j = 0; j < currAttendance.entries.length; j++) {
                         var currAttendanceEntry = currAttendance.entries[j];
-                        if(currAttendanceEntry.studentStatus == "A")
-                        {
-                            allAbsences.push(currAttendanceEntry);                             
-                        }  
+                        if (currAttendanceEntry.studentStatus == "A") {
+                            allAbsences.push(currAttendanceEntry);
+                        }
                     }
                 }
             }
-            return allAbsences;  
+            return allAbsences;
         }
-        return false; 
+        return false;
     }
 
     //retrieve list of absent declared attendance (marked by parents) entries based on a date 
-    getAbsentDeclaredEntries(date)
-    {
-        var allAbsences = []; 
-        var subAttendances = this.getSubmittedAttendances(date); 
-        if(subAttendances)
-        {
-            for (var i = 0; i < subAttendances.length; i++)
-            {
-                var currAttendance = subAttendances[i]; 
-                if(currAttendance)
-                {
-                    for(var j = 0; j < currAttendance.entries.length; j++)
-                    {
+    getAbsentDeclaredEntries(date) {
+        var allAbsences = [];
+        var subAttendances = this.getSubmittedAttendances(date);
+        if (subAttendances) {
+            for (var i = 0; i < subAttendances.length; i++) {
+                var currAttendance = subAttendances[i];
+                if (currAttendance) {
+                    for (var j = 0; j < currAttendance.entries.length; j++) {
                         var currAttendanceEntry = currAttendance.entries[j];
-                        if(currAttendanceEntry.studentStatus == "AD")
-                        {
-                            allAbsences.push(currAttendanceEntry);                             
-                        }  
+                        if (currAttendanceEntry.studentStatus == "AD") {
+                            allAbsences.push(currAttendanceEntry);
+                        }
                     }
                 }
             }
-            return allAbsences;  
+            return allAbsences;
         }
-        return false; 
+        return false;
     }
 
     //confirming attendance
-    confirmAttendance(classAttendance)
-    {
-        for(var i = 0; i < classAttendance.entries.length; i++)
-        {
-            var currEntry = classAttendance.entries[i]; 
-            
+    confirmAttendance(classAttendance) {
+        for (var i = 0; i < classAttendance.entries.length; i++) {
+            var currEntry = classAttendance.entries[i];
+
             currEntry.successfullyLogged = true;
 
-            if(currEntry.studentStatus == "P")
-            {
-                classAttendance.present++; 
+            if (currEntry.studentStatus == "P") {
+                classAttendance.present++;
             }
-            else if (currEntry.studentStatus == "A")
-            {
-                classAttendance.absent++; 
+            else if (currEntry.studentStatus == "A") {
+                classAttendance.absent++;
             }
-            else if (currEntry.studentStatus == "AD")
-            {
-                classAttendance.reportedAbsent++; 
+            else if (currEntry.studentStatus == "AD") {
+                classAttendance.reportedAbsent++;
             }
-        
+
         }
     }
 
 
-   
+
 }
 
 
@@ -602,7 +557,7 @@ class Teacher {
         this.taughtClasses = []; //list of classrooms assigned to teacher 
     }
 
-    
+
     //helper method for UI people
     getTeacherFromClass(className) {
         var currClassroom = this.classExists(className);
@@ -618,77 +573,70 @@ class Teacher {
         }
         return false;
     }
-    
+
     //helper method for teacher used in markStatus 
     attendanceExists(className, date) {
         var currClass = this.classExists(className);
         var toReturn = false;
         if (currClass) {
             var currAttendance = currClass.Attendance;
-            currAttendance.forEach(function(att) 
-            {
+            currAttendance.forEach(function (att) {
                 var currDate = att.date;
 
-                if (typeof(currDate) == "string")
-                {
+                if (typeof (currDate) == "string") {
                     var splits = currDate.substring(0, 10);
                     splits = splits.split("-");
-                    currDate = new Date (splits[0], splits[1] - 1, splits[2]);
+                    currDate = new Date(splits[0], splits[1] - 1, splits[2]);
                 }
 
-                if (currDate.getFullYear() == date.getFullYear() && currDate.getMonth() == date.getMonth() && currDate.getDate() == date.getDate()) {                  
+                if (currDate.getFullYear() == date.getFullYear() && currDate.getMonth() == date.getMonth() && currDate.getDate() == date.getDate()) {
                     toReturn = att;
                     return;
                 }
             });
-            if (toReturn)
-            {
+            if (toReturn) {
                 return toReturn;
             }
-            else
-            {
+            else {
                 return false;
             }
         }
     }
 
     //helper method for teacher used in markStatus
-    studentExistsInClass(studID, currClass) 
-    {
+    studentExistsInClass(studID, currClass) {
         for (var i = 0; i < currClass.ClassList.length; i++) {
             if (studID == currClass.ClassList[i].Stdid) {
-                return currClass.ClassList[i]; 
+                return currClass.ClassList[i];
             }
         }
         return false;
     }
 
     //create attendance for day and class CLASSATTENDANCE
-    createAttendance(className, year, month, day)
-    {
+    createAttendance(className, year, month, day) {
         var new_date = new Date(year, month, day);
         //console.log(new_date);
- 
-        var tmpBool = this.attendanceExists(className, new_date);       
-        
+
+        var tmpBool = this.attendanceExists(className, new_date);
+
         //console.log(tmpBool);
-        if (tmpBool) 
-        {
+        if (tmpBool) {
             return false;
         }
 
         //console.log("Here");
-        var currClassroom = this.classExists(className); 
+        var currClassroom = this.classExists(className);
         var attendance_holder = [];  //mock attendance for holding student attendance entries
-        
-        if(currClassroom) // checking if the current classroom exits 
+
+        if (currClassroom) // checking if the current classroom exits 
         {
-            for(var i = 0; i < currClassroom.ClassList.length; i++) //looping through classList to get students 
+            for (var i = 0; i < currClassroom.ClassList.length; i++) //looping through classList to get students 
             {
                 var currStudent = currClassroom.ClassList[i];  //creating student object 
-                
+
                 var attendance_entry = new AttendanceEntry(currStudent, className, "*");  //creating an attendance entry 
-                                
+
                 attendance_holder.push(attendance_entry);   //storing student attendance entries into mock holder
 
             }
@@ -698,29 +646,27 @@ class Teacher {
         //console.log(attendance_1); 
 
         currClassroom.Attendance.push(attendance_1); //putting the attendance made into the class 
-        setGlobalClassList(GlobalClassList); 
-        
+        setGlobalClassList(GlobalClassList);
+
         GlobalAttendenceList.push(attendance_1); //sending the attendance so secratery can access the attendances
         setGlobalAttendenceList(GlobalAttendenceList);
 
-        return attendance_1; 
+        return attendance_1;
     }
-    
+
     //mark student present/absent
-    markStatus(className, currDate, stdId, status)
-    {
+    markStatus(className, currDate, stdId, status) {
         var currClass = this.classExists(className); //grabs the current class
 
         // var currStudent = this.studentExistsInClass(studId, currClass);
         var classAttendanceList = currClass.Attendance;
         var classAttendance_1;
-        classAttendanceList.forEach(function(classAttend){
-            var betterDate = classAttend.date;            
-            if (typeof(betterDate) == "string")
-            {
+        classAttendanceList.forEach(function (classAttend) {
+            var betterDate = classAttend.date;
+            if (typeof (betterDate) == "string") {
                 var splits = betterDate.substring(0, 10);
                 splits = splits.split("-");
-                betterDate = new Date (splits[0], splits[1] - 1, splits[2]);
+                betterDate = new Date(splits[0], splits[1] - 1, splits[2]);
             }
 
             if (betterDate.getFullYear() == currDate.getFullYear() && betterDate.getMonth() == currDate.getMonth() && betterDate.getDate() == currDate.getDate()) {
@@ -728,35 +674,32 @@ class Teacher {
                 return;
             }
         });
-        
-        if (classAttendance_1)
-        {
-            classAttendance_1.entries.forEach(function(classEntry){
+
+        if (classAttendance_1) {
+            classAttendance_1.entries.forEach(function (classEntry) {
                 if (classEntry.student.Stdid == stdId) {
                     classEntry.studentStatus = status;
                     return;
                 }
             });
         }
-        
-        setGlobalClassList(GlobalClassList); 
-        setGlobalAttendenceList(GlobalAttendenceList);  
+
+        setGlobalClassList(GlobalClassList);
+        setGlobalAttendenceList(GlobalAttendenceList);
     }
 
-    markStatus2(className, currDate, stdId, status)
-    {
+    markStatus2(className, currDate, stdId, status) {
         var foundAtt;
-        GlobalAttendenceList.forEach(function(classAttend) {
+        GlobalAttendenceList.forEach(function (classAttend) {
 
-            var betterDate = classAttend.date;            
-            if (typeof(betterDate) == "string")
-            {
+            var betterDate = classAttend.date;
+            if (typeof (betterDate) == "string") {
                 var splits = betterDate.substring(0, 10);
                 splits = splits.split("-");
-                betterDate = new Date (splits[0], splits[1] - 1, splits[2]);
+                betterDate = new Date(splits[0], splits[1] - 1, splits[2]);
             }
             if (betterDate.getFullYear() == currDate.getFullYear() && betterDate.getMonth() == currDate.getMonth() && betterDate.getDate() == currDate.getDate()) {
-                classAttend.entries.forEach(function(ent) {
+                classAttend.entries.forEach(function (ent) {
                     if (ent.className == className) {
                         foundAtt = classAttend;
                         return;
@@ -772,79 +715,70 @@ class Teacher {
         })
 
         var classAttendance_1 = foundAtt;
-        if (classAttendance_1)
-        {
-            classAttendance_1.entries.forEach(function(classEntry){
+        if (classAttendance_1) {
+            classAttendance_1.entries.forEach(function (classEntry) {
                 if (classEntry.student.Stdid == stdId) {
                     classEntry.studentStatus = status;
                     return;
                 }
             });
         }
-        
-        setGlobalClassList(GlobalClassList); 
-        setGlobalAttendenceList(GlobalAttendenceList);  
+
+        setGlobalClassList(GlobalClassList);
+        setGlobalAttendenceList(GlobalAttendenceList);
     }
 
-    
+
 
     //submitting a complete attendance to the secretary (updating global list)
-    submitAttendance(className, date)
-    {
+    submitAttendance(className, date) {
         var currClass = this.classExists(className); //grabs the current class
-        var idx;  
+        var idx;
 
-        for(var i = 0; i < currClass.Attendance.length; i++)
-        {
-            
+        for (var i = 0; i < currClass.Attendance.length; i++) {
+
             var currDate = currClass.Attendance[i].date;
 
-            if (typeof(currDate) == "string")
-            {
+            if (typeof (currDate) == "string") {
                 var splits = currDate.substring(0, 10);
                 splits = splits.split("-");
-                currDate = new Date (splits[0], splits[1] - 1, splits[2]);
+                currDate = new Date(splits[0], splits[1] - 1, splits[2]);
             }
 
             //var currDate =  currClass.Attendance[i].getDate(); 
 
-            if(currDate.getFullYear() == date.getFullYear() && currDate.getMonth() == date.getMonth() && currDate.getDate() == date.getDate())
-            {
-                idx = i;  
+            if (currDate.getFullYear() == date.getFullYear() && currDate.getMonth() == date.getMonth() && currDate.getDate() == date.getDate()) {
+                idx = i;
             }
-            
+
         }
-        var currAttendanceEntry = currClass.Attendance[idx].entries; 
-        
-        for (var i = 0; i < currAttendanceEntry.length; i++)
-        {
-            if(currAttendanceEntry[i].studentStatus == "None" || currAttendanceEntry[i].studentStatus == "*" )
-            {
-                return false; 
+        var currAttendanceEntry = currClass.Attendance[idx].entries;
+
+        for (var i = 0; i < currAttendanceEntry.length; i++) {
+            if (currAttendanceEntry[i].studentStatus == "None" || currAttendanceEntry[i].studentStatus == "*") {
+                return false;
             }
         }
         currClass.Attendance[idx].submitted = true;
         setGlobalClassList(GlobalClassList);
         setGlobalAttendenceList(GlobalAttendenceList);
-        return true; 
+        return true;
     }
 
 
     //submitting a complete attendance to the secretary (updating global list)
-    submitAttendance2(className, date)
-    {
+    submitAttendance2(className, date) {
         var foundAtt;
-        GlobalAttendenceList.forEach(function(classAttend) {
+        GlobalAttendenceList.forEach(function (classAttend) {
 
-            var betterDate = classAttend.date;            
-            if (typeof(betterDate) == "string")
-            {
+            var betterDate = classAttend.date;
+            if (typeof (betterDate) == "string") {
                 var splits = betterDate.substring(0, 10);
                 splits = splits.split("-");
-                betterDate = new Date (splits[0], splits[1] - 1, splits[2]);
+                betterDate = new Date(splits[0], splits[1] - 1, splits[2]);
             }
             if (betterDate.getFullYear() == date.getFullYear() && betterDate.getMonth() == date.getMonth() && betterDate.getDate() == date.getDate()) {
-                classAttend.entries.forEach(function(ent) {
+                classAttend.entries.forEach(function (ent) {
                     if (ent.className == className) {
                         foundAtt = classAttend;
                         return;
@@ -858,18 +792,16 @@ class Teacher {
                 return;
             }
         })
-        
+
         if (foundAtt) {
-            var currAttendanceEntry = foundAtt.entries; 
-        
-            for (var i = 0; i < currAttendanceEntry.length; i++)
-            {
-                if(currAttendanceEntry[i].studentStatus == "None" || currAttendanceEntry[i].studentStatus == "*" )
-                {
-                    return false; 
+            var currAttendanceEntry = foundAtt.entries;
+
+            for (var i = 0; i < currAttendanceEntry.length; i++) {
+                if (currAttendanceEntry[i].studentStatus == "None" || currAttendanceEntry[i].studentStatus == "*") {
+                    return false;
                 }
             }
-            currClass.Attendance[idx].submitted = true;
+            foundAtt.submitted = true;
             setGlobalClassList(GlobalClassList);
             setGlobalAttendenceList(GlobalAttendenceList);
             return true;
@@ -879,7 +811,7 @@ class Teacher {
         }
     }
 
-    
+
 }
 
 
@@ -888,9 +820,261 @@ class SupplyTeacher {       // Substitute Teacher: same functionalities as FT-Te
         this.name = name;
         this.username = username;
         this.password = password;
-        this.user = new Teacher(name, username, password); 
         this.type = "SupplyTeacher";
         this.taughtClasses = []; //list of classrooms assigned to teacher 
+    }
+
+    //helper method for UI people
+    getTeacherFromClass(className) {
+        var currClassroom = this.classExists(className);
+        return currClassroom.teacher;
+    }
+
+    //helper method for teacher used in createAttendance 
+    classExists(className) {
+        for (var i = 0; i < GlobalClassList.length; i++) {
+            if (className == GlobalClassList[i].name) {
+                return GlobalClassList[i];
+            }
+        }
+        return false;
+    }
+
+    //helper method for teacher used in markStatus 
+    attendanceExists(className, date) {
+        var currClass = this.classExists(className);
+        var toReturn = false;
+        if (currClass) {
+            var currAttendance = currClass.Attendance;
+            currAttendance.forEach(function (att) {
+                var currDate = att.date;
+
+                if (typeof (currDate) == "string") {
+                    var splits = currDate.substring(0, 10);
+                    splits = splits.split("-");
+                    currDate = new Date(splits[0], splits[1] - 1, splits[2]);
+                }
+
+                if (currDate.getFullYear() == date.getFullYear() && currDate.getMonth() == date.getMonth() && currDate.getDate() == date.getDate()) {
+                    toReturn = att;
+                    return;
+                }
+            });
+            if (toReturn) {
+                return toReturn;
+            }
+            else {
+                return false;
+            }
+        }
+    }
+
+    //helper method for teacher used in markStatus
+    studentExistsInClass(studID, currClass) {
+        for (var i = 0; i < currClass.ClassList.length; i++) {
+            if (studID == currClass.ClassList[i].Stdid) {
+                return currClass.ClassList[i];
+            }
+        }
+        return false;
+    }
+
+    //create attendance for day and class CLASSATTENDANCE
+    createAttendance(className, year, month, day) {
+        var new_date = new Date(year, month, day);
+        //console.log(new_date);
+
+        var tmpBool = this.attendanceExists(className, new_date);
+
+        //console.log(tmpBool);
+        if (tmpBool) {
+            return false;
+        }
+
+        //console.log("Here");
+        var currClassroom = this.classExists(className);
+        var attendance_holder = [];  //mock attendance for holding student attendance entries
+
+        if (currClassroom) // checking if the current classroom exits 
+        {
+            for (var i = 0; i < currClassroom.ClassList.length; i++) //looping through classList to get students 
+            {
+                var currStudent = currClassroom.ClassList[i];  //creating student object 
+
+                var attendance_entry = new AttendanceEntry(currStudent, className, "*");  //creating an attendance entry 
+
+                attendance_holder.push(attendance_entry);   //storing student attendance entries into mock holder
+
+            }
+        }
+        //var d = new Date(new_date.getFullYear(), new_date.getMonth(), new_date.getDay());
+        var attendance_1 = new ClassAttendance(attendance_holder, new_date);  // creating the class attendance list from temp mock class attendance
+        //console.log(attendance_1); 
+
+        currClassroom.Attendance.push(attendance_1); //putting the attendance made into the class 
+        setGlobalClassList(GlobalClassList);
+
+        GlobalAttendenceList.push(attendance_1); //sending the attendance so secratery can access the attendances
+        setGlobalAttendenceList(GlobalAttendenceList);
+
+        return attendance_1;
+    }
+
+    //mark student present/absent
+    markStatus(className, currDate, stdId, status) {
+        var currClass = this.classExists(className); //grabs the current class
+
+        // var currStudent = this.studentExistsInClass(studId, currClass);
+        var classAttendanceList = currClass.Attendance;
+        var classAttendance_1;
+        classAttendanceList.forEach(function (classAttend) {
+            var betterDate = classAttend.date;
+            if (typeof (betterDate) == "string") {
+                var splits = betterDate.substring(0, 10);
+                splits = splits.split("-");
+                betterDate = new Date(splits[0], splits[1] - 1, splits[2]);
+            }
+
+            if (betterDate.getFullYear() == currDate.getFullYear() && betterDate.getMonth() == currDate.getMonth() && betterDate.getDate() == currDate.getDate()) {
+                classAttendance_1 = classAttend;
+                return;
+            }
+        });
+
+        if (classAttendance_1) {
+            classAttendance_1.entries.forEach(function (classEntry) {
+                if (classEntry.student.Stdid == stdId) {
+                    classEntry.studentStatus = status;
+                    return;
+                }
+            });
+        }
+
+        setGlobalClassList(GlobalClassList);
+        setGlobalAttendenceList(GlobalAttendenceList);
+    }
+
+    markStatus2(className, currDate, stdId, status) {
+        var foundAtt;
+        GlobalAttendenceList.forEach(function (classAttend) {
+
+            var betterDate = classAttend.date;
+            if (typeof (betterDate) == "string") {
+                var splits = betterDate.substring(0, 10);
+                splits = splits.split("-");
+                betterDate = new Date(splits[0], splits[1] - 1, splits[2]);
+            }
+            if (betterDate.getFullYear() == currDate.getFullYear() && betterDate.getMonth() == currDate.getMonth() && betterDate.getDate() == currDate.getDate()) {
+                classAttend.entries.forEach(function (ent) {
+                    if (ent.className == className) {
+                        foundAtt = classAttend;
+                        return;
+                    }
+                    else {
+                        return;
+                    }
+                })
+            }
+            if (foundAtt) {
+                return;
+            }
+        })
+
+        var classAttendance_1 = foundAtt;
+        if (classAttendance_1) {
+            classAttendance_1.entries.forEach(function (classEntry) {
+                if (classEntry.student.Stdid == stdId) {
+                    classEntry.studentStatus = status;
+                    return;
+                }
+            });
+        }
+
+        setGlobalClassList(GlobalClassList);
+        setGlobalAttendenceList(GlobalAttendenceList);
+    }
+
+
+
+    //submitting a complete attendance to the secretary (updating global list)
+    submitAttendance(className, date) {
+        var currClass = this.classExists(className); //grabs the current class
+        var idx;
+
+        for (var i = 0; i < currClass.Attendance.length; i++) {
+
+            var currDate = currClass.Attendance[i].date;
+
+            if (typeof (currDate) == "string") {
+                var splits = currDate.substring(0, 10);
+                splits = splits.split("-");
+                currDate = new Date(splits[0], splits[1] - 1, splits[2]);
+            }
+
+            //var currDate =  currClass.Attendance[i].getDate(); 
+
+            if (currDate.getFullYear() == date.getFullYear() && currDate.getMonth() == date.getMonth() && currDate.getDate() == date.getDate()) {
+                idx = i;
+            }
+
+        }
+        var currAttendanceEntry = currClass.Attendance[idx].entries;
+
+        for (var i = 0; i < currAttendanceEntry.length; i++) {
+            if (currAttendanceEntry[i].studentStatus == "None" || currAttendanceEntry[i].studentStatus == "*") {
+                return false;
+            }
+        }
+        currClass.Attendance[idx].submitted = true;
+        setGlobalClassList(GlobalClassList);
+        setGlobalAttendenceList(GlobalAttendenceList);
+        return true;
+    }
+
+
+    //submitting a complete attendance to the secretary (updating global list)
+    submitAttendance2(className, date) {
+        var foundAtt;
+        GlobalAttendenceList.forEach(function (classAttend) {
+
+            var betterDate = classAttend.date;
+            if (typeof (betterDate) == "string") {
+                var splits = betterDate.substring(0, 10);
+                splits = splits.split("-");
+                betterDate = new Date(splits[0], splits[1] - 1, splits[2]);
+            }
+            if (betterDate.getFullYear() == date.getFullYear() && betterDate.getMonth() == date.getMonth() && betterDate.getDate() == date.getDate()) {
+                classAttend.entries.forEach(function (ent) {
+                    if (ent.className == className) {
+                        foundAtt = classAttend;
+                        return;
+                    }
+                    else {
+                        return;
+                    }
+                })
+            }
+            if (foundAtt) {
+                return;
+            }
+        })
+
+        if (foundAtt) {
+            var currAttendanceEntry = foundAtt.entries;
+
+            for (var i = 0; i < currAttendanceEntry.length; i++) {
+                if (currAttendanceEntry[i].studentStatus == "None" || currAttendanceEntry[i].studentStatus == "*") {
+                    return false;
+                }
+            }
+            foundAtt.submitted = true;
+            setGlobalClassList(GlobalClassList);
+            setGlobalAttendenceList(GlobalAttendenceList);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }
 
@@ -905,7 +1089,7 @@ class Parent {
         this.type = "Parent";
         this.notifications = [];
     }
-    
+
 
     // a helper function for checking if a child (student) exists in the Parent's children list
     childExists(studId) {
@@ -916,7 +1100,7 @@ class Parent {
         }
         return false;
     }
-   
+
     // a helper function for checking if a child is enrolled in a class
     classExists(className) {
         for (var i = 0; i < GlobalClassList.length; i++) {
@@ -928,24 +1112,20 @@ class Parent {
     }
 
     //helper method to see if parent exists will be used by addStudent
-    parentExists(username)
-    {
-        for(var i = 0; i < ParentList.length; i++)
-        {
-            if(ParentList[i].username == username)
-            {
-                return ParentList[i]; 
+    parentExists(username) {
+        for (var i = 0; i < ParentList.length; i++) {
+            if (ParentList[i].username == username) {
+                return ParentList[i];
             }
         }
-        return false; 
+        return false;
     }
-  
+
     // Lets Parent link a student to their account
     addStudent(studId, studRegKey, parUsername) {
 
-        var currParent = this.parentExists(parUsername); 
-        if(currParent)
-        {
+        var currParent = this.parentExists(parUsername);
+        if (currParent) {
             for (var i = 0; i < StudentList.length; i++) {
                 if (StudentList[i].Stdid == studId && StudentList[i].regKey == studRegKey) {   // if student found + regKey matches
                     var currStud = StudentList[i];
@@ -953,7 +1133,7 @@ class Parent {
                     setParentList(ParentList);
                     return true;
                 }
-            }         
+            }
         }
         return false;
     }
@@ -968,19 +1148,19 @@ class Parent {
     // if the ClassAttendance does not exist on that date, create it using CreateAttendance (from dummy_teacher), then recursively call reportStudentAbsence after it
     // (CHANGES FOR CreateAttendance include: if it sees that the ClassAttendance already exists, it should not overwrite that dates attendances)
     reportStudentAbsence(studId, date, className) {
-        var dummy_teacher = new Teacher("","","");
+        var dummy_teacher = new Teacher("", "", "");
         var studClass = this.classExists(className);
         var classAttendance = studClass.Attendance;
-        
+
         var succ = false;
 
 
-        classAttendance.forEach(function(att) {
+        classAttendance.forEach(function (att) {
             att.date = new Date(att.date)
             console.log(att.date)
             if (att.date.getFullYear() == date.getFullYear() && att.date.getMonth() == date.getMonth() && att.date.getDate() == date.getDate()) {
                 succ = true;
-                att.entries.forEach(function(ent) {
+                att.entries.forEach(function (ent) {
                     if (ent.student.Stdid == studId) {
                         ent.studentStatus = "AD";
                         setGlobalAttendenceList(GlobalAttendenceList);
@@ -998,11 +1178,10 @@ class Parent {
     }
 
     //registering parent into the system
-    registerParent(name, username, password, email)
-    {
-        var currParent = new Parent(name, username, password, email); 
-        ParentList.push(currParent); 
-        setParentList(ParentList); 
+    registerParent(name, username, password, email) {
+        var currParent = new Parent(name, username, password, email);
+        ParentList.push(currParent);
+        setParentList(ParentList);
     }
 }
 
@@ -1021,7 +1200,7 @@ class Classroom {
 //this is just a single entry within the major attendance sheet for a single class for a single student
 class AttendanceEntry {
     constructor(student, className) {
-        this.student = student; 
+        this.student = student;
         this.className = className;
         this.studentStatus = "*"; //this will be the different types of status (P - Present), (A - Absent), (RA - Reported Absent)
         this.successfullyLogged = false; //method used by the secretary to log the attendance 
@@ -1035,9 +1214,9 @@ class ClassAttendance {
         this.entries = AttEntries;
         this.date = date;
         this.submitted = false;
-        this.present = 0; 
-        this.absent = 0; 
-        this.reportedAbsent = 0;  
+        this.present = 0;
+        this.absent = 0;
+        this.reportedAbsent = 0;
     }
 
 
