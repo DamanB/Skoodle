@@ -1,2 +1,19 @@
 Storyboarding for Video Demo + Testing Purposes
 
+ADMIN:
+ - Add Employees
+    - Add 
+ - Manage/Remove Emloyees (Sorted by Type: FT-Teacher, Supply-Teacher, Secretary)
+
+SECRETARY:
+
+
+FT-TEACHER:
+
+
+SUPPLY-TEACHER:
+
+
+PARENT:
+
+
