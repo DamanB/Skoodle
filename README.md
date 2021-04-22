@@ -9,3 +9,10 @@ As Skoodle is a prototype, no database or hosting system is used for this applic
 
 ## How to run Skoodle
 To run Skoodle, simply deploy the index.html file on a local host. (I.e. using live server plugin on VS Code)
+
+##What we Learned
+- How to develop a website using standard
+  - HTML
+  - CSS
+  - JavaScript
+- Client side data storage
